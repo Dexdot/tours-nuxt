@@ -1,0 +1,59 @@
+@import "mixins"
+@import "vars"
+
+a
+  &,
+  &:visited,
+  &:focus,
+  &:active
+    color: $black
+
+body
+  color: $black
+  +norms(r)
+  font-size: 18px
+  line-height: 1.388
+  letter-spacing: 0.02em
+  font-variant-ligatures: none
+
+// Headers
+=h1
+  +yo('font-size', (375px: 48px, 1920px: 88px, 2550px: 112px))
+=h2
+  +yo('font-size', (375px: 40px, 1920px: 72px, 2550px: 88px))
+=h3
+  +yo('font-size', (375px: 36px, 1920px: 64px, 2550px: 80px))
+=h4
+  +yo('font-size', (375px: 30px, 1920px: 48px, 2550px: 64px))
+=h5
+  +yo('font-size', (375px: 24px, 1920px: 36px, 2550px: 48px))
+=h6
+  +yo('font-size', (375px: 20px, 1920px: 24px, 2550px: 36px))
+
+h1,
+.t-h1
+  +h1
+h2,
+.t-h2
+  +h2
+h3,
+.t-h3
+  +h3
+h4,
+.t-h4
+  +h4
+h5,
+.t-h5
+  +h5
+h6,
+.t-h6
+  +h6
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'TT Travels'
+  letter-spacing: -0.02em
+  
+.t-ttu
+  font-size: 12px
+  letter-spacing: 0.1em
+  text-transform: uppercase

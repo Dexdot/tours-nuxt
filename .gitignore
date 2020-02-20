@@ -1,0 +1,22 @@
+# dependencies
+node_modules
+
+# logs
+npm-debug.log
+
+# Editor
+.vscode
+
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+# Env vars
+.env
+.env.build
+now.json
+
+# PHP
+ajax/config.php

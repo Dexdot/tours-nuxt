@@ -1,0 +1,42 @@
+{
+  "name": "buffet",
+  "version": "1.0.0",
+  "description": "buffet based on nuxt.js",
+  "author": "dexdot",
+  "private": true,
+  "scripts": {
+    "deb": "nuxt build && now remove buffet-nuxt && now",
+    "deploy": "now remove buffet-nuxt && now",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "yarn lint"
+  },
+  "dependencies": {
+    "@contentful/rich-text-html-renderer": "^13.4.0",
+    "@contentful/rich-text-plain-text-renderer": "^13.4.0",
+    "@contentful/rich-text-types": "^13.4.0",
+    "@nuxtjs/axios": "^5.9.3",
+    "@nuxtjs/redirect-module": "^0.3.1",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "autosize": "^4.0.2",
+    "contentful": "^7.10.0",
+    "gsap": "3.0.2",
+    "loco-scroll": "^3.2.8",
+    "nuxt": "^2.0.0",
+    "vue-inputmask": "^0.2.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^4.19.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-vue": "^4.0.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
+    "vue-svg-loader": "^0.15.0"
+  }
+}
