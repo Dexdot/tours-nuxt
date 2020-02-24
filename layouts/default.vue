@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <Menu :active="isMenuActive" />
-    <Header :light="isLight" :isMenuActive="isMenuActive" />
+    <Header :isMenuActive="isMenuActive" />
+    <Footer />
 
-    <div class="scroll-container">
+    <div class="page-container">
       <nuxt ref="page" />
     </div>
 
@@ -16,6 +17,7 @@
 import { mapGetters } from 'vuex'
 
 import Header from '~/components/Header'
+import Footer from '~/components/Footer'
 import Menu from '~/components/Menu'
 import Cover from '~/components/Cover'
 import Intro from '~/components/Intro'
@@ -24,9 +26,9 @@ import initCSSProps from '~/assets/scripts/css-props'
 import { detectDevices } from '~/assets/scripts/detect'
 
 export default {
-  name: 'App',
   components: {
     Header,
+    Footer,
     Menu,
     Intro,
     Cover
@@ -40,7 +42,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      isLight: 'dom/isLight',
+      locale: 'lang/locale',
       isMenuActive: 'dom/isMenuActive'
     }),
     page() {
@@ -60,6 +62,15 @@ export default {
   watch: {
     $route(to, from) {
       this.dir = { to, from }
+    },
+    locale: {
+      immediate: true,
+      handler: function() {
+        if (this.locale === 'fi') this.$store.dispatch('lang/setCity', 'tallin')
+
+        console.log('general/load from lang watcher')
+        this.$store.dispatch('general/load')
+      }
     }
   }
 }
@@ -76,9 +87,4 @@ body
     &:active,
     &:focus
       color: #000
-</style>
-
-<style lang="sass" scoped>
-.scroll-container
-  overflow: hidden
 </style>

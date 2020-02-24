@@ -1,59 +1,97 @@
-@import "mixins"
-@import "vars"
-
 a
-  &,
-  &:visited,
-  &:focus,
-  &:active
-    color: $black
+  +link($base-text-color)
 
-body
-  color: $black
-  +norms(r)
-  font-size: 18px
-  line-height: 1.388
-  letter-spacing: 0.02em
-  font-variant-ligatures: none
+b
+  +mont(b)
 
-// Headers
-=h1
-  +yo('font-size', (375px: 48px, 1920px: 88px, 2550px: 112px))
-=h2
-  +yo('font-size', (375px: 40px, 1920px: 72px, 2550px: 88px))
-=h3
-  +yo('font-size', (375px: 36px, 1920px: 64px, 2550px: 80px))
-=h4
+/* Заголовки */
+=heading-size-1
+  +yo('font-size', (375px: 40px, 1920px: 96px, 2550px: 104px))
+
+=heading-size-2
   +yo('font-size', (375px: 30px, 1920px: 48px, 2550px: 64px))
-=h5
-  +yo('font-size', (375px: 24px, 1920px: 36px, 2550px: 48px))
-=h6
-  +yo('font-size', (375px: 20px, 1920px: 24px, 2550px: 36px))
 
-h1,
+=heading-size-3
+  +yo('font-size', (375px: 24px, 1920px: 40px, 2550px: 56px))
+
+=heading-size-4
+  +yo('font-size', (375px: 24px, 1920px: 30px, 2550px: 36px))
+
+=heading-size-5
+  font-size: 24px
+
+=heading-size-6
+  +yo('font-size', (375px: 14px, 1920px: 18px, 2550px: 20px))
+
+
+h1
+  +heading-size-1
+h2
+  +heading-size-2
+h3
+  +heading-size-3
+h4
+  +heading-size-4
+h5
+  +heading-size-5
+h6
+  +heading-size-6
+
+
+=heading-typo
+  +mont(b)
+  line-height: 1.2
+
 .t-h1
-  +h1
-h2,
-.t-h2
-  +h2
-h3,
-.t-h3
-  +h3
-h4,
-.t-h4
-  +h4
-h5,
-.t-h5
-  +h5
-h6,
-.t-h6
-  +h6
+  letter-spacing: -0.04em
+  +heading-size-1
+  +heading-typo
 
-h1, h2, h3, h4, h5, h6
-  font-family: 'TT Travels'
-  letter-spacing: -0.02em
-  
+.t-h2
+  +heading-size-2
+  +heading-typo
+
+.t-h3
+  +heading-size-3
+  +heading-typo
+
+.t-h4
+  +heading-size-4
+  +heading-typo
+
+.t-h5
+  +heading-size-5
+  +heading-typo
+
+.t-h6
+  +heading-size-6
+  +heading-typo
+
+
+
+/**
+ * Text Uppercase styled
+ */
 .t-ttu
+  +mont(sb)
+  line-height: 1
   font-size: 12px
-  letter-spacing: 0.1em
+  letter-spacing: 0.04em
   text-transform: uppercase
+
+
+
+
+/**
+ * Text alignments.
+ */
+
+.t-tar
+  text-align: right
+
+.t-tal
+  text-align: left
+
+.t-tac
+  text-align: center
+

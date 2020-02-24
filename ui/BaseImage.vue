@@ -6,7 +6,6 @@
 import { getImageUrl } from '~/assets/scripts/helpers'
 
 export default {
-  name: 'BaseImage',
   props: {
     img: {
       type: Object,

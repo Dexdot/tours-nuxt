@@ -18,7 +18,6 @@
 
 <script>
 export default {
-  name: 'Menu',
   props: {
     active: {
       type: Boolean,

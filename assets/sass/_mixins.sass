@@ -1,14 +1,18 @@
 @import "responsive-mixin"
+@import "font-mixin"
+@import "common-mixin"
 @import "grid"
 
-// TT Norms
-=norms($weight: r)
+=mont($weight: m)
   @if $weight == r
-    font-family: 'TT Norms'
+    font-family: 'Montserrat', sans-serif
     font-weight: 400
   @if $weight == m
-    font-family: 'TT Norms'
+    font-family: 'Montserrat', sans-serif
     font-weight: 500
+  @if $weight == sb
+    font-family: 'Montserrat', sans-serif
+    font-weight: 600
   @if $weight == b
-    font-family: 'TT Norms'
+    font-family: 'Montserrat', sans-serif
     font-weight: 700

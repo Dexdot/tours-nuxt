@@ -1,35 +1,24 @@
 <template>
-  <button
-    :class="['burger', { 'burger--light': light, active }]"
-    @click="$emit('click')"
-  >
+  <button :class="['burger', { active }]" @click="$emit('click')">
     <div class="burger-icon">
-      <span class="burger-icon-top"></span>
-      <span class="burger-icon-bottom"></span>
+      <span class="burger-icon-top"></span
+      ><span class="burger-icon-bottom"></span
+      ><span class="burger-icon-last"></span>
     </div>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'ButtonBurger',
   props: {
-    light: { type: Boolean, default: false },
     active: { type: Boolean, default: false }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-.burger--light
-  .burger-icon-top,
-  .burger-icon-bottom
-    &::before,
-    &::after
-      background: #fff
-
 .burger
-  height: 24px
+  height: 14px
   display: flex
   align-items: flex-start
   justify-content: flex-start
@@ -37,15 +26,16 @@ export default {
 
   perspective: 200px
   transform: translateZ(0)
-  transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
+  transition: opacity 0.4s cubic-bezier(.165,.84,.44,1)
 
   &-icon
     position: relative
-    width: 24px
-    height: 9px
+    width: 40px
+    height: 14px
 
     &-top,
-    &-bottom
+    &-bottom,
+    &-last
       display: block
       width: 100%
       height: 2px
@@ -79,17 +69,22 @@ export default {
 
     &-top
       top: 0
+
     &-bottom
-      bottom: 0
+      top: 6px
       &::before
         transform-origin: left
       &::after
         transform-origin: right
 
+    &-last
+      top: 12px
+
   &:hover
     .burger-icon
       &-top,
-      &-bottom
+      &-bottom,
+      &-last
         &::before
           transform: scaleX(0) translateZ(0)
           transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)
@@ -98,11 +93,11 @@ export default {
           transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s
 
   &.active
-    @media (max-width: 500px)
-      opacity: 0.3
-      
+    .burger-icon-last
+      opacity: 0
     .burger-icon-top
-      transform: translateY(8px) rotate(45deg) translateZ(0)
+      transform: translateY(14px) rotate(45deg) translateZ(0)
+
     .burger-icon-bottom
-      transform: translateY(1px) rotate(-45deg) translateZ(0)
+      transform: translateY(8px) rotate(-45deg) translateZ(0)
 </style>

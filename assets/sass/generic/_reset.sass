@@ -1,7 +1,7 @@
 /**
  * RESET
  */
-  
+
 /**
  * As well as using normalize.css, it is often advantageous to remove all
  * margins from certain elements.
@@ -74,16 +74,14 @@ a
 button,
 input,
 textarea,
-fieldset
+fieldset,
+select
   background: 0
   border: 0
   outline: 0
 
   margin: 0
   padding: 0
-
-textarea
-  resize: none
 
 
 
@@ -101,4 +99,21 @@ ol
  */
 address
   font-style: unset
-  
+
+
+/**
+ * Set the global `box-sizing` state to `border-box`.
+ *
+ * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+ * paulirish.com/2012/box-sizing-border-box-ftw
+ */
+
+html
+  box-sizing: border-box
+
+*
+  &,
+  &:before,
+  &:after
+    box-sizing: inherit
+

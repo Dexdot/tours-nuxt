@@ -4,9 +4,6 @@ export const state = () => ({
 });
 
 export const getters = {
-  isLight({ isLight }) {
-    return isLight;
-  },
   isMenuActive({ isMenuActive }) {
     return isMenuActive;
   },
@@ -16,9 +13,6 @@ export const getters = {
 };
 
 export const mutations = {
-  toggleLight(state, isLight) {
-    state.isLight = isLight;
-  },
   disableScroll(state) {
     state.scrollDisabled = true;
   },
@@ -31,16 +25,13 @@ export const mutations = {
 };
 
 export const actions = {
-  toggleLight({ commit }, isLight) {
-    commit('toggleLight', isLight);
-  },
   toggleMenu({ commit, state }) {
-    commit('toggleMenu');
+    commit("toggleMenu");
 
     if (!state.isMenuActive) {
-      commit('disableScroll');
+      commit("disableScroll");
     } else {
-      commit('enableScroll');
+      commit("enableScroll");
     }
   }
 };

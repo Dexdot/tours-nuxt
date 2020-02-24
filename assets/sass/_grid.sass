@@ -1,10 +1,22 @@
+/**
+ * https://www.smashingmagazine.com/2019/03/robust-layouts-container-units-css/
+ */
+
+.container 
+  margin-right: auto
+  margin-left: auto
+  padding-left: $unit
+  padding-right: $unit
+  
 \:root
-  --unit: 3.335vw
+  --unit: 5vw
+  @media (max-width: $mob)
+    --unit: 24px
 
   // Grid proportions
-  --grid-width: 1792
-  --grid-column-width: 75
-  --grid-columns: 16
+  --grid-width: 1728
+  --grid-column-width: 115
+  --grid-columns: 12
 
   // Grid logic
   --grid-gutters: calc(var(--grid-columns) - 1)
@@ -18,18 +30,14 @@
   --gutter-unit: calc(var(--gutter-proportion) * var(--container-width))
   --column-and-gutter-unit: calc(var(--column-unit) + var(--gutter-unit))
 
-  // Container Width
-  --container-width: calc(100vw - var(--unit) * 2)
-
-  @media (max-width: 500px)
-    --unit: 24px
+  --container-width: calc(100vw - #{$unit-2})
 
 @function unit-plus($fn)
-  @return calc(var(--unit) + #{$fn})
+  @return calc(#{$unit} + #{$fn})
 
 @function minus($fn)
   @return calc(-1 * #{$fn})
-  
+
 @function columns($i)
   @return calc(#{$i} * var(--column-unit))
 
@@ -44,9 +52,3 @@
 
 @function mix($columns, $gutters: $columns)
   @return calc((#{$columns} * var(--column-unit)) + (#{$gutters} * var(--gutter-unit)))
-
-.container
-  margin-left: auto
-  margin-right: auto
-
-  padding: 0 var(--unit)

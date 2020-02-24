@@ -1,10 +1,25 @@
-$trs: 0.25s ease
-$ease-out: cubic-bezier(.165,.84,.44,1)
 
+// Colors
+$black: #000
+$acc: #4AAD7B
+$beige-l: #EFEDE9
+$beige-d: #DBD1C6
+
+// Typo
+$base-lh: 1.5 !default
+$base-text-color: $black !default
+
+
+// Transitions
 $cubic-io: cubic-bezier(0.785, 0.135, 0.15, 0.86)
-$cubic-in-out: cubic-bezier(0.645, 0.045, 0.355, 1)
-$cubic-in: cubic-bezier(0.55, 0.055, 0.675, 0.19)
-$cubic-out: cubic-bezier(0.215, 0.61, 0.355, 1)
 
-$black: #1F2020
-$red: #eb5757
+$trs: 0.25s ease !default
+$trs-4: 0.4s $cubic-io
+
+
+// Common
+$mob: 500px
+$tab-sm: 700px
+$tab: 1040px
+$unit: var(--unit)
+$unit-2: calc(var(--unit) * 2)
