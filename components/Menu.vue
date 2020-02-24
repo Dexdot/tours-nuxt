@@ -1,154 +1,138 @@
 <template>
   <transition name="menu">
     <section class="menu" v-show="active">
-      <div class="menu__overlay"></div>
-
-      <div class="menu__content">
+      <div class="menu__container container">
         <nav class="menu__nav">
           <ul>
-            <li class="menu__li">
-              <nuxt-link class="menu__link" to="/"></nuxt-link>
+            <li class="menu__li" v-for="link in $t('navLinks')" :key="link.to">
+              <nuxt-link class="t-h2" :to="localePath(link.to)">{{
+                link.text
+              }}</nuxt-link>
             </li>
           </ul>
         </nav>
+
+        <div class="menu__social">
+          <SocialList :list="[]" />
+        </div>
+
+        <div class="menu__info">
+          <div class="menu__contact">
+            <a :href="`tel:${general.phoneNumber}`">
+              {{ general.phoneText }}
+            </a>
+            <button>
+              {{ $t('orderCall') }}
+            </button>
+          </div>
+
+          <BaseButton>{{ $t('chooseTour') }}</BaseButton>
+        </div>
       </div>
     </section>
   </transition>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import SocialList from '~/components/SocialList'
+
 export default {
+  components: {
+    SocialList
+  },
   props: {
     active: {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      general: 'general/data'
+    })
   }
 }
 </script>
 
 <style lang="sass" scoped>
 /* ENTER */
-.menu-enter
-  pointer-events: none
-
-  .menu__li
-    opacity: 0
-    transform: translateY(24px)
-
-  .menu__overlay
-    transform: translateY(101%)
-
-
-.menu-enter-to
-  pointer-events: auto
-
-  .menu__li
-    opacity: 1
-    transform: translateY(0px)
-
-  .menu__overlay
-    transform: translateY(0%)
-
-
-.menu-enter-active
-  transition: 1s ease-in-out
-
-  .menu__overlay
-    transition: 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
-
-@for $i from 1 through 6
-  .menu-enter-active .menu__li:nth-child(#{$i})
-    transition: 0.4s ease (#{$i*0.05s + 0.4s})
-
-
-/* LEAVE */
-.menu-leave
-  pointer-events: auto
-
-  .menu__li
-    opacity: 1
-    transform: translateY(0px)
-
-  .menu__overlay
-    transform: translateY(0%)
-
+.menu-enter,
 .menu-leave-to
   pointer-events: none
+  transform: translateX(100%)
 
-  .menu__li
-    opacity: 0
+.menu-enter-to,
+.menu-leave
+  pointer-events: auto
+  transform: translateX(0%)
 
-  .menu__overlay
-    transform: translateY(101%)
-
+.menu-enter-active,
 .menu-leave-active
-  transition: 1s ease-in-out
+  transition: $trs
 
-  .menu__overlay
-    transition: 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)
-
-@for $i from 1 through 6
-  .menu-leave-active .menu__li:nth-child(#{$i})
-    transition: 0.4s ease (#{$i*0.05s})
 
 .menu
-  z-index: 3
+  z-index: 4
   position: fixed
   top: 0
   left: 0
-  right: 0
-  bottom: 0
 
   width: 100vw
-  height: 100vh
-  height: calc(var(--vh, 1vh) * 100)
+  +vh
 
+  @media (min-width: $tab + 1)
+    display: none
 
-
-// Overlay
-.menu__overlay
-  background: #000
-
+.menu__container
   position: absolute
   top: 0
   left: 0
 
+  padding-top: 30vh
   width: 100vw
-  height: 100vh
-  height: calc(var(--vh, 1vh) * 100)
+  height: 100%
+  +scrollbar
 
-.menu__content
-  z-index: 1
-  position: absolute
-  bottom: 40px
-  right: var(--unit)
-
-  text-align: right
-
-.menu__nav
   display: flex
   flex-direction: column
-  align-items: flex-end
-  margin-bottom: 40px
+  align-items: flex-start
 
-// Hover
-.menu__link
-  transition: 0.25s ease
+  background: #D8D1C6
 
-.menu__nav .menu__link:not(.nuxt-link-exact-active)
-  opacity: 1
+.menu__nav .t-h2
+  line-height: 1
+  letter-spacing: -0.02em
 
-.menu__nav .menu__link.nuxt-link-exact-active
-  opacity: 0.3
+.menu__nav li:not(:last-child)
+  margin-bottom: 8px
 
-.menu__nav:hover
-  .menu__link:not(.nuxt-link-exact-active),
-  .menu__link.nuxt-link-exact-active
-    opacity: 0.3
+.menu__social
+  margin-top: auto
+  margin-bottom: 24px
 
-.menu__nav
-  .menu__link:not(.nuxt-link-exact-active):hover,
-  .menu__link.nuxt-link-exact-active:hover
-    opacity: 1
+.menu__info
+  border-top: 1px solid rgba($black, 0.1)
+
+  padding: 16px 0 24px
+  width: 100%
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.menu__contact
+  a
+    +mont(sb)
+    font-size: 16px
+    letter-spacing: 0.04em
+    line-height: 1
+
+    display: block
+
+  button
+    font-size: 12px
+    opacity: 0.6
+    transition: $trs
+    &:hover
+      opacity: 1
 </style>

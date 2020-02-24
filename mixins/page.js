@@ -1,8 +1,8 @@
-import transition from "~/assets/scripts/transitions/default";
+// import transition from "~/assets/scripts/transitions/default";
 import Footer from "~/components/Footer";
 
 export default {
-  transition,
+  // transition,
   components: {
     Footer
   }

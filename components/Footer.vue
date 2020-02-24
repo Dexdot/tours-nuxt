@@ -20,14 +20,14 @@
           <BaseButton classDark classPulse>{{ $t('orderTicket') }}</BaseButton>
 
           <div class="footer__contact">
-            <a href="tel:+78125653541">
-              +7 (812) 565-35-41
+            <a :href="`tel:${general.phoneNumber}`">
+              {{ general.phoneText }}
             </a>
             <button>
               {{ $t('orderCall') }}
             </button>
-            <a href="mailto:peshehodtour@yandex.ru">
-              peshehodtour@yandex.ru
+            <a :href="`mailto:${general.email}`">
+              {{ general.email }}
             </a>
           </div>
         </div>
@@ -54,13 +54,18 @@
   </footer>
 </template>
 
-
 <script>
+import { mapGetters } from 'vuex'
 import SocialList from '~/components/SocialList'
 
 export default {
   components: {
     SocialList
+  },
+  computed: {
+    ...mapGetters({
+      general: 'general/data'
+    })
   }
 }
 </script>

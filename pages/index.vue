@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <section style="height: 200vh"></section>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,15 @@
 <template>
-  <header class="header">
+  <header
+    :class="[
+      'header',
+      {
+        'header--menu-active': isMenuActive,
+        'header--uphidden': isUphidden,
+        'header--transparent': isTrasparent,
+        'header--fixed': isFixed
+      }
+    ]"
+  >
     <div class="container">
       <div class="header__inner">
         <div class="header__logo-wrap">
@@ -84,12 +94,60 @@ export default {
     SocialList
   },
   props: {
-    isMenuActive: { type: Boolean, default: false }
+    isMenuActive: { type: Boolean, default: false },
+    transparent: { type: Boolean, default: false }
   },
+  data: () => ({
+    scrollY: 0,
+    dir: 'down',
+    isMob: false
+  }),
   computed: {
     ...mapGetters({
       general: 'general/data'
-    })
+    }),
+    onTop() {
+      return this.scrollY <= 1
+    },
+    isUphidden() {
+      if (this.onTop) {
+        return false
+      } else {
+        return this.dir === 'down'
+      }
+    },
+    isTrasparent() {
+      return this.transparent && this.onTop
+    },
+    isFixed() {
+      return this.onTop
+    }
+  },
+  mounted() {
+    this.handleScroll()
+    this.handleResize()
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.onScroll)
+    window.removeEventListener('resize', this.onResize)
+  },
+  methods: {
+    handleScroll() {
+      this.onScroll()
+      window.addEventListener('scroll', this.onScroll.bind(this))
+    },
+    handleResize() {
+      this.onResize()
+      window.addEventListener('resize', this.onResize.bind(this))
+    },
+    onScroll() {
+      let y = window.pageYOffset
+      this.dir = y > this.scrollY ? 'down' : 'up'
+      this.scrollY = y
+    },
+    onResize() {
+      this.isMob = window.innerWidth <= 1040
+    }
   }
 }
 </script>
@@ -113,8 +171,12 @@ export default {
   @media (min-width: $tab + 1)
     background: $beige-l
 
-.header--fixed:not(.header--transparent)
+.header--fixed:not(.header--transparent):not(.header--menu-active)
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16)
+
+.header--menu-active
+  box-shadow: unset
+  background: 0
 
 .header--uphidden
   @media (max-width: $tab)
@@ -135,10 +197,6 @@ export default {
   .burger-icon-last
     &::before, &::after
       background: #fff
-
-.menu-active .header
-  box-shadow: unset
-  background: 0
   
 .header__inner
   display: flex
@@ -162,10 +220,10 @@ export default {
 .header__logo
   height: 72px
 
-// .header:not(.header--fixed)
-//   .header__logo-wrap .select-text
-//     opacity: 0
-//     pointer-events: none
+.header:not(.header--fixed)
+  .header__logo-wrap .select-text
+    opacity: 0
+    pointer-events: none
 
 .header__logo-wrap .select-text
   line-height: 1

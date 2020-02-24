@@ -2,11 +2,12 @@
   <div id="app">
     <Menu :active="isMenuActive" />
     <Header :isMenuActive="isMenuActive" />
-    <Footer />
 
     <div class="page-container">
       <nuxt ref="page" />
     </div>
+
+    <Footer />
 
     <Cover />
     <Intro @complete="introCompleted = true" />
