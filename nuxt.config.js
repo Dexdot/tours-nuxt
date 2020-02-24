@@ -20,6 +20,28 @@ function svgoPlugins() {
   ];
 }
 
+const i18n = [
+  "nuxt-i18n",
+  {
+    locales: [
+      {
+        code: "ru",
+        file: "ru.js"
+      },
+      {
+        code: "fi",
+        file: "fi.js"
+      }
+    ],
+    defaultLocale: "ru",
+    vueI18n: {
+      fallbackLocale: "ru"
+    },
+    lazy: true,
+    langDir: "lang/"
+  }
+];
+
 module.exports = {
   server: {
     port: 3001,
@@ -126,6 +148,7 @@ module.exports = {
    ** Modules
    */
   modules: [
+    i18n,
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
     "@nuxtjs/redirect-module",
@@ -151,9 +174,6 @@ module.exports = {
    ** Customize the progress bar color
    */
   loading: { color: "#FDC616" },
-  router: {
-    middleware: "i18n"
-  },
   /**
    * style-resources
    */

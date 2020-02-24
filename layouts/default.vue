@@ -42,7 +42,6 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      locale: 'lang/locale',
       isMenuActive: 'dom/isMenuActive'
     }),
     page() {
@@ -62,15 +61,6 @@ export default {
   watch: {
     $route(to, from) {
       this.dir = { to, from }
-    },
-    locale: {
-      immediate: true,
-      handler: function() {
-        if (this.locale === 'fi') this.$store.dispatch('lang/setCity', 'tallin')
-
-        console.log('general/load from lang watcher')
-        this.$store.dispatch('general/load')
-      }
     }
   }
 }

@@ -1,25 +1,15 @@
-import Vue from "vue";
-import VueI18n from "vue-i18n";
+const onChange = (app, newLocale) => {
+  const locale = newLocale || app.i18n.locale;
 
-Vue.use(VueI18n);
-
-export default ({ app, store }) => {
-  // Set i18n instance on app
-  // This way we can use it in middleware and pages asyncData/fetch
-  app.i18n = new VueI18n({
-    locale: store.getters["lang/locale"],
-    fallbackLocale: "ru",
-    messages: {
-      ru: require("~/locales/ru.json"),
-      fi: require("~/locales/fi.json")
-    }
-  });
-
-  app.i18n.path = link => {
-    if (app.i18n.locale === app.i18n.fallbackLocale) {
-      return `/${link}`;
-    }
-
-    return `/${app.i18n.locale}/${link}`;
-  };
+  if (locale === "fi") app.store.dispatch("city/setCity", "tallin");
+  app.store.commit("lang/setLocale", locale);
+  app.store.dispatch("general/load");
 };
+
+export default function({ app }) {
+  onChange(app);
+
+  app.i18n.beforeLanguageSwitch = (oldLocale, newLocale) => {
+    onChange(app, newLocale);
+  };
+}

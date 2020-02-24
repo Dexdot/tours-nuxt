@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header__inner">
         <div class="header__logo-wrap">
-          <nuxt-link class="header__logo u-center" :to="$i18n.path('')">
+          <nuxt-link class="header__logo u-center" :to="localePath('index')">
             <svg-icon name="logo" />
           </nuxt-link>
 
@@ -20,7 +20,7 @@
         <nav class="header__nav">
           <ul>
             <li v-for="link in $t('navLinks')" :key="link.to">
-              <nuxt-link class="t-ttu" :to="$i18n.path(link.to)">{{
+              <nuxt-link class="t-ttu" :to="localePath(link.to)">{{
                 link.text
               }}</nuxt-link>
             </li>
@@ -28,15 +28,15 @@
             <li>
               <nuxt-link
                 v-if="$i18n.locale === 'ru'"
-                :to="`/fi` + $route.fullPath"
+                :to="switchLocalePath('fi')"
                 class="t-ttu"
               >
                 FIN
               </nuxt-link>
 
               <nuxt-link
-                v-else
-                :to="$route.fullPath.replace(/^\/[^\/]+/, '')"
+                v-if="$i18n.locale === 'fi'"
+                :to="switchLocalePath('ru')"
                 class="t-ttu"
               >
                 RU

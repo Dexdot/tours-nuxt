@@ -2,17 +2,14 @@ export default {
   computed: {
     city: {
       get: function() {
-        return this.$store.getters["lang/city"];
+        return this.$store.getters["city/city"];
       },
       set: function(city) {
         if (city === "spb") {
-          this.$store.dispatch("lang/setLang", "ru");
-          console.log("wanna set ru lang");
+          this.$i18n.setLocale("ru");
         }
 
-        this.$store.dispatch("lang/setCity", city);
-
-        console.log("general/load from city");
+        this.$store.dispatch("city/setCity", city);
         this.$store.dispatch("general/load");
       }
     }

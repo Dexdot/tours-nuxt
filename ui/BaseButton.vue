@@ -44,7 +44,7 @@
 
   <!-- Nuxt Link -->
   <nuxt-link
-    :to="$i18n.path(to)"
+    :to="localePath(to)"
     v-else
     :class="[
       'btn',

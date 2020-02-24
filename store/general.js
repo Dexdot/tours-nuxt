@@ -32,11 +32,10 @@ export const mutations = {
 };
 
 export const actions = {
-  async load({ commit, getters, rootState }) {
-    const currentLocale = rootState.lang.locale;
-
+  async load({ commit, getters, rootGetters }) {
+    const currentLocale = rootGetters["lang/locale"];
     const locale = `${currentLocale}-${currentLocale.toUpperCase()}`;
-    const { city } = rootState.lang;
+    const city = rootGetters["city/city"];
 
     let data;
 
