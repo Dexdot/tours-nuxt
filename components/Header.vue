@@ -65,7 +65,7 @@
         </div>
 
         <div class="header__social">
-          <SocialList :list="[]" />
+          <SocialList :socialLinks="general.socialLinks" />
         </div>
 
         <BaseButton classPulse>{{ $t('orderTicket') }}</BaseButton>

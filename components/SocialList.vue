@@ -1,13 +1,13 @@
 <template>
   <ul class="social">
     <li
-      v-for="item in list"
-      :key="item.name"
-      :href="item.to"
-      :class="`social-li--${item.name}`"
-      target="_blank"
+      v-for="socialName in computedList"
+      :key="socialName"
+      :class="`social-li--${socialName}`"
     >
-      <svg-icon :name="item.name" />
+      <a class="u-center" :href="socialMap[socialName]" target="_blank">
+        <svg-icon :name="socialName" />
+      </a>
     </li>
     <slot></slot>
   </ul>
@@ -16,9 +16,37 @@
 <script>
 export default {
   props: {
-    list: {
+    socialLinks: {
       type: Array,
       required: true
+    }
+  },
+  data: () => ({
+    allSocials: {
+      tripadvisor: 'tripadvisor',
+      inst: 'instagram',
+      vk: 'vk',
+      fb: 'facebook',
+      telegram: 't.me'
+    }
+  }),
+  computed: {
+    computedList() {
+      return Object.keys(this.allSocials).filter(key =>
+        this.socialLinks.some(link => link.includes(this.allSocials[key]))
+      )
+    },
+    socialMap() {
+      const socialMap = {}
+
+      this.computedList.forEach(key => {
+        const href = this.socialLinks.find(link =>
+          link.includes(this.allSocials[key])
+        )
+        socialMap[key] = href
+      })
+
+      return socialMap
     }
   }
 }

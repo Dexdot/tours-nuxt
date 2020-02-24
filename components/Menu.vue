@@ -13,7 +13,7 @@
         </nav>
 
         <div class="menu__social">
-          <SocialList :list="[]" />
+          <SocialList :socialLinks="general.socialLinks" />
         </div>
 
         <div class="menu__info">

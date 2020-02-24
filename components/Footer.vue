@@ -47,7 +47,7 @@
         </div>
 
         <div class="footer__social">
-          <SocialList :list="[]" />
+          <SocialList :socialLinks="general.socialLinks" />
         </div>
       </div>
     </div>
