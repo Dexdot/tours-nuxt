@@ -50,6 +50,8 @@ export default {
     }
   },
   mounted() {
+    window.$app = this
+
     initCSSProps()
     this.detect = detectDevices()
 

@@ -38,14 +38,14 @@
             <li>
               <nuxt-link
                 v-if="$i18n.locale === 'ru'"
-                :to="switchLocalePath('fi')"
+                :to="switchLocalePath('en')"
                 class="t-ttu"
               >
-                FIN
+                EN
               </nuxt-link>
 
               <nuxt-link
-                v-if="$i18n.locale === 'fi'"
+                v-if="$i18n.locale === 'en'"
                 :to="switchLocalePath('ru')"
                 class="t-ttu"
               >

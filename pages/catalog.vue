@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <section style="height: 200vh"></section>
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -12,7 +10,7 @@ export default {
   mixins: [page],
   head() {
     return {
-      title: 'Главная'
+      title: 'Каталог'
     }
   },
   async asyncData({ store }) {

@@ -29,8 +29,8 @@ const i18n = [
         file: "ru.js"
       },
       {
-        code: "fi",
-        file: "fi.js"
+        code: "en",
+        file: "en.js"
       }
     ],
     defaultLocale: "ru",

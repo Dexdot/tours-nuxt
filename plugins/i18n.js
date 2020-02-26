@@ -1,7 +1,7 @@
 const onChange = (app, newLocale) => {
   const locale = newLocale || app.i18n.locale;
 
-  if (locale === "fi") app.store.dispatch("city/setCity", "tallin");
+  if (locale === "en") app.store.dispatch("city/setCity", "tallin");
   app.store.commit("lang/setLocale", locale);
   app.store.dispatch("general/load");
 };
