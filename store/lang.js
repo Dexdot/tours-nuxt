@@ -9,5 +9,10 @@ export const mutations = {
 export const getters = {
   locale({ locale }) {
     return locale;
+  },
+  localeCode({ locale }) {
+    const upperLocale = locale === "en" ? "US" : locale.toUpperCase();
+
+    return `${locale}-${upperLocale}`;
   }
 };

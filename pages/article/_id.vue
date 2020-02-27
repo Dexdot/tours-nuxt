@@ -39,9 +39,11 @@
           >
             <h2 class="t-h5" v-if="isH2(item)" v-html="render(item)"></h2>
             <h3 class="t-h6" v-if="isH3(item)" v-html="render(item)"></h3>
+
             <p v-if="isText(item)" v-html="render(item)"></p>
             <ol v-if="isOL(item)" v-html="render(item)"></ol>
             <ul v-if="isUL(item)" v-html="render(item)"></ul>
+
             <blockquote v-if="isQuote(item)" v-html="render(item)"></blockquote>
 
             <BaseImage
@@ -70,7 +72,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { fetchArticle } from '~/api/blog'
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 
 import render from '~/mixins/render'
 import page from '~/mixins/page'

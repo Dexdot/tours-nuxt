@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^13.4.0",
-    "@contentful/rich-text-plain-text-renderer": "^13.4.0",
     "@contentful/rich-text-types": "^13.4.0",
     "@nuxtjs/axios": "^5.9.3",
     "@nuxtjs/redirect-module": "^0.3.1",
@@ -28,7 +27,8 @@
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.5.0",
     "vue-i18n": "^8.15.3",
-    "vue-inputmask": "^0.2.1"
+    "vue-inputmask": "^0.2.1",
+    "vue-yandex-maps": "^0.10.6"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",

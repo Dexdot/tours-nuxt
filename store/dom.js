@@ -1,4 +1,5 @@
 export const state = () => ({
+  scrollTop: 0,
   scrollDisabled: false,
   isMenuActive: false
 });
@@ -14,12 +15,25 @@ export const getters = {
 
 export const mutations = {
   disableScroll(state) {
+    if (state.scrollDisabled) return false;
     state.scrollDisabled = true;
-    document.body.classList.add("no-scroll");
+
+    const { body } = document;
+    state.scrollTop = window.pageYOffset;
+    body.style.top = `-${state.scrollTop}px`;
+    body.classList.add("no-scroll");
   },
   enableScroll(state) {
+    if (!state.scrollDisabled) return true;
     state.scrollDisabled = false;
-    document.body.classList.remove("no-scroll");
+
+    const { body } = document;
+    body.style.top = "";
+    body.classList.remove("no-scroll");
+
+    setTimeout(() => {
+      window.scrollTo(0, state.scrollTop);
+    }, 0);
   },
   toggleMenu(state) {
     state.isMenuActive = !state.isMenuActive;
@@ -35,5 +49,11 @@ export const actions = {
     } else {
       commit("enableScroll");
     }
+  },
+  disableScroll({ commit }) {
+    commit("disableScroll");
+  },
+  enableScroll({ commit }) {
+    commit("enableScroll");
   }
 };

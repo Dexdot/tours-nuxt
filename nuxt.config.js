@@ -184,7 +184,8 @@ module.exports = {
   plugins: [
     "~/plugins/i18n",
     "~/plugins/global",
-    { src: "~/plugins/inputmask", ssr: false }
+    { src: "~/plugins/inputmask", ssr: false },
+    { src: "~/plugins/ymapPlugin.js", mode: "client" }
   ],
   /**
    * Css / Sass / scss

@@ -68,16 +68,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-body
-  color: #000
-  background: #fff
-
-  /deep/ a
-    &,
-    &:visited,
-    &:active,
-    &:focus
-      color: #000
-</style>

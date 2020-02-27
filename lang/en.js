@@ -24,10 +24,22 @@ const lang = {
       text: "Contacts"
     }
   ],
+  tour: {
+    routeTitle: "What will we see",
+    roadmapTip: "Hover over the title to see the photo.",
+    venueTitle: "Venue"
+  },
   footer: {
     companyName: "Peshehod Tour",
     reservedRights: "All rights reserved",
     policy: "Policy"
+  },
+  formOrder: {
+    price: "for adults",
+    priceChild: "for children under 12 years old",
+    title: "Nearest excursion",
+    subtitle: "No need to pay right away",
+    button: "Buy a ticket"
   }
 };
 

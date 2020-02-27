@@ -126,6 +126,9 @@ export default {
 
 .footer__info
   @media (min-width: $tab + 1)
+    display: flex
+    flex-direction: column
+    align-items: flex-end
     margin-left: auto
 
 .footer__info .btn

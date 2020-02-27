@@ -24,10 +24,22 @@ const lang = {
       text: "Контакты"
     }
   ],
+  tour: {
+    routeTitle: "Что увидим",
+    roadmapTip: "Наведите курсор на заголовок, чтобы увидеть фото",
+    venueTitle: "Место встречи"
+  },
   footer: {
     companyName: "Пешеход Тур",
     reservedRights: "Все права защищены",
     policy: "Соглашение"
+  },
+  formOrder: {
+    price: "для взрослых",
+    priceChild: "для детей до 12 лет",
+    title: "Ближайшая экскурсия",
+    subtitle: "Сразу платить не нужно",
+    button: "Записаться"
   }
 };
 

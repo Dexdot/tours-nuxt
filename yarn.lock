@@ -806,13 +806,6 @@
     "@contentful/rich-text-types" "^13.4.0"
     escape-html "^1.0.3"
 
-"@contentful/rich-text-plain-text-renderer@^13.4.0":
-  version "13.4.0"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-plain-text-renderer/-/rich-text-plain-text-renderer-13.4.0.tgz#3da5f84d5b5d4f02f30849c0c5f9b9dd55eaaebd"
-  integrity sha512-kUs0oYLupHB3y3/a4iTd3WR+u7iGmkeoHU2nr5tSsqX9WMzM9FHp2v9PI6EN6FsfITWbnYgMW19vJ1bBv0T6BQ==
-  dependencies:
-    "@contentful/rich-text-types" "^13.4.0"
-
 "@contentful/rich-text-types@^13.4.0":
   version "13.4.0"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-13.4.0.tgz#a59c311ebd1b801ee00edbc08663c8d78da26171"
@@ -8451,6 +8444,11 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-yandex-maps@^0.10.6:
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/vue-yandex-maps/-/vue-yandex-maps-0.10.6.tgz#69b40cba0e33b00c6fa2d01813c1dad4e3d1623f"
+  integrity sha512-vXOBvNw0kEFMDAd/EgRYD3ac34tI9L2ejN8LDSiMhj7ypGcdR1z99lYFM3WA3+qbDi2bFD5hmit7HOTxFcTqcg==
 
 vue@^2.4.2, vue@^2.6.11:
   version "2.6.11"

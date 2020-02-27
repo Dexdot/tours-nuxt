@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import SocialList from '~/components/SocialList'
 
 export default {
@@ -51,12 +51,26 @@ export default {
     ...mapGetters({
       general: 'general/data'
     })
+  },
+  methods: {
+    ...mapActions({
+      disableScroll: 'dom/disableScroll',
+      enableScroll: 'dom/enableScroll'
+    })
+  },
+  watch: {
+    active(isActive) {
+      if (isActive) {
+        this.disableScroll()
+      } else {
+        this.enableScroll()
+      }
+    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-/* ENTER */
 .menu-enter,
 .menu-leave-to
   pointer-events: none

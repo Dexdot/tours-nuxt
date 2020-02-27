@@ -120,7 +120,7 @@ export default {
       return this.transparent && this.onTop
     },
     isFixed() {
-      return this.onTop
+      return !this.onTop
     }
   },
   mounted() {
@@ -152,12 +152,14 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 \:root
   --header-h: 126px
   @media (max-width: $tab)
     --header-h: 104px
-  
+</style>
+
+<style lang="sass" scoped>  
 .header
   z-index: 5
   position: fixed
