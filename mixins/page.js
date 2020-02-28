@@ -1,15 +1,13 @@
-// import transition from "~/assets/scripts/transitions/default";
 import Footer from "~/components/Footer";
 
 export default {
-  // transition,
   components: {
     Footer
   },
-  async validate({ params, store }) {
+  async validate({ app, params, store }) {
     const { city } = params;
     if (!city) return true;
 
-    return store.state.city.cities.includes(city);
+    return Object.keys(app.i18n.t("cities")).includes(city);
   }
 };

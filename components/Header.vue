@@ -41,7 +41,7 @@
 
             <li>
               <nuxt-link
-                v-if="$i18n.locale === 'ru'"
+                v-if="$i18n.locale === 'ru' && city !== 'spb'"
                 :to="switchLocalePath('en')"
                 class="t-ttu"
               >

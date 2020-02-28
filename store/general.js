@@ -5,10 +5,13 @@ const copyObject = obj => JSON.parse(JSON.stringify(obj));
 export const state = () => ({
   data: {},
   cached: {
-    spb: null,
+    spb: {
+      ru: null,
+      en: null
+    },
     tallin: {
       ru: null,
-      fi: null
+      en: null
     }
   }
 });
@@ -35,33 +38,22 @@ export const actions = {
   async load({ commit, getters, rootGetters }, city) {
     const currentLocale = rootGetters["lang/locale"];
     const locale = rootGetters["lang/localeCode"];
-    // const city = rootGetters["city/city"];
 
-    let data;
+    // Get data from cache or API
+    console.log("G.city ", city);
+    console.log("G.lang ", currentLocale);
 
-    // SPB
-    if (city === "spb") {
-      // Get data from cache or API
-      data = getters.cached.spb || (await fetchGeneral({ locale, city }));
+    const data =
+      getters.cached[city][currentLocale] ||
+      (await fetchGeneral({
+        locale,
+        city
+      }));
 
-      // Save data in cache
-      const cached = copyObject(getters.cached);
-      cached.spb = data;
-      commit("setCached", cached);
-    }
-
-    // TALLIN
-    if (city === "tallin") {
-      // Get data from cache or API
-      data =
-        getters.cached.tallin[currentLocale] ||
-        (await fetchGeneral({ locale, city }));
-
-      // Save data in cache
-      const cached = copyObject(getters.cached);
-      cached.tallin[currentLocale] = data;
-      commit("setCached", cached);
-    }
+    // Save data in cache
+    const cached = copyObject(getters.cached);
+    cached[city][currentLocale] = data;
+    commit("setCached", cached);
 
     commit("setData", data);
     return data;
