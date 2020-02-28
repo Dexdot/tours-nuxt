@@ -2,6 +2,10 @@ const lang = {
   chooseTour: "Выбрать тур",
   orderCall: "Заказать звонок",
   orderTicket: "Купить билет",
+  cities: {
+    spb: "Санкт-Петербург",
+    tallin: "Таллин"
+  },
   navLinks: [
     {
       to: "/tours",

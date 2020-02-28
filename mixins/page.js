@@ -5,5 +5,11 @@ export default {
   // transition,
   components: {
     Footer
+  },
+  async validate({ params, store }) {
+    const { city } = params;
+    if (!city) return true;
+
+    return store.state.city.cities.includes(city);
   }
 };

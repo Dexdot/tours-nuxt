@@ -21,8 +21,12 @@
             <svg-icon name="chevron" />
 
             <select v-model="city">
-              <option value="spb">Санкт-Петербург</option>
-              <option value="tallin">Таллин</option>
+              <option
+                v-for="key in Object.keys($t('cities'))"
+                :key="key"
+                :value="key"
+                >{{ $t('cities')[key] }}</option
+              >
             </select>
           </div>
         </div>

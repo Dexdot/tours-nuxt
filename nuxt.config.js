@@ -180,8 +180,12 @@ module.exports = {
   styleResources: {
     sass: ["./assets/sass/_utils.sass"]
   },
+  // router: {
+  //   middleware: "city"
+  // },
   // Plugins
   plugins: [
+    // "~/plugins/city",
     "~/plugins/i18n",
     "~/plugins/global",
     { src: "~/plugins/inputmask", ssr: false },

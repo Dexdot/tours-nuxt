@@ -1,10 +1,7 @@
 export const state = () => ({
+  locales: ["ru", "en"],
   locale: "ru"
 });
-
-export const mutations = {
-  setLocale: (state, locale) => (state.locale = locale)
-};
 
 export const getters = {
   locale({ locale }) {
@@ -15,4 +12,8 @@ export const getters = {
 
     return `${locale}-${upperLocale}`;
   }
+};
+
+export const mutations = {
+  setLocale: (state, locale) => (state.locale = locale)
 };

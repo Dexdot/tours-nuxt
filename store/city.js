@@ -18,7 +18,14 @@ export const mutations = {
 };
 
 export const actions = {
-  setCity({ commit }, city) {
+  setCityOnly({ commit }, city) {
+    commit("setCity", city);
+  },
+  setCity({ commit }, { city, i18n }) {
+    if (city === "spb" && i18n) {
+      i18n.setLocale("ru");
+    }
+
     commit("setCity", city);
   }
 };

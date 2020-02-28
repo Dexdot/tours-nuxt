@@ -1,5 +1,5 @@
 export const actions = {
-  nuxtServerInit({ dispatch }) {
-    return Promise.resolve(dispatch("general/load"));
+  nuxtServerInit({ dispatch }, { route }) {
+    return Promise.resolve(dispatch("general/load", route.params.city));
   }
 };

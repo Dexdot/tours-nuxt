@@ -2,15 +2,11 @@ export default {
   computed: {
     city: {
       get: function() {
-        return this.$store.getters["city/city"];
+        return this.$route.params.city;
       },
       set: function(city) {
-        if (city === "spb") {
-          this.$i18n.setLocale("ru");
-        }
-
-        this.$store.dispatch("city/setCity", city);
-        this.$store.dispatch("general/load");
+        // this.$store.dispatch("city/setCity", { city, i18n: this.$i18n });
+        this.$store.dispatch("general/load", { city: this.$route.params.city });
       }
     }
   }
