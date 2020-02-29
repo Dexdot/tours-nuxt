@@ -1,14 +1,11 @@
-const onChange = ({ app, route }, newLocale) => {
-  const locale = newLocale || app.i18n.locale;
-
-  app.store.commit("lang/setLocale", locale);
-  app.store.dispatch("general/load", route.params.city);
+const onChange = (app, locale) => {
+  app.store.dispatch("lang/setLocale", locale);
 };
 
 export default ({ app, route }) => {
-  onChange({ app, route });
+  app.store.commit("lang/setLocale", app.i18n.locale);
 
   app.i18n.beforeLanguageSwitch = (oldLocale, newLocale) => {
-    onChange({ app, route }, newLocale);
+    onChange(app, newLocale);
   };
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section style="height: 200vh"></section>
+    <section style="height: 50vh"></section>
   </div>
 </template>
 

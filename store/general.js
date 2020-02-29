@@ -40,9 +40,6 @@ export const actions = {
     const locale = rootGetters["lang/localeCode"];
 
     // Get data from cache or API
-    console.log("G.city ", city);
-    console.log("G.lang ", currentLocale);
-
     const data =
       getters.cached[city][currentLocale] ||
       (await fetchGeneral({

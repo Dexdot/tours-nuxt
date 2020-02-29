@@ -9,7 +9,9 @@ export default {
           this.$i18n.setLocale("ru");
         }
 
+        this.$store.dispatch("lang/setCity", city);
         this.$router.push({ params: { city } });
+
         this.$store.dispatch("general/load", city);
       }
     }
