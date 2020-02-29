@@ -17,7 +17,20 @@ export default function({ app, isHMR, store, params, error, route, redirect }) {
       en: { city }
     });
 
-    const path = `/${defaultCity}${app.localePath(route.fullPath)}`;
-    return redirect(path);
+    const isRU = app.i18n.locale === "ru";
+    console.log("isRU", isRU);
+
+    const localeRouteName = isRU ? "" : app.i18n.locale;
+    console.log("localeRouteName", localeRouteName);
+
+    const cleanPath = route.fullPath.replace(`/${localeRouteName}`, "");
+    console.log("cleanPath", cleanPath);
+
+    const separator = cleanPath.startsWith("/") ? "" : "/";
+
+    const newPath = `/spb${separator}${cleanPath}`;
+    console.log("newPath", newPath);
+
+    return redirect(newPath);
   }
 }
