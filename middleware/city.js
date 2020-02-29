@@ -3,6 +3,9 @@ export default function({ app, isHMR, store, params, error, route, redirect }) {
     return;
   }
 
+  if (route.fullPath.startsWith("/ru"))
+    return redirect(route.fullPath.replace("/ru", ""));
+
   const defaultCity = "spb";
   const city = params.city || defaultCity;
   app.store.dispatch("lang/setCity", city);
@@ -18,18 +21,9 @@ export default function({ app, isHMR, store, params, error, route, redirect }) {
     });
 
     const isRU = app.i18n.locale === "ru";
-    console.log("isRU", isRU);
-
-    const localeRouteName = isRU ? "" : app.i18n.locale;
-    console.log("localeRouteName", localeRouteName);
-
-    const cleanPath = route.fullPath.replace(`/${localeRouteName}`, "");
-    console.log("cleanPath", cleanPath);
-
+    const cleanPath = route.fullPath.replace(`/${app.i18n.locale}`, "");
     const separator = cleanPath.startsWith("/") ? "" : "/";
-
     const newPath = `/spb${separator}${cleanPath}`;
-    console.log("newPath", newPath);
 
     return redirect(newPath);
   }
