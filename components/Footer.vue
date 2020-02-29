@@ -2,14 +2,14 @@
   <footer class="footer">
     <div class="container">
       <div class="footer__inner">
-        <nuxt-link class="footer__logo u-center" :to="localePath('index')">
+        <nuxt-link class="footer__logo u-center" :to="$cityLocalePath('index')">
           <svg-icon name="logo" />
         </nuxt-link>
 
         <nav class="footer__nav">
           <ul>
             <li v-for="link in $t('navLinks')" :key="link.to">
-              <nuxt-link class="t-ttu" :to="localePath(link.to)">{{
+              <nuxt-link class="t-ttu" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
             </li>
@@ -40,10 +40,10 @@
             <span>{{ $t('footer.reservedRights') }}</span>
           </p>
 
-          <nuxt-link :to="localePath('/policy')">{{
+          <nuxt-link :to="$cityLocalePath('/policy')">{{
             $t('footer.policy')
           }}</nuxt-link>
-          <nuxt-link :to="localePath('/credits')">Credits</nuxt-link>
+          <nuxt-link :to="$cityLocalePath('/credits')">Credits</nuxt-link>
         </div>
 
         <div class="footer__social">

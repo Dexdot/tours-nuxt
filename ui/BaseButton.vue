@@ -44,7 +44,7 @@
 
   <!-- Nuxt Link -->
   <nuxt-link
-    :to="localePath(to)"
+    :to="$cityLocalePath(to)"
     v-else
     :class="[
       'btn',

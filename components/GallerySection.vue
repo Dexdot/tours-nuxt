@@ -19,7 +19,7 @@
             class="img gallery-section__cell"
             v-for="(img, i) in imagesWithoutFirst.slice(0, 6)"
             @click="$emit('cell-click', i + 1)"
-            :key="img.sys.id"
+            :key="img.sys.id + i"
           >
             <BaseImage class="img__i" :img="img" :alt="img.fields.title" />
             <svg-icon name="arrow"></svg-icon>

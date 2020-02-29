@@ -250,6 +250,10 @@ export default {
     // Load all tours if its empty
     if (allToursInStore.length <= 0) await store.dispatch('tours/loadAllTours')
 
+    if (params.city !== tour.fields.city) {
+      error({ statusCode: 404 })
+    }
+
     return { tour }
   },
   computed: {

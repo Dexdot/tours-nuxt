@@ -5,7 +5,10 @@
     @close-click="$emit('close-click')"
   >
     <div class="gallery-modal u-center">
-      <nuxt-link class="gallery-modal__logo u-center" :to="localePath('index')">
+      <nuxt-link
+        class="gallery-modal__logo u-center"
+        :to="$cityLocalePath('index')"
+      >
         <svg-icon name="logo" />
       </nuxt-link>
 
@@ -15,7 +18,7 @@
             <li
               :class="{ active: index === i }"
               v-for="(img, i) in images"
-              :key="img.sys.id"
+              :key="img.sys.id + i"
             >
               <div class="gallery-modal__hero-img img">
                 <BaseImage :img="img" :alt="img.fields.title" class="img__i" />
@@ -42,7 +45,7 @@
           <li
             :class="{ active: index === i }"
             v-for="(img, i) in images"
-            :key="img.sys.id"
+            :key="img.sys.id + i"
           >
             <button class="gallery-modal__thumb u-center" @click="setIndex(i)">
               <BaseImage :img="img" :alt="img.fields.title" />

@@ -185,6 +185,7 @@ module.exports = {
   },
   // Plugins
   plugins: [
+    "~/plugins/city-locale-path",
     "~/plugins/i18n",
     "~/plugins/global",
     { src: "~/plugins/inputmask", ssr: false },

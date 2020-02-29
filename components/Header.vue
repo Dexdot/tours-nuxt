@@ -13,11 +13,14 @@
     <div class="container">
       <div class="header__inner">
         <div class="header__logo-wrap">
-          <nuxt-link class="header__logo u-center" :to="localePath('index')">
+          <nuxt-link
+            class="header__logo u-center"
+            :to="$cityLocalePath('index')"
+          >
             <svg-icon name="logo" />
           </nuxt-link>
 
-          <div class="select-text">
+          <div class="select-text" v-if="!$route.fullPath.includes('/tour')">
             <svg-icon name="chevron" />
 
             <select v-model="city">
@@ -34,7 +37,7 @@
         <nav class="header__nav">
           <ul>
             <li v-for="link in $t('navLinks')" :key="link.to">
-              <nuxt-link class="t-ttu" :to="localePath(link.to)">{{
+              <nuxt-link class="t-ttu" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
             </li>

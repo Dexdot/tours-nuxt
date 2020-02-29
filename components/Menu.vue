@@ -5,7 +5,7 @@
         <nav class="menu__nav">
           <ul>
             <li class="menu__li" v-for="link in $t('navLinks')" :key="link.to">
-              <nuxt-link class="t-h2" :to="localePath(link.to)">{{
+              <nuxt-link class="t-h2" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
             </li>
