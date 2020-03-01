@@ -1,0 +1,87 @@
+<template>
+  <ul :class="['pagen', { 'pagen--outline': outlined }]">
+    <li v-for="item in list" :key="item.text">
+      <button
+        :class="['u-center', { active: item.active }]"
+        type="button"
+        @click="$emit('click', item)"
+      >
+        {{ item.text }}
+      </button>
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  props: {
+    outlined: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
+
+<style lang="sass" scoped>
+.pagen
+  display: flex
+
+.pagen:not(.pagen--outline)
+  font-size: 18px
+
+  margin-left: -8px
+  li
+    margin-left: 8px
+
+  a
+    width: 48px
+    height: 48px
+
+    transition: $trs
+    +link($black)
+    border-bottom: 1px solid rgba($black, 0.2)
+
+    &:hover
+      color: $acc
+
+    &.active
+      +link($acc)
+      border-bottom: 1px solid $acc
+
+
+.pagen--outline
+  +mont(sb)
+  font-size: 18px
+
+  margin-left: -16px
+
+  @media (max-width: $mob)
+    flex-wrap: wrap
+    font-size: 16px
+    margin-top: -8px
+    justify-content: center
+
+  li
+    margin-left: 16px
+    @media (max-width: $mob)
+      margin-top: 8px
+
+  a
+    width: 72px
+    height: 72px
+
+    transition: $trs
+    border-radius: 50%
+    border: 1px solid $black
+
+    @media (max-width: $mob)
+      width: 48px
+      height: 48px
+
+    &:not(.active)
+      opacity: 0.4
+
+    &:hover
+      opacity: 0.8
+</style>

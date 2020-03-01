@@ -48,7 +48,19 @@ const lang = {
     button: "Записаться"
   },
   reviews: {
-    sectionButton: "Все отзывы"
+    title: "Отзывы",
+    otherToursTitle: "Время выбирать свое приключение",
+    sectionButton: "Все отзывы",
+    selectTourNotChosenTitle: "Экскурсия",
+    selectTourNotChosen: "Не выбрано",
+    selectTypeTitle: "Тип экскурсии",
+    select: {
+      all: "Все",
+      group: "Групповые",
+      individual: "Индивидуальные"
+    },
+    watchReviews: "Смотреть отзывы",
+    goTo: "Перейти к отзыву"
   }
 };
 

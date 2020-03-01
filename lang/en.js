@@ -48,7 +48,19 @@ const lang = {
     button: "Buy a ticket"
   },
   reviews: {
-    sectionButton: "All reviews"
+    title: "Reviews",
+    otherToursTitle: "Time to choose your adventure",
+    sectionButton: "All reviews",
+    selectTourNotChosenTitle: "Excursion",
+    selectTourNotChosen: "Not chosen",
+    selectTypeTitle: "Type of tour",
+    select: {
+      all: "All",
+      group: "Group",
+      individual: "Individual"
+    },
+    watchReviews: "Watch reviews",
+    goTo: "Go to review"
   }
 };
 

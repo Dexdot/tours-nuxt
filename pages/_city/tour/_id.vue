@@ -150,7 +150,11 @@
     </main>
 
     <ReviewsSlider v-if="tourData.reviews" :reviews="tourData.reviews" />
-    <ToursSlider v-if="otherTours.length > 0" :tours="otherTours" />
+    <ToursSlider
+      :title="$t('tour.otherToursTitle')"
+      v-if="otherTours.length > 0"
+      :tours="otherTours"
+    />
   </div>
 </template>
 
@@ -227,9 +231,6 @@ export default {
       ]
     }
   },
-  mounted() {
-    console.log('TOUR: ', this)
-  },
   data: () => ({
     isGalleryModalVisible: false,
     isSightsModalVisible: false,
@@ -294,7 +295,7 @@ export default {
         return !!localeTour ? localeTour.fields.city === city : false
       })
 
-      return filteredTours.map(tour => tour[locale])
+      return filteredTours.map(tour => tour[locale]).slice(0, 8)
     }
   },
   methods: {
