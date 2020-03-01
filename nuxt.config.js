@@ -189,6 +189,7 @@ module.exports = {
     "~/plugins/i18n",
     "~/plugins/global",
     { src: "~/plugins/inputmask", ssr: false },
+    { src: "~/plugins/scrollbooster", mode: "client" },
     { src: "~/plugins/ymapPlugin.js", mode: "client" }
   ],
   /**

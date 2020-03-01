@@ -47,7 +47,7 @@
           $t('reviews.sectionButton')
         }}</BaseButton>
 
-        <div class="reviews-slider__btns">
+        <div class="reviews-slider__btns" v-if="reviews.length > 1">
           <ButtonArrow
             @click="prev"
             class="reviews-slider__btn reviews-slider__btn--prev"

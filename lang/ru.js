@@ -31,7 +31,9 @@ const lang = {
   tour: {
     routeTitle: "Что увидим",
     roadmapTip: "Наведите курсор на заголовок, чтобы увидеть фото",
-    venueTitle: "Место встречи"
+    venueTitle: "Место встречи",
+    priceFrom: "от",
+    otherToursTitle: "Другие экскурсии, которые вам понравятся"
   },
   footer: {
     companyName: "Пешеход Тур",

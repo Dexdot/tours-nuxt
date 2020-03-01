@@ -31,7 +31,9 @@ const lang = {
   tour: {
     routeTitle: "What will we see",
     roadmapTip: "Hover over the title to see the photo.",
-    venueTitle: "Venue"
+    venueTitle: "Venue",
+    priceFrom: "from",
+    otherToursTitle: "Other tours you will like"
   },
   footer: {
     companyName: "Peshehod Tour",

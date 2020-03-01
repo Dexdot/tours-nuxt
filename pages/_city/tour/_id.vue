@@ -150,6 +150,7 @@
     </main>
 
     <ReviewsSlider v-if="tourData.reviews" :reviews="tourData.reviews" />
+    <ToursSlider v-if="otherTours.length > 0" :tours="otherTours" />
   </div>
 </template>
 
@@ -161,6 +162,7 @@ import GallerySection from '~/components/GallerySection'
 import GalleryModal from '~/components/GalleryModal'
 import SightsModal from '~/components/SightsModal'
 import ReviewsSlider from '~/components/ReviewsSlider'
+import ToursSlider from '~/components/ToursSlider'
 
 import Tip from '~/ui/Tip'
 import TipButton from '~/ui/TipButton'
@@ -176,6 +178,7 @@ export default {
     GalleryModal,
     SightsModal,
     ReviewsSlider,
+    ToursSlider,
     Tip,
     TipButton,
     FormOrder
@@ -262,14 +265,36 @@ export default {
       error({ statusCode: 404 })
     }
 
+    if (store.getters['tours/allTours'].length <= 1)
+      await store.dispatch('tours/loadAllTours')
+
     return { tour }
   },
   computed: {
+    ...mapGetters({
+      allTours: 'tours/allTours',
+      locale: 'lang/locale'
+    }),
     coords() {
       return [this.tourData.location.lat, this.tourData.location.lon]
     },
     tourData() {
       return this.tour.fields
+    },
+    otherTours() {
+      const { locale, $route } = this
+      const { city, id } = $route.params
+
+      const filteredTours = this.allTours.filter(tour => {
+        const localeTour = tour[locale]
+        if (!localeTour || localeTour.fields.slug === id) {
+          return false
+        }
+
+        return !!localeTour ? localeTour.fields.city === city : false
+      })
+
+      return filteredTours.map(tour => tour[locale])
     }
   },
   methods: {

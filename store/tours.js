@@ -10,12 +10,6 @@ export const getters = {
   },
   allTours({ tours }) {
     return Object.values(tours);
-  },
-  toursInSpb({ tours }, { allTours }) {
-    return allTours.filter(({ fields }) => fields.city === "spb");
-  },
-  toursInTallin({ tours }) {
-    return allTours.filter(({ fields }) => fields.city === "tallin");
   }
 };
 
