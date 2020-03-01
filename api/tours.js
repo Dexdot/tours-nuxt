@@ -1,6 +1,6 @@
 import client from "~/api/client";
 
-// Articles
+// Tours
 export const fetchTours = options =>
   new Promise(resolve => {
     client

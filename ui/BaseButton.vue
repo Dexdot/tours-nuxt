@@ -68,8 +68,7 @@
 export default {
   props: {
     to: {
-      type: Boolean,
-      default: false
+      type: String
     },
     isLink: {
       type: Boolean,

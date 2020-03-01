@@ -44,6 +44,9 @@ const lang = {
     title: "Ближайшая экскурсия",
     subtitle: "Сразу платить не нужно",
     button: "Записаться"
+  },
+  reviews: {
+    sectionButton: "Все отзывы"
   }
 };
 

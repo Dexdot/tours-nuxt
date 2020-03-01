@@ -44,6 +44,9 @@ const lang = {
     title: "Nearest excursion",
     subtitle: "No need to pay right away",
     button: "Buy a ticket"
+  },
+  reviews: {
+    sectionButton: "All reviews"
   }
 };
 

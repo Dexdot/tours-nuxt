@@ -7,7 +7,12 @@
   >
     <div class="sights">
       <div class="sights__img img">
-        <BaseImage class="img__i" :img="img" :alt="img.fields.title" />
+        <BaseImage
+          class="img__i"
+          :key="counter"
+          :img="img"
+          :alt="img.fields.title"
+        />
         <div v-if="counter" class="sights__counter u-center">{{ counter }}</div>
       </div>
 
@@ -25,8 +30,8 @@
 </template>
 
 <script>
-import Modal from '~/components/Modal'
-import SliderNav from '~/components/SliderNav'
+import Modal from '~/ui/Modal'
+import SliderNav from '~/ui/SliderNav'
 
 export default {
   components: {

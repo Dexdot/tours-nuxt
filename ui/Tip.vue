@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TipButton from '~/components/TipButton'
+import TipButton from '~/ui/TipButton'
 
 export default {
   components: {

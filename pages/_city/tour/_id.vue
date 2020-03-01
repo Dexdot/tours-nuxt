@@ -148,6 +148,8 @@
         </no-ssr>
       </div>
     </main>
+
+    <ReviewsSlider v-if="tourData.reviews" :reviews="tourData.reviews" />
   </div>
 </template>
 
@@ -158,8 +160,10 @@ import { fetchTour } from '~/api/tours'
 import GallerySection from '~/components/GallerySection'
 import GalleryModal from '~/components/GalleryModal'
 import SightsModal from '~/components/SightsModal'
-import Tip from '~/components/Tip'
-import TipButton from '~/components/TipButton'
+import ReviewsSlider from '~/components/ReviewsSlider'
+
+import Tip from '~/ui/Tip'
+import TipButton from '~/ui/TipButton'
 import FormOrder from '~/components/FormOrder'
 
 import render from '~/mixins/render'
@@ -171,6 +175,7 @@ export default {
     GallerySection,
     GalleryModal,
     SightsModal,
+    ReviewsSlider,
     Tip,
     TipButton,
     FormOrder
@@ -219,9 +224,9 @@ export default {
       ]
     }
   },
-  // mounted() {
-  //   console.log('TOUR: ', this)
-  // },
+  mounted() {
+    console.log('TOUR: ', this)
+  },
   data: () => ({
     isGalleryModalVisible: false,
     isSightsModalVisible: false,

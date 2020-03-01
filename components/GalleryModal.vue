@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import Modal from '~/components/Modal'
-import SliderNav from '~/components/SliderNav'
+import Modal from '~/ui/Modal'
+import SliderNav from '~/ui/SliderNav'
 
 export default {
   components: {
