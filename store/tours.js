@@ -1,31 +1,61 @@
-import { fetchTours } from "~/api/tours";
+import { fetchTours, fetchTour } from "~/api/tours";
 
 export const state = () => ({
-  tours: []
+  tours: {}
 });
 
 export const getters = {
-  allTours({ tours }) {
+  tours({ tours }) {
     return tours;
   },
-  toursInSpb({ tours }) {
-    return tours.filter(({ fields }) => fields.city === "spb");
+  allTours({ tours }) {
+    return Object.values(tours);
+  },
+  toursInSpb({ tours }, { allTours }) {
+    return allTours.filter(({ fields }) => fields.city === "spb");
   },
   toursInTallin({ tours }) {
-    return tours.filter(({ fields }) => fields.city === "tallin");
+    return allTours.filter(({ fields }) => fields.city === "tallin");
   }
 };
 
 export const mutations = {
   setTours(state, tours) {
-    state.tours = [...tours];
+    state.tours = { ...tours };
+  },
+  setTour({ tours }, { tour, locale }) {
+    const tourInStore = tours[tour.fields.slug];
+
+    if (tourInStore) {
+      tours[tour.fields.slug][locale] = tour;
+    } else {
+      tours[tour.fields.slug] = {};
+      tours[tour.fields.slug][locale] = tour;
+    }
   }
 };
 
 export const actions = {
   async loadAllTours({ commit, rootGetters }) {
     const tours = await fetchTours({ locale: rootGetters["lang/localeCode"] });
-    commit("setTours", tours);
-    return tours;
+
+    const toursMap = {};
+    tours.forEach(tour => {
+      const locale = rootGetters["lang/locale"];
+      toursMap[tour.fields.slug] = {};
+      toursMap[tour.fields.slug][locale] = tour;
+    });
+
+    commit("setTours", toursMap);
+    return toursMap;
+  },
+  async loadTour({ commit, rootGetters }, slug) {
+    const tour = await fetchTour({
+      slug,
+      locale: rootGetters["lang/localeCode"]
+    });
+
+    commit("setTour", { tour, locale: rootGetters["lang/locale"] });
+    return tour;
   }
 };

@@ -15,7 +15,7 @@ dist
 
 # Env vars
 .env
-.env.build
+.env.*
 now.json
 
 # PHP

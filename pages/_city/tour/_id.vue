@@ -219,9 +219,9 @@ export default {
       ]
     }
   },
-  mounted() {
-    console.log('TOUR: ', this)
-  },
+  // mounted() {
+  //   console.log('TOUR: ', this)
+  // },
   data: () => ({
     isGalleryModalVisible: false,
     isSightsModalVisible: false,
@@ -229,26 +229,29 @@ export default {
   }),
   async asyncData({ store, params, error }) {
     // Tours
-    const allToursInStore = store.getters['tours/allTours']
+    const toursInStore = store.getters['tours/tours']
+
+    // Current locale
+    const locale = store.getters['lang/locale']
+
+    // Tour ID
+    const slug = params.id
+
+    let tour
 
     // Find tour in store
-    const slug = params.id
-    let tour = allToursInStore.find(({ fields }) => fields.slug === slug)
+    if (toursInStore[slug] && toursInStore[slug][locale]) {
+      tour = toursInStore[slug][locale]
+    }
 
     // Load tour from API
-    if (!tour) {
+    else {
       try {
-        tour = await fetchTour({
-          slug,
-          locale: store.getters['lang/localeCode']
-        })
+        tour = await store.dispatch('tours/loadTour', slug)
       } catch (e) {
         error({ statusCode: 404 })
       }
     }
-
-    // Load all tours if its empty
-    if (allToursInStore.length <= 0) await store.dispatch('tours/loadAllTours')
 
     if (params.city !== tour.fields.city) {
       error({ statusCode: 404 })
