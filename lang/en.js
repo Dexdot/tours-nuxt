@@ -64,6 +64,12 @@ const lang = {
     selectTypeTitle: "Type of tour",
     watchReviews: "Watch reviews",
     goTo: "Go to review"
+  },
+  faq: {
+    title: "FAQ",
+    subtitle: "Still have questions?",
+    call: "Call",
+    text: "or write to the mail"
   }
 };
 

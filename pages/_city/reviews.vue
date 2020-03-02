@@ -105,7 +105,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchReviews } from '~/api/reviews'
 
 import ToursSlider from '~/components/ToursSlider'
 import ReviewCard from '~/components/ReviewCard'

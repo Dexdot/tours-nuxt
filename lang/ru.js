@@ -64,6 +64,12 @@ const lang = {
     selectTypeTitle: "Тип экскурсии",
     watchReviews: "Смотреть отзывы",
     goTo: "Перейти к отзыву"
+  },
+  faq: {
+    title: "FAQ",
+    subtitle: "Остались вопросы?",
+    call: "Позвоните",
+    text: "или пишите на почту"
   }
 };
 
