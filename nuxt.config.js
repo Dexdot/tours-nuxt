@@ -174,12 +174,6 @@ module.exports = {
    ** Customize the progress bar color
    */
   loading: { color: "#FDC616" },
-  /**
-   * style-resources
-   */
-  styleResources: {
-    sass: ["./assets/sass/_utils.sass"]
-  },
   router: {
     middleware: "city"
   },
@@ -192,6 +186,12 @@ module.exports = {
     { src: "~/plugins/scrollbooster", mode: "client" },
     { src: "~/plugins/ymapPlugin.js", mode: "client" }
   ],
+  /**
+   * style-resources
+   */
+  styleResources: {
+    sass: ["./assets/sass/_utils.sass"]
+  },
   /**
    * Css / Sass / scss
    */
