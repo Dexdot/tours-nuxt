@@ -1,6 +1,10 @@
 <template>
   <section :class="className">
-    <button class="modal__overlay" type="button"></button>
+    <button
+      class="modal__overlay"
+      type="button"
+      @click="$emit('close-click')"
+    ></button>
     <div class="modal__container">
       <button
         class="modal__close u-center"

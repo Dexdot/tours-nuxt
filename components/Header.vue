@@ -75,7 +75,9 @@
           <SocialList :socialLinks="general.socialLinks" />
         </div>
 
-        <BaseButton classPulse>{{ $t('orderTicket') }}</BaseButton>
+        <BaseButton classPulse @click="$store.dispatch('dom/showBukza')">{{
+          $t('orderTicket')
+        }}</BaseButton>
 
         <ButtonBurger
           :active="isMenuActive"

@@ -1,12 +1,16 @@
 export const state = () => ({
   scrollTop: 0,
   scrollDisabled: false,
-  isMenuActive: false
+  isMenuActive: false,
+  isBukzaActive: false
 });
 
 export const getters = {
   isMenuActive({ isMenuActive }) {
     return isMenuActive;
+  },
+  isBukzaActive({ isBukzaActive }) {
+    return isBukzaActive;
   },
   scrollDisabled({ scrollDisabled }) {
     return scrollDisabled;
@@ -37,6 +41,9 @@ export const mutations = {
   },
   toggleMenu(state) {
     state.isMenuActive = !state.isMenuActive;
+  },
+  setBukzaActive(state, isActive) {
+    state.isBukzaActive = isActive;
   }
 };
 
@@ -49,6 +56,12 @@ export const actions = {
     } else {
       commit("enableScroll");
     }
+  },
+  showBukza({ commit }) {
+    commit("setBukzaActive", true);
+  },
+  hideBukza({ commit }) {
+    commit("setBukzaActive", false);
   },
   disableScroll({ commit }) {
     commit("disableScroll");

@@ -8,7 +8,7 @@
 
             <div class="reviews-controls reviews-controls--desktop">
               <div class="reviews-control">
-                <p class="t-ttu">{{ $t('tourTypesTypeTitle') }}</p>
+                <p class="t-ttu">{{ $t('reviews.selectTypeTitle') }}</p>
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
@@ -23,11 +23,13 @@
 
               <div class="reviews-control" v-if="filteredTours.length > 0">
                 <p class="t-ttu">
-                  {{ $t('tourTypesTourNotChosenTitle') }}
+                  {{ $t('reviews.selectTourNotChosenTitle') }}
                 </p>
                 <div class="select-text">
                   <select v-model="selectedTour">
-                    <option value="">{{ $t('tourTypesTourNotChosen') }}</option>
+                    <option value="">{{
+                      $t('reviews.selectTourNotChosenTitle')
+                    }}</option>
                     <option
                       v-for="tour in filteredTours"
                       :key="tour.sys.id"
