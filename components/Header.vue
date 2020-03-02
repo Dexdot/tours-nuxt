@@ -20,7 +20,7 @@
             <svg-icon name="logo" />
           </nuxt-link>
 
-          <div class="select-text" v-if="!$route.fullPath.includes('/tour')">
+          <div class="select-text" v-if="!$route.name.includes('tour-')">
             <svg-icon name="chevron" />
 
             <select v-model="city">

@@ -5,8 +5,6 @@
   "author": "dexdot",
   "private": true,
   "scripts": {
-    "deb": "nuxt build && now remove peshehod && now",
-    "deploy": "now remove peshehod && now",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",

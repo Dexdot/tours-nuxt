@@ -1,6 +1,8 @@
 <template>
   <div>
-    <section style="height: 50vh"></section>
+    <section style="height: 50vh">
+      <h1>Main</h1>
+    </section>
   </div>
 </template>
 
@@ -15,13 +17,8 @@ export default {
       title: 'Главная'
     }
   },
-  async asyncData({ store }) {
-    // if (!store.getters['main/isLoaded']) await store.dispatch('main/load')
-  },
   computed: {
-    ...mapGetters({
-      // content: 'main/content'
-    })
+    ...mapGetters({})
   }
 }
 </script>

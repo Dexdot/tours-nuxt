@@ -8,14 +8,14 @@
 
             <div class="reviews-controls reviews-controls--desktop">
               <div class="reviews-control">
-                <p class="t-ttu">{{ $t('reviews.selectTypeTitle') }}</p>
+                <p class="t-ttu">{{ $t('tourTypesTypeTitle') }}</p>
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
-                      v-for="key in Object.keys($t('reviews.select'))"
+                      v-for="key in Object.keys($t('tourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t('reviews.select')[key] }}</option
+                      >{{ $t('tourTypes')[key] }}</option
                     >
                   </select>
                 </div>
@@ -23,13 +23,11 @@
 
               <div class="reviews-control" v-if="filteredTours.length > 0">
                 <p class="t-ttu">
-                  {{ $t('reviews.selectTourNotChosenTitle') }}
+                  {{ $t('tourTypesTourNotChosenTitle') }}
                 </p>
                 <div class="select-text">
                   <select v-model="selectedTour">
-                    <option value="">{{
-                      $t('reviews.selectTourNotChosen')
-                    }}</option>
+                    <option value="">{{ $t('tourTypesTourNotChosen') }}</option>
                     <option
                       v-for="tour in filteredTours"
                       :key="tour.sys.id"
@@ -46,10 +44,10 @@
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
-                      v-for="key in Object.keys($t('reviews.select'))"
+                      v-for="key in Object.keys($t('tourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t('reviews.select')[key] }}</option
+                      >{{ $t('tourTypes')[key] }}</option
                     >
                   </select>
                 </div>
@@ -169,7 +167,7 @@ export default {
       ]
     }
   },
-  async asyncData({ store, params, error }) {
+  async asyncData({ store }) {
     // Tours
     if (store.getters['tours/allTours'].length <= 1)
       await store.dispatch('tours/loadAllTours')
@@ -180,9 +178,6 @@ export default {
       await store.dispatch('reviews/loadAllReviews')
 
     return {}
-  },
-  mounted() {
-    console.log('REVIEWS: ', this)
   },
   data: () => ({
     isReviewRatesModalVisible: false,
@@ -293,8 +288,6 @@ export default {
   },
   methods: {
     showReviewRatesModal() {
-      console.log('showReviewRatesModal')
-
       this.isReviewRatesModalVisible = true
     },
     hideReviewRatesModal() {

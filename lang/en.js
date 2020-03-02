@@ -28,12 +28,20 @@ const lang = {
       text: "Contacts"
     }
   ],
+  tours: {
+    title: "Excursions"
+  },
   tour: {
     routeTitle: "What will we see",
     roadmapTip: "Hover over the title to see the photo.",
     venueTitle: "Venue",
     priceFrom: "from",
     otherToursTitle: "Other tours you will like"
+  },
+  tourTypes: {
+    all: "All",
+    group: "Group",
+    individual: "Individual"
   },
   footer: {
     companyName: "Peshehod Tour",
@@ -54,11 +62,6 @@ const lang = {
     selectTourNotChosenTitle: "Excursion",
     selectTourNotChosen: "Not chosen",
     selectTypeTitle: "Type of tour",
-    select: {
-      all: "All",
-      group: "Group",
-      individual: "Individual"
-    },
     watchReviews: "Watch reviews",
     goTo: "Go to review"
   }

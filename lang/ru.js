@@ -28,12 +28,20 @@ const lang = {
       text: "Контакты"
     }
   ],
+  tours: {
+    title: "Экскурсии"
+  },
   tour: {
     routeTitle: "Что увидим",
     roadmapTip: "Наведите курсор на заголовок, чтобы увидеть фото",
     venueTitle: "Место встречи",
     priceFrom: "от",
     otherToursTitle: "Другие экскурсии, которые вам понравятся"
+  },
+  tourTypes: {
+    all: "Все",
+    group: "Групповые",
+    individual: "Индивидуальные"
   },
   footer: {
     companyName: "Пешеход Тур",
@@ -54,11 +62,6 @@ const lang = {
     selectTourNotChosenTitle: "Экскурсия",
     selectTourNotChosen: "Не выбрано",
     selectTypeTitle: "Тип экскурсии",
-    select: {
-      all: "Все",
-      group: "Групповые",
-      individual: "Индивидуальные"
-    },
     watchReviews: "Смотреть отзывы",
     goTo: "Перейти к отзыву"
   }

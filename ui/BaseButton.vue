@@ -23,6 +23,7 @@
 
   <!-- External Link -->
   <a
+    target="_blank"
     :href="to"
     v-else-if="isExternalLink"
     :class="[
