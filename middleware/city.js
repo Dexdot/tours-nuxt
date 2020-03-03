@@ -1,20 +1,24 @@
-export default function({ app, isHMR, store, params, error, route, redirect }) {
+const defaultCity = "spb";
+
+export default ({ app, isHMR, store, params, error, route, redirect }) => {
+  // HMR
   if (isHMR) {
     return;
   }
 
+  // RU
   if (route.fullPath.startsWith("/ru"))
     return redirect(route.fullPath.replace("/ru", ""));
 
-  const defaultCity = "spb";
   const city = params.city || defaultCity;
   app.store.dispatch("lang/setCity", city);
 
+  // Set locale "ru" if city "spb"
   if (city === "spb" && app.i18n.locale !== "ru") {
     app.i18n.setLocale("ru");
   }
 
-  if (!params.city) {
+  if (!params.city && route.matched.length > 0) {
     app.store.dispatch("i18n/setRouteParams", {
       ru: { city },
       en: { city }
@@ -27,4 +31,4 @@ export default function({ app, isHMR, store, params, error, route, redirect }) {
 
     return redirect(newPath);
   }
-}
+};
