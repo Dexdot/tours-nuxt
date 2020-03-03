@@ -132,4 +132,7 @@ $acc-btn-p: 32px
   @media (max-width: $tab)
     padding-bottom: 24px
     font-size: 14px
+
+  > div
+    margin-bottom: 16px
 </style>

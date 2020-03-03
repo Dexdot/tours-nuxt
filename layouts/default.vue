@@ -71,6 +71,8 @@ export default {
   watch: {
     $route(to, from) {
       this.dir = { to, from }
+
+      if (this.isMenuActive) this.$store.dispatch('dom/toggleMenu')
     }
   }
 }

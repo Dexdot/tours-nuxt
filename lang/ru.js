@@ -65,6 +65,10 @@ const lang = {
     watchReviews: "Смотреть отзывы",
     goTo: "Перейти к отзыву"
   },
+  main: {
+    toursTitle: "Популярные экскурсии",
+    faqTitle: "FAQ"
+  },
   faq: {
     title: "FAQ",
     subtitle: "Остались вопросы?",

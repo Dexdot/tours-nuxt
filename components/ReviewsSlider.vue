@@ -28,12 +28,13 @@
             </li>
           </ul>
 
-          <div
-            class="reviews-slide__text"
-            v-for="(item, i) in review.fields.reviewText.content"
-            :key="i + item.nodeType"
-          >
-            <p v-if="isText(item)" v-html="render(item)"></p>
+          <div class="reviews-slide__text">
+            <div
+              v-for="(item, i) in review.fields.reviewText.content"
+              :key="i + item.nodeType"
+            >
+              <p v-if="isText(item)" v-html="render(item)"></p>
+            </div>
           </div>
 
           <b class="reviews-slide__name" v-if="review.fields.clientName">
@@ -196,6 +197,10 @@ export default {
 
   p
     margin-bottom: 24px
+    display: -webkit-box
+    -webkit-line-clamp: 8
+    overflow: hidden
+    -webkit-box-orient: vertical
 
 .reviews-slide__name
   +mont(sb)

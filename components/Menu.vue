@@ -26,7 +26,9 @@
             </button>
           </div>
 
-          <BaseButton>{{ $t('chooseTour') }}</BaseButton>
+          <BaseButton @click="$store.dispatch('dom/showBukza')">{{
+            $t('chooseTour')
+          }}</BaseButton>
         </div>
       </div>
     </section>
