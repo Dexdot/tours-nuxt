@@ -74,6 +74,16 @@ const lang = {
     subtitle: "Остались вопросы?",
     call: "Позвоните",
     text: "или пишите на почту"
+  },
+  form: {
+    name: "Имя",
+    nameError: "введите имя",
+    email: "Email",
+    emailError: "неправильный формат",
+    message: "Привет, Пешеход Тур!",
+    messageError: "минимум 10 символов",
+    button: "Отправить",
+    buttonError: "Есть ошибки"
   }
 };
 

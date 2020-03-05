@@ -74,6 +74,16 @@ const lang = {
     subtitle: "Still have questions?",
     call: "Call",
     text: "or write to the mail"
+  },
+  form: {
+    name: "Name",
+    nameError: "enter a name",
+    email: "Email",
+    emailError: "invalid format",
+    message: "Hello, Peshehod Tour!",
+    messageError: "minimum 10 characters",
+    button: "Submit",
+    buttonError: "Errors"
   }
 };
 

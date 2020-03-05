@@ -1,26 +1,32 @@
 <template>
-  <label :class="['input', { 'input--invalid': !isValid }]">
-    <template v-if="textarea">
+  <label
+    :class="['input', { 'input--invalid': !isValid }]"
+    :data-error-text="errorText"
+  >
+    <template v-if="isTextarea">
       <textarea
-        @input="resizeTextarea"
-        @blur="checkValid"
-        ref="textarea"
         class="input__field"
+        ref="textarea"
         v-bind="$attrs"
+        @input="
+          resizeTextarea()
+          onChange()
+        "
+        @blur="onChange"
       ></textarea>
-
-      <span class="input__line"></span>
     </template>
 
-    <template v-else-if="upload">
-      <input class="input__field" type="file" @change="onFileUpload" />
+    <template v-else-if="isFile">
       <input
         class="input__field"
+        type="file"
         v-bind="$attrs"
         :placeholder="fileName || $attrs.placeholder"
-        readonly
+        @change="
+          onFileUpload()
+          onChange()
+        "
       />
-      <span class="input__line"></span>
     </template>
 
     <template v-else>
@@ -28,20 +34,26 @@
         v-if="usePhoneMask"
         v-mask="'+9(999)999-99-99'"
         class="input__field"
-        @input="updateValue($event.target.value)"
-        @blur="checkValid"
-        v-bind="$attrs"
         ref="input"
+        v-bind="$attrs"
+        @input="
+          updateValue($event.target.value)
+          onChange()
+        "
+        @blur="onChange"
       />
+
       <input
         v-else
         class="input__field"
-        @input="updateValue($event.target.value)"
-        @blur="checkValid"
-        v-bind="$attrs"
         ref="input"
+        v-bind="$attrs"
+        @input="
+          updateValue($event.target.value)
+          onChange()
+        "
+        @blur="onChange"
       />
-      <span class="input__line"></span>
     </template>
   </label>
 </template>
@@ -52,11 +64,15 @@ export default {
     value: {
       type: String
     },
-    upload: {
+    errorText: {
+      type: String,
+      default: ''
+    },
+    isFile: {
       type: Boolean,
       default: false
     },
-    textarea: {
+    isTextarea: {
       type: Boolean,
       default: false
     },
@@ -75,8 +91,29 @@ export default {
     })
   },
   methods: {
+    updateValue(value) {
+      this.$emit('input', value)
+    },
+    onFileUpload(e) {
+      this.fileName = e.target.files[0].name
+    },
+    onChange() {
+      if (this.getValidState() && !this.isValid) this.setValidState()
+    },
+    getValidState() {
+      const input = this.isTextarea ? this.$refs.textarea : this.$refs.input
+
+      return this.usePhoneMask
+        ? input.value.replace(/[^0-9]/g, '').length >= 11
+        : input.validity.valid
+    },
+    setValidState() {
+      this.$nextTick(() => {
+        this.isValid = this.getValidState()
+      })
+    },
     handleTextarea() {
-      if (this.textarea) {
+      if (this.isTextarea) {
         this.$nextTick(() => {
           const { scrollHeight } = this.$refs.textarea
           const h = scrollHeight === 0 ? 'auto' : `${scrollHeight}px`
@@ -93,21 +130,6 @@ export default {
 
       textarea.style.height = 'auto'
       textarea.style.height = textarea.scrollHeight + 'px'
-    },
-    updateValue(value) {
-      this.$emit('input', value)
-    },
-    onFileUpload(e) {
-      this.fileName = e.target.files[0].name
-    },
-    checkValid() {
-      this.$nextTick(() => {
-        const input = this.textarea ? this.$refs.textarea : this.$refs.input
-
-        this.isValid = this.usePhoneMask
-          ? input.value.replace(/[^0-9]/g, '').length >= 11
-          : input.validity.valid
-      })
     }
   }
 }
@@ -119,58 +141,37 @@ export default {
   width: 100%
   position: relative
 
-.input__line
+  +mont(m)
+  font-size: 16px
+  letter-spacing: -0.02em
+
+.input::after
+  content: attr(data-error-text)
   position: absolute
-  bottom: 0
-  left: 0
+  top: 0
+  right: 0
 
-  width: 100%
-  height: 1px
-
-  background: #efefef
-
-  &::before
-    content: ''
-    position: absolute
-    bottom: 0
-    left: 0
-
-    width: 100%
-    height: 1px
-
-    background: $black
-    transition: 0.3s $cubic-in-out
-    transform: scaleX(0)
-    transform-origin: 100% 50%
-
-.input__field:focus ~ .input__line::before
-    transform: scaleX(1)
+  color: $acc
+  font-size: 14px
+  transition: opacity $trs
+  opacity: 0
 
 .input__field
   width: 100%
   padding-bottom: 16px
+  border-bottom: 1px solid rgba($black, 0.1)
   
   &, &::placeholder
     color: $black
     transition: color $trs
 
-  &[type="file"]
-    z-index: 1
-    position: absolute
-    top: 0
-    left: 0
-    height: 100%
-    opacity: 0
-
-.input__field[type="file"] + .input__field
-  &, &::placeholder
-    color: rgba($black, 0.4)
+textarea.input__field::placeholder
+  color: rgba($black, 0.3)
 
 .input--invalid
   .input__field
-    &, &::placeholder
-      color: $red
-  .input__line
-    &, &::before
-      background: $red
+    border-bottom: 1px solid rgba($red, 0.1)
+
+  &::after
+    opacity: 1
 </style>

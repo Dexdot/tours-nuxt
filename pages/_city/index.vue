@@ -2,18 +2,20 @@
   <div>
     <section class="hero">
       <div class="hero__bg img">
-        <BaseImage
-          class="img__i"
-          v-for="(img, i) in main.heroImages"
-          :key="img.sys.id"
-          :img="img"
-          :alt="img.fields.title"
-          :style="{
-            animation: `kenburns ${main.heroImages.length *
-              6}s ease-in-out infinite`,
-            'animation-delay': `${i * 6}s`
-          }"
-        />
+        <template v-if="main.heroImages">
+          <BaseImage
+            class="img__i"
+            v-for="(img, i) in main.heroImages"
+            :key="img.sys.id"
+            :img="img"
+            :alt="img.fields.title"
+            :style="{
+              animation: `kenburns ${main.heroImages.length *
+                6}s ease-in-out infinite`,
+              'animation-delay': `${i * 6}s`
+            }"
+          />
+        </template>
       </div>
 
       <div class="hero__text">
@@ -41,7 +43,7 @@
       :text="main.popularText"
     />
 
-    <HowSection :text="main.runningTitle" />
+    <HowSection v-if="main.runningTitle" :text="main.runningTitle" />
 
     <section class="features-section">
       <div class="container">
@@ -82,6 +84,7 @@
       <div class="container">
         <div class="about-section__first-img">
           <BaseImage
+            v-if="main.aboutImages[0]"
             :img="main.aboutImages[0]"
             :alt="main.aboutImages[0].fields.title"
           />
@@ -89,16 +92,21 @@
 
         <div class="about-section__info">
           <div class="about-section__text">
-            <div
-              v-for="(item, i) in main.aboutText.content"
-              :key="i + item.nodeType"
-            >
-              <p v-if="isText(item)" v-html="render(item)"></p>
-            </div>
+            <template v-if="main.aboutText.content">
+              <div
+                v-for="(item, i) in main.aboutText.content"
+                :key="i + item.nodeType"
+              >
+                <p v-if="isText(item)" v-html="render(item)"></p>
+              </div>
+            </template>
             <BaseButton>{{ $t('chooseTour') }}</BaseButton>
           </div>
 
-          <div class="about-section__text-img">
+          <div
+            class="about-section__text-img"
+            v-if="main.aboutImages.length >= 3"
+          >
             <BaseImage
               :img="main.aboutImages[1]"
               :alt="main.aboutImages[1].fields.title"
@@ -110,7 +118,10 @@
           </div>
         </div>
 
-        <div class="about-section__last-img">
+        <div
+          class="about-section__last-img"
+          v-if="main.aboutImages.length >= 5"
+        >
           <div>
             <BaseImage
               :img="main.aboutImages[3]"
@@ -122,6 +133,7 @@
             />
           </div>
           <BaseImage
+            v-if="main.aboutImages[5]"
             :img="main.aboutImages[5]"
             :alt="main.aboutImages[5].fields.title"
           />
@@ -129,16 +141,16 @@
       </div>
     </section>
 
-    <section class="faq-section">
+    <section class="faq-section" v-if="general.faq">
       <div class="container">
         <h2 class="t-h3 faq-section__title">{{ $t('main.faqTitle') }}</h2>
         <div class="faq-section__content">
-          <FaqList v-if="general.faq" :content="general.faq.content" />
+          <FaqList :content="general.faq.content" />
         </div>
       </div>
     </section>
 
-    <Instagram :data="instagramData" />
+    <Instagram v-if="instagramData" :data="instagramData" />
   </div>
 </template>
 

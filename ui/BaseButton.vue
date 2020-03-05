@@ -5,6 +5,8 @@
     :class="[
       'btn',
       {
+        'btn--success': showSuccess && !showError,
+        'btn--error': showError && !showSuccess,
         'btn--expand': classExpand,
         'btn--scale': classScale,
         'btn--pulse': classPulse,
@@ -16,7 +18,13 @@
     v-bind="$attrs"
   >
     <span class="btn__bg"></span>
-    <span class="btn__text"><slot></slot></span>
+    <span
+      :class="['btn__text', { 'btn__text--icon': showSuccess || showError }]"
+    >
+      <svg-icon v-if="showSuccess" class="btn__icon" name="daw"></svg-icon>
+      <svg-icon v-if="showError" class="btn__icon" name="close-sm"></svg-icon>
+      <slot></slot
+    ></span>
 
     <svg-icon v-if="classExpand" class="btn__plus" name="plus"></svg-icon>
   </button>
@@ -29,6 +37,8 @@
     :class="[
       'btn',
       {
+        'btn--success': showSuccess && !showError,
+        'btn--error': showError && !showSuccess,
         'btn--expand': classExpand,
         'btn--scale': classScale,
         'btn--pulse': classPulse,
@@ -38,7 +48,13 @@
     ]"
   >
     <span class="btn__bg"></span>
-    <span class="btn__text"><slot></slot></span>
+    <span
+      :class="['btn__text', { 'btn__text--icon': showSuccess || showError }]"
+    >
+      <svg-icon v-if="showSuccess" class="btn__icon" name="daw"></svg-icon>
+      <svg-icon v-if="showError" class="btn__icon" name="close-sm"></svg-icon>
+      <slot></slot
+    ></span>
 
     <svg-icon v-if="classExpand" class="btn__plus" name="plus"></svg-icon>
   </a>
@@ -50,6 +66,8 @@
     :class="[
       'btn',
       {
+        'btn--success': showSuccess && !showError,
+        'btn--error': showError && !showSuccess,
         'btn--expand': classExpand,
         'btn--scale': classScale,
         'btn--pulse': classPulse,
@@ -59,7 +77,13 @@
     ]"
   >
     <span class="btn__bg"></span>
-    <span class="btn__text"><slot></slot></span>
+    <span
+      :class="['btn__text', { 'btn__text--icon': showSuccess || showError }]"
+    >
+      <svg-icon v-if="showSuccess" class="btn__icon" name="daw"></svg-icon>
+      <svg-icon v-if="showError" class="btn__icon" name="close-sm"></svg-icon>
+      <slot></slot
+    ></span>
 
     <svg-icon v-if="classExpand" class="btn__plus" name="plus"></svg-icon>
   </nuxt-link>
@@ -72,6 +96,14 @@ export default {
       type: String
     },
     isLink: {
+      type: Boolean,
+      default: false
+    },
+    showSuccess: {
+      type: Boolean,
+      default: false
+    },
+    showError: {
       type: Boolean,
       default: false
     },
@@ -150,6 +182,13 @@ a.btn
   letter-spacing: 0.04em
   text-transform: uppercase
   +link(#fff)
+
+.btn__text--icon
+  display: inline-flex
+  align-items: center
+
+  svg
+    margin-right: 8px
 
 .btn svg
   color: #fff
