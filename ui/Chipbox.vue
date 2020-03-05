@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="['chipbox', { active }]"
+    :class="['chipbox', { 'chipbox--white': white, active }]"
     type="button"
     @click="$emit('click')"
   >
@@ -12,6 +12,10 @@
 export default {
   props: {
     active: {
+      type: Boolean,
+      default: false
+    },
+    white: {
       type: Boolean,
       default: false
     }

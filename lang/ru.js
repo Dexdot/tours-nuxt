@@ -66,7 +66,7 @@ const lang = {
     goTo: "Перейти к отзыву"
   },
   main: {
-    toursTitle: "Популярные экскурсии",
+    toursButton: "Смотреть все",
     faqTitle: "FAQ"
   },
   faq: {

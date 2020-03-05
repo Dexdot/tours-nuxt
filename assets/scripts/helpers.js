@@ -1,4 +1,4 @@
-import client from '~/api/client';
+import client from "~/api/client";
 
 export const findYearInString = s =>
   s.split(/[^\d]/).filter(n => {
@@ -15,13 +15,13 @@ export const setCaseYear = project => {
 };
 
 export const isImage = ({ fields }) =>
-  fields.file.contentType.split('/')[0] === 'image';
+  fields.file.contentType.split("/")[0] === "image";
 
 export const isJPG = img =>
-  isImage(img) && img.fields.file.contentType.split('/')[1] === 'jpeg';
+  isImage(img) && img.fields.file.contentType.split("/")[1] === "jpeg";
 
 export const isVideo = ({ fields }) =>
-  fields.file.contentType.split('/')[0] === 'video';
+  fields.file.contentType.split("/")[0] === "video";
 
 export const getRandomFromRange = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -49,9 +49,9 @@ const getSupports = () => {
   const webp =
     (ffMatch && ffv >= 65) ||
     document
-      .createElement('canvas')
-      .toDataURL('image/webp')
-      .indexOf('data:image/webp') == 0;
+      .createElement("canvas")
+      .toDataURL("image/webp")
+      .indexOf("data:image/webp") == 0;
 
   return {
     isMob: window.innerWidth <= 500,
@@ -62,8 +62,8 @@ const getSupports = () => {
 const encodeParams = data => {
   const ret = [];
   for (let d in data)
-    ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-  return ret.join('&');
+    ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+  return ret.join("&");
 };
 
 export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
@@ -72,15 +72,15 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
 
   const fmfl = isJPG(img)
     ? {
-        fm: supports.webp ? 'webp' : 'jpg',
-        fl: supports.webp ? '' : 'progressive'
+        fm: supports.webp ? "webp" : "jpg",
+        fl: supports.webp ? "" : "progressive"
       }
     : {};
 
   const params = {
     ...fmfl,
-    w: supports.isMob ? (useOriginalSizeOnMob ? '' : '1125') : '',
-    fit: supports.isMob ? 'fill' : ''
+    w: supports.isMob ? (useOriginalSizeOnMob ? "" : "1125") : "",
+    fit: supports.isMob ? "fill" : ""
   };
 
   return `${url}?${encodeParams(params)}`;
@@ -90,8 +90,8 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
 const loadContentItem = item =>
   new Promise(resolve => {
     const isAssetLink =
-      item.nodeType === 'embedded-entry-block' &&
-      item.data.target.sys.type === 'Link';
+      item.nodeType === "embedded-entry-block" &&
+      item.data.target.sys.type === "Link";
 
     if (!isAssetLink) {
       resolve(item);
@@ -129,3 +129,5 @@ export const loadCasesAssets = cases =>
     const processedCases = await Promise.all(casesPromises);
     resolve(processedCases);
   });
+
+export const copyObject = obj => JSON.parse(JSON.stringify(obj));

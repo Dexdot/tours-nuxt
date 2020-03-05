@@ -1,11 +1,133 @@
 <template>
   <div>
-    <ToursSlider
-      :title="$t('main.toursTitle')"
+    <section class="hero">
+      <div class="hero__bg img">
+        <BaseImage
+          class="img__i"
+          v-for="(img, i) in main.heroImages"
+          :key="img.sys.id"
+          :img="img"
+          :alt="img.fields.title"
+          :style="{
+            animation: `kenburns ${main.heroImages.length *
+              6}s ease-in-out infinite`,
+            'animation-delay': `${i * 6}s`
+          }"
+        />
+      </div>
+
+      <div class="hero__text">
+        <div class="container">
+          <div class="hero__chipbox-list">
+            <Chipbox
+              white
+              :active="key === city"
+              v-for="key in Object.keys($t('cities'))"
+              :key="key"
+              @click="onChipboxClick(key)"
+              >{{ $t('cities')[key] }}
+            </Chipbox>
+          </div>
+          <h1 v-if="main.heroTitle" class="t-h1">{{ main.heroTitle }}</h1>
+          <p v-if="main.heroText">{{ main.heroText }}</p>
+        </div>
+      </div>
+    </section>
+
+    <ToursPopular
       v-if="tours.length > 0"
       :tours="tours"
+      :title="main.popularTitle"
+      :text="main.popularText"
     />
+
+    <HowSection :text="main.runningTitle" />
+
+    <section class="features-section">
+      <div class="container">
+        <div class="features-section__inner">
+          <div class="feature-section__img">
+            <div class="feature-section__cover"></div>
+            <div class="feature-img" v-if="main.featuresCover">
+              <BaseImage
+                :img="main.featuresCover"
+                :alt="main.featuresCover.fields.title"
+              />
+            </div>
+          </div>
+
+          <ul
+            class="features-list"
+            v-if="main.featuresIcons && main.featuresIcons.length > 0"
+          >
+            <li v-for="img in main.featuresIcons" :key="img.sys.id">
+              <div class="feature">
+                <div class="feature__icon u-center">
+                  <img :src="img.fields.file.url" :alt="img.fields.title" />
+                </div>
+                <div class="feature__info">
+                  <h3 class="t-h5 feature__title">{{ img.fields.title }}</h3>
+                  <p>{{ img.fields.description }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <ReviewsSlider v-if="reviews && reviews.length > 0" :reviews="reviews" />
+
+    <section class="about-section">
+      <div class="container">
+        <div class="about-section__first-img">
+          <BaseImage
+            :img="main.aboutImages[0]"
+            :alt="main.aboutImages[0].fields.title"
+          />
+        </div>
+
+        <div class="about-section__info">
+          <div class="about-section__text">
+            <div
+              v-for="(item, i) in main.aboutText.content"
+              :key="i + item.nodeType"
+            >
+              <p v-if="isText(item)" v-html="render(item)"></p>
+            </div>
+            <BaseButton>{{ $t('chooseTour') }}</BaseButton>
+          </div>
+
+          <div class="about-section__text-img">
+            <BaseImage
+              :img="main.aboutImages[1]"
+              :alt="main.aboutImages[1].fields.title"
+            />
+            <BaseImage
+              :img="main.aboutImages[2]"
+              :alt="main.aboutImages[2].fields.title"
+            />
+          </div>
+        </div>
+
+        <div class="about-section__last-img">
+          <div>
+            <BaseImage
+              :img="main.aboutImages[3]"
+              :alt="main.aboutImages[3].fields.title"
+            />
+            <BaseImage
+              :img="main.aboutImages[4]"
+              :alt="main.aboutImages[4].fields.title"
+            />
+          </div>
+          <BaseImage
+            :img="main.aboutImages[5]"
+            :alt="main.aboutImages[5].fields.title"
+          />
+        </div>
+      </div>
+    </section>
 
     <section class="faq-section">
       <div class="container">
@@ -23,19 +145,22 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ToursSlider from '~/components/ToursSlider'
+import ToursPopular from '~/components/ToursPopular'
+import HowSection from '~/components/HowSection'
 import ReviewsSlider from '~/components/ReviewsSlider'
 import FaqList from '~/components/FaqList'
 import Instagram from '~/components/Instagram'
 import Chipbox from '~/ui/Chipbox'
 
 import page from '~/mixins/page'
+import render from '~/mixins/render'
 import city from '~/mixins/city'
 
 export default {
-  mixins: [page, city],
+  mixins: [page, render, city],
   components: {
-    ToursSlider,
+    ToursPopular,
+    HowSection,
     ReviewsSlider,
     FaqList,
     Instagram,
@@ -85,13 +210,16 @@ export default {
       ]
     }
   },
-  async asyncData({ store }) {
+  async asyncData({ store, route }) {
+    await store.dispatch('main/load', route.params.city)
+
     if (store.getters['tours/allTours'].length <= 1)
       await store.dispatch('tours/loadAllTours')
   },
   computed: {
     ...mapGetters({
       allTours: 'tours/allTours',
+      main: 'main/data',
       general: 'general/data',
       locale: 'lang/locale'
     }),

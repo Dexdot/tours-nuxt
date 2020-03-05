@@ -1,5 +1,5 @@
 import { copyObject } from "~/assets/scripts/helpers";
-import { fetchGeneral } from "~/api/other";
+import { fetchMain } from "~/api/other";
 
 export const state = () => ({
   data: {},
@@ -41,7 +41,7 @@ export const actions = {
     // Get data from cache or API
     const data =
       getters.cached[city][currentLocale] ||
-      (await fetchGeneral({
+      (await fetchMain({
         locale,
         city
       }));

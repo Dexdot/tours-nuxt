@@ -45,7 +45,6 @@ export default {
     content: ''
     position: absolute
     top: -1px
-    left: 0
     
     height: calc(100% + 1px)
     width: 100vw
