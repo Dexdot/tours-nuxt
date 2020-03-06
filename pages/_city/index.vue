@@ -264,7 +264,6 @@ export default {
     instagramData() {
       const { general } = this
 
-      // const {instagramImages} = general
       const instagramImages = [...general.instagramImages].reverse()
       const images = []
 

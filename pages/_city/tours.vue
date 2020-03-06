@@ -71,7 +71,7 @@
     </section>
 
     <ReviewsSlider v-if="reviews && reviews.length > 0" :reviews="reviews" />
-    <Instagram :data="instagramData" />
+    <Instagram v-if="instagramData" :data="instagramData" />
   </div>
 </template>
 
@@ -196,7 +196,6 @@ export default {
     instagramData() {
       const { general } = this
 
-      // const {instagramImages} = general
       const instagramImages = [...general.instagramImages].reverse()
       const images = []
 

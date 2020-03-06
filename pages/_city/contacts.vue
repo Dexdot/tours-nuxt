@@ -1,7 +1,14 @@
 <template>
   <main>
     <section class="contacts">
-      <div class="contacts__bg img"><img src="" alt="" class="img__i" /></div>
+      <div class="contacts__bg img">
+        <BaseImage
+          class="img__i"
+          v-if="general.contactsImage"
+          :img="general.contactsImage"
+          :alt="general.contactsImage.fields.title"
+        ></BaseImage>
+      </div>
 
       <div class="contacts__container">
         <div class="contacts__info">
@@ -17,7 +24,11 @@
         </div>
 
         <div class="contacts__right">
-          <div class="contacts__visual"></div>
+          <div class="contacts__visual">
+            <img src="~assets/svg/circle-waves.svg" alt="Icon" />
+            <img src="~assets/svg/stamp.svg" alt="Icon" />
+          </div>
+
           <form action="ajax/callback.php" class="contacts__form" novalidate>
             <BaseInput
               required
@@ -54,6 +65,8 @@
         </div>
       </div>
     </section>
+
+    <Instagram v-if="instagramData" :data="instagramData" />
   </main>
 </template>
 
@@ -61,11 +74,13 @@
 import { mapGetters } from 'vuex'
 import page from '~/mixins/page'
 import SocialList from '~/components/SocialList'
+import Instagram from '~/components/Instagram'
 
 export default {
   mixins: [page],
   components: {
-    SocialList
+    SocialList,
+    Instagram
   },
   head() {
     const title = 'Контакты'
@@ -116,6 +131,29 @@ export default {
       general: 'general/data',
       locale: 'lang/locale'
     }),
+    instagramData() {
+      const { general } = this
+
+      const instagramImages = [...general.instagramImages].reverse()
+      const images = []
+
+      images.push(instagramImages[0])
+      images.push({ sys: { id: new Date().getTime() } })
+
+      instagramImages.slice(1).forEach(img => {
+        images.push(img)
+      })
+
+      const data = {
+        images,
+        title: general.instagramTitle,
+        text: general.instagramText,
+        buttonUrl: general.instagramButtonUrl,
+        buttonText: general.instagramButtonText
+      }
+
+      return data
+    },
     isFormSubmitted() {
       return false
     },
@@ -262,12 +300,13 @@ export default {
     margin-top: 32px
 
 .contacts__form .btn
+  min-width: 200px
+  max-width: 100%
   margin-top: 40px
-  width: 100%
-
-  .btn__bg
-    border-radius: 0
 
   @media (max-width: $tab)
     margin-top: 32px
+
+  .btn__bg
+    border-radius: 0
 </style>
