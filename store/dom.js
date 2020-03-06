@@ -2,7 +2,8 @@ export const state = () => ({
   scrollTop: 0,
   scrollDisabled: false,
   isMenuActive: false,
-  isBukzaActive: false
+  isBukzaActive: false,
+  isHeaderTransparent: false
 });
 
 export const getters = {
@@ -14,6 +15,9 @@ export const getters = {
   },
   scrollDisabled({ scrollDisabled }) {
     return scrollDisabled;
+  },
+  isHeaderTransparent({ isHeaderTransparent }) {
+    return isHeaderTransparent;
   }
 };
 
@@ -44,6 +48,9 @@ export const mutations = {
   },
   setBukzaActive(state, isActive) {
     state.isBukzaActive = isActive;
+  },
+  setHeaderTransparent(state, isHeaderTransparent) {
+    state.isHeaderTransparent = isHeaderTransparent;
   }
 };
 
@@ -68,5 +75,8 @@ export const actions = {
   },
   enableScroll({ commit }) {
     commit("enableScroll");
+  },
+  setHeaderTransparent({ commit }, isHeaderTransparent) {
+    commit("setHeaderTransparent", isHeaderTransparent);
   }
 };

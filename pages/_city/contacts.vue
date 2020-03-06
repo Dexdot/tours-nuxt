@@ -10,7 +10,7 @@
         ></BaseImage>
       </div>
 
-      <div class="contacts__container">
+      <div class="contacts__container" ref="container">
         <div class="contacts__info">
           <div class="contacts__info-links">
             <a :href="general.phoneNumber"
@@ -23,46 +23,7 @@
           </div>
         </div>
 
-        <div class="contacts__right">
-          <div class="contacts__visual">
-            <img src="~assets/svg/circle-waves.svg" alt="Icon" />
-            <img src="~assets/svg/stamp.svg" alt="Icon" />
-          </div>
-
-          <form action="ajax/callback.php" class="contacts__form" novalidate>
-            <BaseInput
-              required
-              type="text"
-              :placeholder="$t('form.name')"
-              :error-text="$t('form.nameError')"
-            />
-            <BaseInput
-              required
-              type="text"
-              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-              :placeholder="$t('form.email')"
-              :error-text="$t('form.emailError')"
-            />
-            <BaseInput
-              required
-              isTextarea
-              minlength="10"
-              :placeholder="$t('form.message')"
-              :error-text="$t('form.messageError')"
-            />
-
-            <BaseButton
-              :showSuccess="isFormSubmitted && isFormValid"
-              :showError="!isFormSubmitted && !isFormValid"
-              type="submit"
-            >
-              <slot v-if="!isFormSubmitted && !isFormValid">{{
-                $t('form.buttonError')
-              }}</slot>
-              <slot v-else>{{ $t('form.button') }}</slot>
-            </BaseButton>
-          </form>
-        </div>
+        <FormCallback />
       </div>
     </section>
 
@@ -75,12 +36,14 @@ import { mapGetters } from 'vuex'
 import page from '~/mixins/page'
 import SocialList from '~/components/SocialList'
 import Instagram from '~/components/Instagram'
+import FormCallback from '~/components/FormCallback'
 
 export default {
   mixins: [page],
   components: {
     SocialList,
-    Instagram
+    Instagram,
+    FormCallback
   },
   head() {
     const title = 'Контакты'
@@ -160,6 +123,30 @@ export default {
     isFormValid() {
       return true
     }
+  },
+  created() {
+    this.$store.dispatch('dom/setHeaderTransparent', true)
+  },
+  mounted() {
+    this.onResize()
+    window.addEventListener('resize', this.onResize(this))
+  },
+  beforeDestroy() {
+    this.$store.dispatch('dom/setHeaderTransparent', false)
+    window.removeEventListener('resize', this.onResize)
+  },
+  methods: {
+    onResize() {
+      const wh = window.innerHeight
+
+      const header = document.querySelector('.header')
+      const headerH = header.offsetHeight + 40
+
+      const { container } = this.$refs
+      const mt = wh - container.offsetHeight
+
+      container.style.setProperty('--contacts-mt', `${Math.max(headerH, mt)}px`)
+    }
   }
 }
 </script>
@@ -173,10 +160,12 @@ export default {
   @media (min-width: $tab + 1)
     min-height: 100vh
 
+
+// BG
 .contacts__bg
   @media (min-width: $tab + 1)
     position: absolute
-    height: 100%
+    height: 100vh
 
   @media (max-width: $tab)
     padding-bottom: 280px
@@ -184,6 +173,8 @@ export default {
   @media (max-width: $mob)
     padding-bottom: 73.6%
 
+
+// BG Overlay
 .contacts__bg::before
   content: ''
   z-index: 1
@@ -195,44 +186,67 @@ export default {
   height: 100%
   background: rgba($black, 0.3)
 
+
+// Container
 .contacts__container
   z-index: 1
   position: relative
 
-  display: flex
-  height: calc(100vh - var(--header-h) - 10.6vh)
-
   background: $beige-d
+  display: flex
 
   @media (min-width: $tab + 1)
-    margin-top: auto
+    margin-top: var(--contacts-mt)
     margin-left: auto
-    width: unit-plus(column-spans(9))
-    padding: $unit
-
-  @media (min-width: $tab + 1) and (max-height: 960px)
-    height: calc(100vh - var(--header-h) - 40px)
-
-  @media (min-width: $tab + 1) and (max-width: 1500px) and (max-height: 960px)
-    height: calc(100vh - var(--header-h))
 
   @media (max-width: $tab)
     flex-direction: column
-    height: auto
-    padding: 48px $unit 80px
 
+
+// Callback form
+.contacts__container .contacts-callback::before
+  content: ''
+  position: absolute
+  top: $unit
+  left: 0
+
+  display: none
+  width: 1px
+  height: calc(100% - 176px)
+
+  background: rgba($black, 0.1)
+
+  @media (min-width: $tab + 1)
+    display: block
+
+
+// Info
 .contacts__info
   display: flex
   flex-direction: column
 
   @media (min-width: $tab + 1)
-    width: 50%
+    padding: $unit $unit 80px
+
+  @media (min-width: $tab + 1) and (max-width: 1400px)
+    min-width: column-spans(7)
+    width: column-spans(7)
+
+  @media (min-width: 1401px)
+    min-width: mix(5)
+    width: mix(5)
 
   @media (max-width: $tab)
-    margin-bottom: 32px
+    padding: 48px $unit 0
 
+
+// Email, phone
 .contacts__info-links
   line-height: 1
+  
+  @media (min-width: $tab + 1)
+    margin-bottom: 47.407vh
+
   @media (max-width: $tab)
     margin-bottom: 24px
 
@@ -248,65 +262,8 @@ export default {
   font-size: 30px
 
   @media (max-height: 1440px)
+    font-size: 20px
+
+  @media (max-width: $tab)
     font-size: 24px
-
-.contacts__info-social
-  @media (min-width: $tab + 1)
-    margin-top: auto
-
-.contacts__right
-  display: flex
-  flex-direction: column
-
-  @media (min-width: $tab + 1)
-    width: 50%
-    padding-left: $unit
-    border-left: 1px solid rgba($black, 0.1)
-
-.contacts__visual
-  display: flex
-  align-items: flex-start
-  justify-content: space-between
-
-  @media (max-width: $tab)
-    margin-bottom: 16px
-    padding-top: 32px
-    border-top: 1px solid rgba($black, 0.1)
-
-.contacts__visual img:first-child
-  @media (min-width: $tab + 1) and(max-height: 960px)
-    width: 120px
-
-  @media (max-width: $tab)
-    width: 108px
-    margin-top: 16px
-
-.contacts__visual img:last-child
-  @media (min-width: $tab + 1) and (max-height: 960px)
-    width: 104px
-
-  @media (min-width: $tab + 1) and (max-width: 1500px) and (max-height: 960px)
-    width: 64px
-
-  @media (max-width: $tab)
-    width: 101px
-
-.contacts__form
-  margin-top: auto
-
-.contacts__form .input:not(:first-child)
-  margin-top: 40px
-  @media (max-width: $tab)
-    margin-top: 32px
-
-.contacts__form .btn
-  min-width: 200px
-  max-width: 100%
-  margin-top: 40px
-
-  @media (max-width: $tab)
-    margin-top: 32px
-
-  .btn__bg
-    border-radius: 0
 </style>

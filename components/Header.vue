@@ -200,17 +200,18 @@ export default {
   background: 0
   color: #fff
   
-  a, svg
-    +link(#fff)
+  /deep/
+    a, svg
+      +link(#fff)
 
-  .social a::before
-    border-color: #fff
+    .social a::before
+      border-color: #fff
 
-  .burger-icon-top,
-  .burger-icon-bottom,
-  .burger-icon-last
-    &::before, &::after
-      background: #fff
+    .burger-icon-top,
+    .burger-icon-bottom,
+    .burger-icon-last
+      &::before, &::after
+        background: #fff
   
 .header__inner
   display: flex

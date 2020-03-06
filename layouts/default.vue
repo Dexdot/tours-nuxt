@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menu :active="isMenuActive" />
-    <Header :isMenuActive="isMenuActive" />
+    <Header :isMenuActive="isMenuActive" :transparent="isHeaderTransparent" />
 
     <div class="page-container">
       <nuxt ref="page" />
@@ -50,7 +50,8 @@ export default {
   computed: {
     ...mapGetters({
       isMenuActive: 'dom/isMenuActive',
-      isBukzaActive: 'dom/isBukzaActive'
+      isBukzaActive: 'dom/isBukzaActive',
+      isHeaderTransparent: 'dom/isHeaderTransparent'
     }),
     page() {
       return this.$refs.page && this.$refs.page.$children[0]

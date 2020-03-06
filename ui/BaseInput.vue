@@ -165,8 +165,10 @@ export default {
     color: $black
     transition: color $trs
 
-textarea.input__field::placeholder
-  color: rgba($black, 0.3)
+textarea.input__field
+  resize: none
+  &::placeholder
+    color: rgba($black, 0.3)
 
 .input--invalid
   .input__field
