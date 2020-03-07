@@ -26,10 +26,14 @@ export default {
     }
   },
   mounted() {
-    this.init()
+    this.$nextTick(() => {
+      this.init()
+    })
   },
   methods: {
     init() {
+      var self = this
+
       ;(function() {
         var d = document
         var w = window
@@ -41,7 +45,7 @@ export default {
           s.src =
             'https://public.bukza.com/api/script/generate/12529/11621/BukzaContainer11621?t=' +
             new Date().getTime()
-          var ss = this.$refs.ss
+          var ss = self.$refs.ss
           ss.parentNode.insertBefore(s, ss)
         }
 
