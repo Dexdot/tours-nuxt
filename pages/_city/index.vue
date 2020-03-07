@@ -5,6 +5,11 @@
         <template v-if="main.heroImages">
           <BaseImage
             class="img__i"
+            :img="main.heroImages[0]"
+            :alt="main.heroImages[0].fields.title"
+          />
+          <!-- <BaseImage
+            class="img__i"
             v-for="(img, i) in main.heroImages"
             :key="img.sys.id"
             :img="img"
@@ -14,7 +19,7 @@
                 6}s ease-in-out infinite`,
               'animation-delay': `${i * 6}s`
             }"
-          />
+          /> -->
         </template>
       </div>
 
