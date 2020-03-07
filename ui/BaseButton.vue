@@ -61,7 +61,7 @@
 
   <!-- Nuxt Link -->
   <nuxt-link
-    :to="$cityLocalePath(to)"
+    :to="to"
     v-else
     :class="[
       'btn',

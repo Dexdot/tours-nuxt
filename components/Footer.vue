@@ -23,7 +23,7 @@
             <a :href="`tel:${general.phoneNumber}`">
               {{ general.phoneText }}
             </a>
-            <button>
+            <button @click="$store.dispatch('dom/toggleCallback')">
               {{ $t('orderCall') }}
             </button>
             <a :href="`mailto:${general.email}`">

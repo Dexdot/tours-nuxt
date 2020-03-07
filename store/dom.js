@@ -3,6 +3,7 @@ export const state = () => ({
   scrollDisabled: false,
   isMenuActive: false,
   isBukzaActive: false,
+  isCallbackActive: false,
   isHeaderTransparent: false
 });
 
@@ -12,6 +13,9 @@ export const getters = {
   },
   isBukzaActive({ isBukzaActive }) {
     return isBukzaActive;
+  },
+  isCallbackActive({ isCallbackActive }) {
+    return isCallbackActive;
   },
   scrollDisabled({ scrollDisabled }) {
     return scrollDisabled;
@@ -46,6 +50,9 @@ export const mutations = {
   toggleMenu(state) {
     state.isMenuActive = !state.isMenuActive;
   },
+  toggleCallback(state) {
+    state.isCallbackActive = !state.isCallbackActive;
+  },
   setBukzaActive(state, isActive) {
     state.isBukzaActive = isActive;
   },
@@ -59,6 +66,15 @@ export const actions = {
     commit("toggleMenu");
 
     if (state.isMenuActive) {
+      commit("disableScroll");
+    } else {
+      commit("enableScroll");
+    }
+  },
+  toggleCallback({ commit, state }) {
+    commit("toggleCallback");
+
+    if (state.isCallbackActive) {
       commit("disableScroll");
     } else {
       commit("enableScroll");

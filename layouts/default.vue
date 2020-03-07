@@ -9,9 +9,8 @@
 
     <Footer />
 
-    <no-ssr>
-      <BukzaModal :active="isBukzaActive" />
-    </no-ssr>
+    <BukzaModal :active="isBukzaActive" />
+    <CallbackModal :active="isCallbackActive" />
 
     <Cover />
     <Intro @complete="introCompleted = true" />
@@ -27,6 +26,7 @@ import Menu from '~/components/Menu'
 import Cover from '~/components/Cover'
 import Intro from '~/components/Intro'
 import BukzaModal from '~/components/BukzaModal'
+import CallbackModal from '~/components/CallbackModal'
 
 import initCSSProps from '~/assets/scripts/css-props'
 import { detectDevices } from '~/assets/scripts/detect'
@@ -38,7 +38,8 @@ export default {
     Menu,
     Intro,
     Cover,
-    BukzaModal
+    BukzaModal,
+    CallbackModal
   },
   data: () => ({
     detect: {},
@@ -51,6 +52,7 @@ export default {
     ...mapGetters({
       isMenuActive: 'dom/isMenuActive',
       isBukzaActive: 'dom/isBukzaActive',
+      isCallbackActive: 'dom/isCallbackActive',
       isHeaderTransparent: 'dom/isHeaderTransparent'
     }),
     page() {

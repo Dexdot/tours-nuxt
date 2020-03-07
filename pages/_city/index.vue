@@ -105,7 +105,9 @@
                 <p v-if="isText(item)" v-html="render(item)"></p>
               </div>
             </template>
-            <BaseButton>{{ $t('chooseTour') }}</BaseButton>
+            <BaseButton isLink :to="$cityLocalePath('/tours')">{{
+              $t('chooseTour')
+            }}</BaseButton>
           </div>
 
           <div

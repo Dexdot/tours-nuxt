@@ -44,7 +44,7 @@
       </ul>
 
       <div class="reviews-slider__bottom">
-        <BaseButton isLink to="/reviews">{{
+        <BaseButton isLink :to="$cityLocalePath('/reviews')">{{
           $t('reviews.sectionButton')
         }}</BaseButton>
 
