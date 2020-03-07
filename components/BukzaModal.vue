@@ -7,31 +7,7 @@
   >
     <!-- BEGIN BUKZA CODE -->
     <div class="bukza-container" id="BukzaContainer11621"></div>
-    <script type="text/javascript">
-      ;(function() {
-        var d = document
-        var w = window
-        function l() {
-          var s = d.createElement('script')
-          s.type = 'text/javascript'
-          s.async = true
-          s.src =
-            'https://public.bukza.com/api/script/generate/12529/11621/BukzaContainer11621?t=' +
-            new Date().getTime()
-          var ss = d.getElementsByTagName('script')[0]
-          ss.parentNode.insertBefore(s, ss)
-        }
-        if (d.readyState == 'complete') {
-          l()
-        } else {
-          if (w.attachEvent) {
-            w.attachEvent('onload', l)
-          } else {
-            w.addEventListener('load', l, false)
-          }
-        }
-      })()
-    </script>
+    <div ref="ss"></div>
     <!-- END BUKZA CODE -->
   </Modal>
 </template>
@@ -47,6 +23,41 @@ export default {
     active: {
       type: Boolean,
       default: false
+    }
+  },
+  mounted() {
+    this.init()
+  },
+  methods: {
+    init() {
+      ;(function() {
+        var d = document
+        var w = window
+
+        function l() {
+          var s = d.createElement('script')
+          s.type = 'text/javascript'
+          s.async = true
+          s.src =
+            'https://public.bukza.com/api/script/generate/12529/11621/BukzaContainer11621?t=' +
+            new Date().getTime()
+          var ss = this.$refs.ss
+          ss.parentNode.insertBefore(s, ss)
+        }
+
+        if (d.readyState == 'complete') {
+          l()
+          console.log('calling readystate')
+        } else {
+          if (w.attachEvent) {
+            console.log('calling onload')
+            w.attachEvent('onload', l)
+          } else {
+            console.log('calling load')
+            w.addEventListener('load', l, false)
+          }
+        }
+      })()
     }
   }
 }
