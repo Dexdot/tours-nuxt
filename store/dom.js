@@ -1,4 +1,7 @@
+const defaultBukzaID = "11621";
+
 export const state = () => ({
+  bukzaID: defaultBukzaID,
   scrollTop: 0,
   scrollDisabled: false,
   isMenuActive: false,
@@ -8,6 +11,9 @@ export const state = () => ({
 });
 
 export const getters = {
+  bukzaID({ bukzaID }) {
+    return bukzaID;
+  },
   isMenuActive({ isMenuActive }) {
     return isMenuActive;
   },
@@ -53,6 +59,9 @@ export const mutations = {
   toggleCallback(state) {
     state.isCallbackActive = !state.isCallbackActive;
   },
+  setBukzaID(state, bukzaID) {
+    state.bukzaID = bukzaID;
+  },
   setBukzaActive(state, isActive) {
     state.isBukzaActive = isActive;
   },
@@ -80,7 +89,8 @@ export const actions = {
       commit("enableScroll");
     }
   },
-  showBukza({ commit }) {
+  showBukza({ commit }, bukzaID = defaultBukzaID) {
+    commit("setBukzaID", bukzaID);
     commit("setBukzaActive", true);
   },
   hideBukza({ commit }) {

@@ -9,7 +9,7 @@
 
     <Footer />
 
-    <BukzaModal :active="isBukzaActive" />
+    <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
     <CallbackModal :active="isCallbackActive" />
 
     <Cover />

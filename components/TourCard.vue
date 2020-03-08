@@ -8,9 +8,11 @@
           :alt="tour.fields.previewImage.fields.title"
         />
       </nuxt-link>
-      <BaseButton classExpand @click="$store.dispatch('dom/showBukza')">{{
-        $t('chooseTour')
-      }}</BaseButton>
+      <BaseButton
+        classExpand
+        @click="$store.dispatch('dom/showBukza', tour.fields.bukzaId)"
+        >{{ $t('chooseTour') }}</BaseButton
+      >
     </div>
 
     <nuxt-link

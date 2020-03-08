@@ -2,7 +2,12 @@ export default {
   data: () => ({
     scrollBooster: {
       instance: {},
-      payload: {}
+      payload: {
+        dragOffsetPosition: {
+          x: 0,
+          y: 0
+        }
+      }
     }
   }),
   beforeDestroy() {

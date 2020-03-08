@@ -5,14 +5,17 @@
     :active="active"
     @close-click="$store.dispatch('dom/hideBukza')"
   >
-    <!-- BEGIN BUKZA CODE -->
-    <div class="bukza-container" id="BukzaContainer11621"></div>
-    <div ref="ss"></div>
-    <!-- END BUKZA CODE -->
+    <div>
+      <!-- BEGIN BUKZA CODE -->
+      <div class="bukza-container" :id="`BukzaContainer${id}`"></div>
+      <div ref="ss"></div>
+      <!-- END BUKZA CODE -->
+    </div>
   </Modal>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Modal from '~/ui/Modal'
 
 export default {
@@ -30,38 +33,36 @@ export default {
       this.init()
     })
   },
+  computed: {
+    ...mapGetters({
+      id: 'dom/bukzaID'
+    })
+  },
   methods: {
     init() {
-      var self = this
+      const d = document
+      const w = window
 
-      ;(function() {
-        var d = document
-        var w = window
+      const l = () => {
+        const s = d.createElement('script')
+        s.type = 'text/javascript'
+        s.async = true
+        s.src = `https://public.bukza.com/api/script/generate/12529/${
+          this.id
+        }/BukzaContainer${this.id}?t=${new Date().getTime()}`
+        const { ss } = this.$refs
+        ss.parentNode.insertBefore(s, ss)
+      }
 
-        function l() {
-          var s = d.createElement('script')
-          s.type = 'text/javascript'
-          s.async = true
-          s.src =
-            'https://public.bukza.com/api/script/generate/12529/11621/BukzaContainer11621?t=' +
-            new Date().getTime()
-          var ss = self.$refs.ss
-          ss.parentNode.insertBefore(s, ss)
-        }
-
-        if (d.readyState == 'complete') {
-          l()
-          console.log('calling readystate')
+      if (d.readyState == 'complete') {
+        l()
+      } else {
+        if (w.attachEvent) {
+          w.attachEvent('onload', l)
         } else {
-          if (w.attachEvent) {
-            console.log('calling onload')
-            w.attachEvent('onload', l)
-          } else {
-            console.log('calling load')
-            w.addEventListener('load', l, false)
-          }
+          w.addEventListener('load', l, false)
         }
-      })()
+      }
     }
   }
 }
