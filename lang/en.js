@@ -84,6 +84,12 @@ const lang = {
     messageError: "minimum 10 characters",
     button: "Submit",
     buttonError: "Errors"
+  },
+  ntf: {
+    title: "Ooops!",
+    text:
+      "This page does not seem to exist. Below in the section you need a section or see the most popular excursions",
+    button: "Home page"
   }
 };
 

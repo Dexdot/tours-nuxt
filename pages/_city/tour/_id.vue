@@ -33,7 +33,7 @@
             <h1 class="tour-page__title t-h3">{{ tourData.title }}</h1>
 
             <ul class="tour-page__info-list">
-              <li>
+              <li v-if="tourData.numberOfPeople">
                 <svg-icon class="tour-page__info-icon" name="people"></svg-icon>
                 <p>{{ tourData.numberOfPeople }}</p>
 
@@ -47,14 +47,14 @@
                 </Tip>
               </li>
 
-              <li>
+              <li v-if="tourData.duration">
                 <svg-icon class="tour-page__info-icon" name="clock"></svg-icon>
                 <p>{{ tourData.duration }}</p>
               </li>
 
-              <li>
+              <li v-if="tourData.venueShort || tourData.venue">
                 <svg-icon class="tour-page__info-icon" name="pin"></svg-icon>
-                <p>{{ tourData.venueShort }}</p>
+                <p>{{ tourData.venueShort || tourData.venue }}</p>
               </li>
             </ul>
           </div>
@@ -262,7 +262,8 @@ export default {
       }
     }
 
-    if (params.city !== tour.fields.city) {
+    // 404
+    if (!tour || params.city !== tour.fields.city) {
       error({ statusCode: 404 })
     }
 

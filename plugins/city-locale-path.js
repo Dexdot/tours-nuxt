@@ -1,5 +1,19 @@
 export default ({ app, route }, inject) => {
   inject("cityLocalePath", (path, city) => {
+    // City
+    let routeCity = route.params.city;
+
+    if (!routeCity) {
+      routeCity = ["tallin", "spb"].find(city =>
+        route.fullPath.split("/").includes(city)
+      );
+    }
+
+    if (!routeCity) {
+      routeCity = "spb";
+    }
+
+    // Path
     const localePath = app.localePath(path);
     const localeRouteName = app.i18n.locale === "ru" ? "" : app.i18n.locale;
     const noLocalePath = localePath.replace(`/${localeRouteName}`, "");
@@ -8,6 +22,6 @@ export default ({ app, route }, inject) => {
     const firstSeparator = localeRouteName.length <= 0 ? "" : "/";
 
     return `${firstSeparator}${localeRouteName}/${city ||
-      route.params.city}${citySeparator}${noLocalePath}`;
+      routeCity}${citySeparator}${noLocalePath}`;
   });
 };

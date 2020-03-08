@@ -17,7 +17,7 @@
     <CallbackModal :active="isCallbackActive" />
 
     <Cover />
-    <Intro @complete="introCompleted = true" />
+    <Intro v-show="!introCompleted" @complete="introCompleted = true" />
   </div>
 </template>
 
@@ -64,13 +64,15 @@ export default {
     }
   },
   mounted() {
+    if (document.readyState === 'complete' && !this.introCompleted)
+      this.introCompleted = true
+
     window.$app = this
 
     initCSSProps()
     this.detect = detectDevices()
 
     this.visited = JSON.parse(localStorage.visited || false)
-
     if (!localStorage.visited) {
       localStorage.visited = JSON.stringify(true)
     }
