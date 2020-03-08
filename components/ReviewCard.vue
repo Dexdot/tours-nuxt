@@ -100,12 +100,13 @@ export default {
   border-radius: 50%
   background: $beige-d
 
-  img
+  &:not(.review-li__avatar--icon) img
     border-radius: 50%
   
 .review-li__avatar--icon img
   width: 26px
   height: 26px
+  object-fit: contain
 
 .review-li__name
   font-size: 18px
