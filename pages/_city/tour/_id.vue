@@ -54,7 +54,7 @@
 
               <li>
                 <svg-icon class="tour-page__info-icon" name="pin"></svg-icon>
-                <p>{{ tourData.venue }}</p>
+                <p>{{ tourData.venueShort }}</p>
               </li>
             </ul>
           </div>
