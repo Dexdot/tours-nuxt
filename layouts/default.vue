@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <Menu :active="isMenuActive" />
-    <Header :isMenuActive="isMenuActive" :transparent="isHeaderTransparent" />
+    <Header
+      :isMenuActive="isMenuActive"
+      :isCallbackActive="isCallbackActive"
+      :transparent="isHeaderTransparent"
+    />
 
     <div class="page-container">
       <nuxt ref="page" />

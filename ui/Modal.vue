@@ -92,7 +92,11 @@ export default {
       const content = this.$refs.content
       const button = this.$refs.containerClose
 
-      button.style.setProperty('--modal-content-top', `${content.offsetTop}px`)
+      if (content && button)
+        button.style.setProperty(
+          '--modal-content-top',
+          `${content.offsetTop}px`
+        )
     }
   },
   watch: {

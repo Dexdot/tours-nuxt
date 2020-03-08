@@ -3,6 +3,7 @@
     :class="[
       'header',
       {
+        'header--callback-active': isCallbackActive,
         'header--menu-active': isMenuActive,
         'header--uphidden': isUphidden,
         'header--transparent': isTrasparent,
@@ -65,22 +66,24 @@
           </ul>
         </nav>
 
-        <div class="header__contact">
-          <a :href="`tel:${general.phoneNumber}`">
-            {{ general.phoneText }}
-          </a>
-          <button @click="$store.dispatch('dom/toggleCallback')">
-            {{ $t('orderCall') }}
-          </button>
-        </div>
+        <div class="header__right">
+          <div class="header__contact">
+            <a :href="`tel:${general.phoneNumber}`">
+              {{ general.phoneText }}
+            </a>
+            <button @click="$store.dispatch('dom/toggleCallback')">
+              {{ $t('orderCall') }}
+            </button>
+          </div>
 
-        <div class="header__social">
-          <SocialList :socialLinks="general.socialLinks" />
-        </div>
+          <div class="header__social">
+            <SocialList :socialLinks="general.socialLinks" />
+          </div>
 
-        <BaseButton classPulse @click="$store.dispatch('dom/showBukza')">{{
-          $t('orderTicket')
-        }}</BaseButton>
+          <BaseButton classPulse @click="$store.dispatch('dom/showBukza')">{{
+            $t('orderTicket')
+          }}</BaseButton>
+        </div>
 
         <ButtonBurger
           :active="isMenuActive"
@@ -106,6 +109,7 @@ export default {
     SocialList
   },
   props: {
+    isCallbackActive: { type: Boolean, default: false },
     isMenuActive: { type: Boolean, default: false },
     transparent: { type: Boolean, default: false }
   },
@@ -212,12 +216,34 @@ export default {
     .burger-icon-last
       &::before, &::after
         background: #fff
-  
+
+.header--callback-active
+  @media (min-width: $tab + 1)
+    z-index: 6
+    background: transparent
+    pointer-events: none
+
+  .header__logo-wrap,
+  .header__nav,
+  .header__social,
+  .btn
+    @media (min-width: $tab + 1)
+      opacity: 0.3
+
+  .header__contact
+    @media (min-width: $tab + 1)
+      pointer-events: auto
+
+    a, button
+      @media (min-width: $tab + 1)
+        +link(#fff)
+
 .header__inner
   display: flex
   align-items: center
   padding-top: 24px
   padding-bottom: 16px
+
   @media (max-width: $tab)
     padding-top: 16px
     align-items: flex-start
@@ -280,13 +306,28 @@ export default {
     opacity: 0.4
 
 
+// Right
+.header__right
+  @media (min-width: 1881px)
+    width: column-spans(4)
+
+  @media (min-width: 1401px) and (max-width: 1880px)
+    width: column-spans(5)
+
+  @media (min-width: 1341px) and (max-width: 1400px)
+    width: calc(#{column-spans(5)} + 40px)
+
+  display: flex
+  align-items: center
+  margin-left: auto
+
+  .btn
+    margin-left: auto
+
+
 // Phone
 .header__contact
-  margin-left: auto
   margin-right: 24px
-
-  @media (max-width: 1540px)
-    margin-right: 16px
 
   a
     +mont(sb)
@@ -294,6 +335,7 @@ export default {
     letter-spacing: 0.04em
     line-height: 1
     display: block
+    
     @media (max-width: 1540px)
       font-size: 14px
 
@@ -307,11 +349,6 @@ export default {
 
 // Social
 .header__social
-  margin-right: 64px
-
-  @media (max-width: 1540px)
-    margin-right: 32px
-
   @media (max-width: 1340px)
     display: none
 

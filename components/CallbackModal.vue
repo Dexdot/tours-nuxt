@@ -51,13 +51,18 @@ export default {
 
   .modal__container,
   .contacts-callback
-    @media (min-width: $tab + 1) and (max-width: 1920px)
+    @media (min-width: 1881px)
+      width: unit-plus(column-spans(4))
+
+    @media (min-width: 1401px) and (max-width: 1880px)
+      width: unit-plus(column-spans(5))
+
+    @media (min-width: 1341px) and (max-width: 1400px)
+      width: unit-plus(calc(#{column-spans(5)} + 40px))
+
+    @media (min-width: $tab + 1) and (max-width: 1340px)
       min-width: 650px
       width: 650px
-
-    @media (min-width: 1921px)
-      min-width: unit-plus(column-spans(4))
-      width: unit-plus(column-spans(4))
 
   .modal__container
     background: $beige-d

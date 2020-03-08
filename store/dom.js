@@ -81,6 +81,10 @@ export const actions = {
     }
   },
   toggleCallback({ commit, state }) {
+    if (state.isMenuActive) {
+      commit("toggleMenu");
+    }
+
     commit("toggleCallback");
 
     if (state.isCallbackActive) {
