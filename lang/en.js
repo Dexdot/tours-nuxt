@@ -83,7 +83,8 @@ const lang = {
     message: "Hello, Peshehod Tour!",
     messageError: "minimum 10 characters",
     button: "Submit",
-    buttonError: "Errors"
+    buttonSuccess: "Sent",
+    buttonError: "Error"
   },
   ntf: {
     title: "Ooops!",

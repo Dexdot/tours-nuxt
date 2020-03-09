@@ -49,7 +49,10 @@
         :showError="submitStatus === 'error'"
         type="submit"
       >
-        <slot v-if="submitStatus === 'error'">{{
+        <slot v-if="submitStatus === 'success'">{{
+          $t('form.buttonSuccess')
+        }}</slot>
+        <slot v-else-if="submitStatus === 'error'">{{
           $t('form.buttonError')
         }}</slot>
         <slot v-else>{{ $t('form.button') }}</slot>
@@ -147,16 +150,13 @@ export default {
     onSuccess() {
       this.$refs.form.reset()
       this.submitStatus = 'success'
-      console.log('success submit')
     },
     onError() {
       this.submitStatus = 'error'
-      console.log('error submit')
     },
     onForm() {
       if (this.submitStatus !== '') {
         this.submitStatus = ''
-        console.log('on form')
       }
     }
   }

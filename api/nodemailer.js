@@ -12,8 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/", (req, res) => {
   const { cb_name: name, cb_email: email, cb_text: text } = req.body;
-  sendMail({ name, email, text });
-  res.status(200).json({ message: "Message has been sent", success: true });
+  sendMail({ name, email, text })
+    .then(() => {
+      res.status(200).json({ message: "Message has been sent", success: true });
+    })
+    .catch(({ message }) => {
+      res.status(200).json({ message, success: false });
+    });
 });
 
 module.exports = {
@@ -21,34 +26,37 @@ module.exports = {
   handler: app
 };
 
-async function sendMail({ name, email, text }) {
-  console.log("sendMail", { name, email, text });
+function sendMail({ name, email, text }) {
+  return new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.yandex.ru",
+      port: 465,
+      secure: true,
+      auth: {
+        user: FROM_EMAIL,
+        pass: FROM_PASSWORD
+      }
+    });
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.yandex.ru",
-    port: 465,
-    secure: true,
-    auth: {
-      user: FROM_EMAIL,
-      pass: FROM_PASSWORD
-    }
-  });
+    const html = `
+      Имя: ${name}<br />
+      Почта: ${email}<br />
+      Сообщение: ${text}
+    `;
 
-  console.log("AUTH params", {
-    user: FROM_EMAIL,
-    pass: FROM_PASSWORD
-  });
+    const msg = {
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      subject: `Пешеход Тур - заявка с сайта`,
+      html
+    };
 
-  const html = `
-  Имя: ${name}<br />
-  Почта: ${email}<br />
-  Сообщение: ${text}
-  `;
+    transporter.sendMail(msg, error => {
+      if (error) {
+        reject(error);
+      }
 
-  await transporter.sendMail({
-    from: FROM_EMAIL,
-    to: TO_EMAIL,
-    subject: `Пешеход Тур - заявка с сайта`,
-    html
+      resolve();
+    });
   });
 }

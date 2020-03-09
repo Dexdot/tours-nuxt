@@ -83,6 +83,7 @@ const lang = {
     message: "Привет, Пешеход Тур!",
     messageError: "минимум 10 символов",
     button: "Отправить",
+    buttonSuccess: "Отправлено",
     buttonError: "Есть ошибки"
   },
   ntf: {
