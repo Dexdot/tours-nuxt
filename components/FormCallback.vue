@@ -123,15 +123,16 @@ export default {
       //   data.append('cb_service[]', v)
       // })
 
-      return data
+      const objectData = {}
+      data.forEach(function(value, key) {
+        objectData[key] = value
+      })
+
+      return objectData
     },
     post(data) {
-      this.$axios({
-        data,
-        method: this.$refs.form.method.toLowerCase(),
-        url: this.$refs.form.action,
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+      this.$axios
+        .post(this.$refs.form.action, data)
         .then(({ data }) => {
           if (data.success == true) {
             this.onSuccess()

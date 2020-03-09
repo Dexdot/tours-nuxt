@@ -17,6 +17,7 @@ dist
 .env
 .env.*
 now.json
+api/credits.js
 
 # PHP
 ajax/config.php

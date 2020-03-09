@@ -1,19 +1,17 @@
 "use strict";
 
-const FROM_EMAIL = process.env.NUXT_ENV_FROM_EMAIL;
-const FROM_PASSWORD = process.env.NUXT_ENV_FROM_PASSWORD;
-const TO_EMAIL = process.env.NUXT_ENV_TO_EMAIL;
+const { FROM_EMAIL, FROM_PASSWORD, TO_EMAIL } = require("./credits.js");
 
+const bodyParser = require("body-parser");
 const express = require("express");
 const nodemailer = require("nodemailer");
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.post("/", (req, res) => {
-  const { name, email, text } = req.body;
-
-  console.log("req body", req.body);
-
+  const { cb_name: name, cb_email: email, cb_text: text } = req.body;
   sendMail({ name, email, text });
   res.status(200).json({ message: "Message has been sent", success: true });
 });
@@ -34,6 +32,11 @@ async function sendMail({ name, email, text }) {
       user: FROM_EMAIL,
       pass: FROM_PASSWORD
     }
+  });
+
+  console.log("AUTH params", {
+    user: FROM_EMAIL,
+    pass: FROM_PASSWORD
   });
 
   const html = `
