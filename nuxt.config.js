@@ -74,11 +74,11 @@ module.exports = {
         content: baseDescription
       },
       { property: "og:url", content: "https://" },
-      { property: "og:site_name", content: "some site name" },
+      { property: "og:site_name", content: "Пешеход Тур" },
       {
         hid: "og:image",
         property: "og:image",
-        content: "/favicon/projectName.png"
+        content: "/favicon/apple-touch-icon.png"
       },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
@@ -90,17 +90,17 @@ module.exports = {
       {
         hid: "twitter:title",
         name: "twitter:title",
-        content: "projectName"
+        content: "Пешеход Тур"
       },
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: "/favicon/projectName.png"
+        content: "/favicon/apple-touch-icon.png"
       },
-      // Favico
+      // Favicons
       {
         name: "msapplication-TileColor",
-        content: "#000000"
+        content: "#4aad7b"
       },
       {
         name: "msapplication-TileImage",
@@ -133,14 +133,18 @@ module.exports = {
         sizes: "16x16",
         href: "/favicon/favicon-16x16.png"
       },
-      // {
-      //   rel: "manifest",
-      //   href: "/favicon/site.webmanifest"
-      // },
+      {
+        rel: "manifest",
+        href: "/favicon/site.webmanifest"
+      },
       {
         rel: "mask-icon",
         href: "/favicon/safari-pinned-tab.svg",
-        color: "#000000"
+        color: "#4aad7b"
+      },
+      {
+        rel: "shortcut-icon",
+        href: "/favicon/favicon.ico"
       }
     ]
   },
