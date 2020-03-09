@@ -325,4 +325,12 @@ $btn-scale-2: cubic-bezier(.165,.84,.44,1)
     opacity: 1
     transform: translate(-50%, -50%) scale(1)
     transition: transform .4s $btn-scale-1,opacity .4s $btn-scale-1
+
+
+// Error
+.btn--error
+  .btn__text, svg
+    +link($black)
+  .btn__bg
+    background: rgba($black, 0.3)
 </style>

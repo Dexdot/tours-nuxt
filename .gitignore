@@ -19,4 +19,4 @@ dist
 now.json
 
 # PHP
-ajax
+ajax/config.php

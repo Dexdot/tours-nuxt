@@ -5,10 +5,21 @@
       <img src="~assets/svg/stamp.svg" alt="Icon" />
     </div>
 
-    <form action="ajax/callback.php" class="contacts-form" novalidate>
+    <form
+      class="contacts-form"
+      action="ajax/callback.php"
+      method="POST"
+      ref="form"
+      novalidate
+      @submit.prevent="onSubmit"
+      @keyup="onForm"
+    >
       <BaseInput
         required
         type="text"
+        name="cb_name"
+        v-model="form.name"
+        ref="name"
         :placeholder="$t('form.name')"
         :error-text="$t('form.nameError')"
       />
@@ -16,6 +27,9 @@
         required
         type="text"
         pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+        name="cb_email"
+        v-model="form.email"
+        ref="email"
         :placeholder="$t('form.email')"
         :error-text="$t('form.emailError')"
       />
@@ -23,16 +37,19 @@
         required
         isTextarea
         minlength="10"
+        name="cb_text"
+        v-model="form.text"
+        ref="text"
         :placeholder="$t('form.message')"
         :error-text="$t('form.messageError')"
       />
 
       <BaseButton
-        :showSuccess="isFormSubmitted && isFormValid"
-        :showError="!isFormSubmitted && !isFormValid"
+        :showSuccess="submitStatus === 'success'"
+        :showError="submitStatus === 'error'"
         type="submit"
       >
-        <slot v-if="!isFormSubmitted && !isFormValid">{{
+        <slot v-if="submitStatus === 'error'">{{
           $t('form.buttonError')
         }}</slot>
         <slot v-else>{{ $t('form.button') }}</slot>
@@ -43,12 +60,103 @@
 
 <script>
 export default {
-  computed: {
-    isFormSubmitted() {
+  data: () => ({
+    submitStatus: '',
+    form: {
+      name: '',
+      email: '',
+      text: ''
+    }
+  }),
+  mounted() {
+    console.log('form', this)
+  },
+  methods: {
+    isFormValid() {
+      if (this.$refs && Object.keys(this.$refs).length > 0) {
+        const { name, email, text } = this.$refs
+
+        return (
+          name.getValidState() && email.getValidState() && text.getValidState()
+        )
+      }
+
       return false
     },
-    isFormValid() {
-      return true
+    onSubmit() {
+      if (this.isFormValid()) {
+        this.submit()
+      } else {
+        this.setFieldsValidState()
+      }
+    },
+    setFieldsValidState() {
+      for (let key in this.$refs) {
+        const ref = this.$refs[key]
+        if (ref && ref.setValidState) ref.setValidState()
+      }
+    },
+    submit() {
+      this.post(this.getFormData())
+    },
+    getFormData() {
+      const data = new FormData()
+
+      // Text, file inputs
+      Array.from(this.$refs.form.elements).forEach(field => {
+        const hasName = field.name
+        const notDisabled = !field.disabled
+        const ignoredTypes = ['radio', 'checkbox', 'reset', 'submit', 'button']
+        const isFile = field.type === 'file'
+
+        if (hasName && notDisabled && !ignoredTypes.includes(field.type)) {
+          if (isFile) {
+            data.append(field.name, field.files[0])
+          } else {
+            data.set(field.name, field.value)
+          }
+        }
+      })
+
+      // Checkboxes
+      // this.form.checked.forEach(v => {
+      //   data.append('cb_service[]', v)
+      // })
+
+      return data
+    },
+    post(data) {
+      this.$axios({
+        data,
+        method: this.$refs.form.method.toLowerCase(),
+        url: this.$refs.form.action,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+        .then(({ data }) => {
+          if (data.success == true) {
+            this.onSuccess()
+          } else {
+            this.onError()
+          }
+        })
+        .catch(() => {
+          this.onError()
+        })
+    },
+    onSuccess() {
+      this.$refs.form.reset()
+      this.submitStatus = 'success'
+      console.log('success submit')
+    },
+    onError() {
+      this.submitStatus = 'error'
+      console.log('error submit')
+    },
+    onForm() {
+      if (this.submitStatus !== '') {
+        this.submitStatus = ''
+        console.log('on form')
+      }
     }
   }
 }
