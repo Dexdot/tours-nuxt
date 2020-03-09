@@ -108,7 +108,7 @@ export default {
       })
 
       const data = {
-        images,
+        images: images.slice(0, 7),
         title: general.instagramTitle,
         text: general.instagramText,
         buttonUrl: general.instagramButtonUrl,
