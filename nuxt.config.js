@@ -181,6 +181,7 @@ module.exports = {
   router: {
     middleware: "city"
   },
+  serverMiddleware: ["~/api/nodemailer"],
   // Plugins
   plugins: [
     "~/plugins/city-locale-path",
