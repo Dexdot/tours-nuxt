@@ -14,9 +14,8 @@ app.post("/", (req, res) => {
 
   console.log("req body", req.body);
 
-  sendMail({ name, email, text }).then(() => {
-    res.status(200).json({ message: "Message has been sent", success: true });
-  });
+  sendMail({ name, email, text });
+  res.status(200).json({ message: "Message has been sent", success: true });
 });
 
 module.exports = {
