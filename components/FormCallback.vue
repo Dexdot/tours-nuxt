@@ -7,7 +7,7 @@
 
     <form
       class="contacts-form"
-      action="/ajax/callback.php"
+      action="/api/nodemailer"
       method="POST"
       ref="form"
       novalidate
