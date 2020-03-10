@@ -1,35 +1,58 @@
-import { fetchArticles } from '~/api/blog';
+import { fetchArticles, fetchArticle } from "~/api/blog";
 
 export const state = () => ({
-  articles: [],
-  skip: 0,
-  limit: 12
+  articles: {}
 });
 
 export const getters = {
   articles({ articles }) {
     return articles;
+  },
+  allArticles({ articles }) {
+    return Object.values(articles);
   }
 };
 
 export const mutations = {
-  addArticles(state, payload) {
-    state.articles = [...payload];
+  setArticles(state, articles) {
+    state.articles = { ...articles };
   },
-  incrementSkip(state) {
-    state.skip += state.limit;
+  setArticle({ articles }, { article, locale }) {
+    const articleInStore = articles[article.fields.slug];
+
+    if (articleInStore) {
+      articles[article.fields.slug][locale] = article;
+    } else {
+      articles[article.fields.slug] = {};
+      articles[article.fields.slug][locale] = article;
+    }
   }
 };
 
 export const actions = {
-  async loadArticles({ commit, getters }) {
-    const { limit, skip } = getters;
-    const articles = await fetchArticles({ limit, skip });
-    commit('addArticles', articles);
-    commit('incrementSkip');
-    return articles;
+  async loadAllArticles({ commit, rootGetters }) {
+    const articles = await fetchArticles({
+      locale: rootGetters["lang/localeCode"]
+    });
+
+    const articlesMap = {};
+
+    articles.forEach(article => {
+      const locale = rootGetters["lang/locale"];
+      articlesMap[article.fields.slug] = {};
+      articlesMap[article.fields.slug][locale] = article;
+    });
+
+    commit("setArticles", articlesMap);
+    return articlesMap;
   },
-  addArticles({ commit }, articles) {
-    commit('addArticles', articles);
+  async loadArticle({ commit, rootGetters }, slug) {
+    const article = await fetchArticle({
+      slug,
+      locale: rootGetters["lang/localeCode"]
+    });
+
+    commit("setArticle", { article, locale: rootGetters["lang/locale"] });
+    return article;
   }
 };

@@ -69,6 +69,10 @@ const lang = {
     toursButton: "Смотреть все",
     faqTitle: "FAQ"
   },
+  blog: {
+    title: "Блог",
+    readArticle: "Читать статью"
+  },
   faq: {
     title: "FAQ",
     subtitle: "Остались вопросы?",

@@ -18,6 +18,10 @@ export default {
     outlined: {
       type: Boolean,
       default: false
+    },
+    list: {
+      type: Array,
+      required: true
     }
   }
 }
