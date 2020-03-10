@@ -17,10 +17,7 @@
           </div>
 
           <ul class="blog-list">
-            <li
-              v-for="article in cityLocaleArticles"
-              :key="article.fields.slug"
-            >
+            <li v-for="article in sortedArticles" :key="article.fields.slug">
               <ArticleCard :article="article"></ArticleCard>
             </li>
           </ul>
@@ -101,6 +98,8 @@ export default {
       locale: 'lang/locale'
     }),
     categories() {
+      const filter = this.$route.params.filter || ''
+
       return this.cityLocaleArticles.reduce((currentTags, { fields }) => {
         const currentSlugs = currentTags.map(({ fields }) => fields.slug)
         const articleCategories = fields.categories || []
@@ -108,10 +107,32 @@ export default {
         return [
           ...currentTags,
           ...articleCategories.filter(
-            ({ fields }) => !currentSlugs.includes(fields.slug)
+            ({ fields }) =>
+              !currentSlugs.includes(fields.slug) && fields.slug !== filter
           )
         ]
       }, [])
+    },
+    sortedArticles() {
+      const articles = [...this.cityLocaleArticles]
+
+      // Sort
+      articles.sort((a, b) => {
+        const aTime = new Date(a.fields.date).getTime()
+        const bTime = new Date(b.fields.date).getTime()
+        return bTime - aTime
+      })
+
+      // Filter
+      const { filter } = this.$route.params
+
+      return articles.filter(article => {
+        const articleCategories = article.fields.categories.map(
+          ({ fields }) => fields.slug
+        )
+
+        return filter ? articleCategories.includes(filter) : true
+      })
     },
     cityLocaleArticles() {
       const { locale, $route } = this
@@ -189,29 +210,4 @@ export default {
 .blog-categories > li
   margin-top: 8px
   margin-left: 8px
-
-.blog-list
-  display: flex
-
-  @media (max-width: $tab-sm)
-    flex-direction: column
-    margin-top: -24px
-    margin-bottom: 48px
-
-  @media (min-width: $tab-sm + 1)
-    flex-wrap: wrap
-
-    margin-bottom: 4.58vw
-    margin-top: -4.58vw
-    margin-left: -4.58vw
-
-.blog-list > li
-  @media (min-width: $tab-sm + 1)
-    margin-top: 4.58vw
-    margin-left: 4.58vw
-    width: calc(50% - 4.58vw)
-
-  @media (max-width: $tab-sm)
-    width: 100%
-    margin-top: 24px
 </style>

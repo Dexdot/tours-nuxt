@@ -71,9 +71,6 @@ export default {
       text: ''
     }
   }),
-  mounted() {
-    console.log('form', this)
-  },
   methods: {
     isFormValid() {
       if (this.$refs && Object.keys(this.$refs).length > 0) {

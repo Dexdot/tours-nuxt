@@ -1,19 +1,5 @@
 import client from "~/api/client";
 
-export const findYearInString = s =>
-  s.split(/[^\d]/).filter(n => {
-    if (n >= 1900 && n <= 2099) return n;
-  });
-
-export const setCaseYear = project => {
-  if (project.fields) {
-    project.fields.year = +findYearInString(project.fields.date)[0];
-  } else {
-    project.year = +findYearInString(project.date)[0];
-  }
-  return project;
-};
-
 export const isImage = ({ fields }) =>
   fields.file.contentType.split("/")[0] === "image";
 
@@ -85,49 +71,5 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
 
   return `${url}?${encodeParams(params)}`;
 };
-
-// Cases assets / links
-const loadContentItem = item =>
-  new Promise(resolve => {
-    const isAssetLink =
-      item.nodeType === "embedded-entry-block" &&
-      item.data.target.sys.type === "Link";
-
-    if (!isAssetLink) {
-      resolve(item);
-    } else {
-      client.getEntry(item.data.target.sys.id).then(entry => {
-        item.data.target = { ...entry };
-        resolve(item);
-      });
-    }
-  });
-
-const processCase = project =>
-  new Promise(async resolve => {
-    // Categories
-    const categoriesPromises = project.fields.categories.map(({ sys }) =>
-      loadCategory(sys.id)
-    );
-    const categories = await Promise.all(categoriesPromises);
-    project.fields.categories = [...categories];
-
-    // Rich content
-    const contentPromises = project.fields.content.content.map(item =>
-      loadContentItem(item)
-    );
-    const content = await Promise.all(contentPromises);
-    project.fields.content.content = [...content];
-
-    project = { ...setCaseYear(project) };
-    resolve(project);
-  });
-
-export const loadCasesAssets = cases =>
-  new Promise(async resolve => {
-    const casesPromises = cases.map(processCase);
-    const processedCases = await Promise.all(casesPromises);
-    resolve(processedCases);
-  });
 
 export const copyObject = obj => JSON.parse(JSON.stringify(obj));

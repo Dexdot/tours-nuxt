@@ -160,7 +160,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchTour } from '~/api/tours'
 
 import GallerySection from '~/components/GallerySection'
 import GalleryModal from '~/components/GalleryModal'

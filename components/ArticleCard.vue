@@ -13,7 +13,7 @@
     </div>
 
     <div class="blog-li__content">
-      <p class="blog-li__date t-ttu">{{ article.fields.date }}</p>
+      <p class="blog-li__date t-ttu">{{ article.fields.dateText }}</p>
       <h3 class="blog-li__title t-h5">{{ article.fields.title }}</h3>
       <p class="blog-li__read">{{ $t('blog.readArticle') }}</p>
     </div>

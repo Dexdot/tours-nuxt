@@ -23,7 +23,11 @@
 
           <div
             class="select-text"
-            v-if="$route.name && !$route.name.includes('tour-')"
+            v-if="
+              $route.name &&
+                !$route.name.includes('tour-') &&
+                !$route.name.includes('blog-slug')
+            "
           >
             <svg-icon name="chevron" />
 

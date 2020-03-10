@@ -71,6 +71,7 @@ const lang = {
   },
   blog: {
     title: "Блог",
+    otherTitle: "Другие статьи",
     readArticle: "Читать статью"
   },
   faq: {
