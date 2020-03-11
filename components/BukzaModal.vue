@@ -84,7 +84,4 @@ export default {
 
 .modal--bukza-modal /deep/ .modal__content
   background-color: #151515
-
-.bukza-container /deep/ iframe
-  height: 100vh !important
 </style>
