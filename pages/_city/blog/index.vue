@@ -6,7 +6,15 @@
           <div class="blog-head t-tac">
             <h1 class="blog-title">{{ $t('blog.title') }}</h1>
             <ul class="blog-categories u-fxw u-center">
-              <li v-for="category in categories" :key="category.fields.slug">
+              <li
+                :class="{
+                  active: $route.params.filter
+                    ? $route.params.filter === category.fields.slug
+                    : true
+                }"
+                v-for="category in categories"
+                :key="category.fields.slug"
+              >
                 <nuxt-link
                   class="btn-outline"
                   :to="$cityLocalePath(`/blog/filter/${category.fields.slug}`)"
@@ -107,8 +115,7 @@ export default {
         return [
           ...currentTags,
           ...articleCategories.filter(
-            ({ fields }) =>
-              !currentSlugs.includes(fields.slug) && fields.slug !== filter
+            ({ fields }) => !currentSlugs.includes(fields.slug)
           )
         ]
       }, [])
@@ -210,4 +217,11 @@ export default {
 .blog-categories > li
   margin-top: 8px
   margin-left: 8px
+
+  opacity: 0.2
+  transition: $trs
+
+  &:hover,
+  &.active
+    opacity: 1
 </style>
