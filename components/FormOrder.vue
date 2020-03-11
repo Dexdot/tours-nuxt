@@ -10,7 +10,7 @@
         </p>
       </div>
 
-      <div class="form-order__price-item">
+      <div class="form-order__price-item" v-if="tourData.priceChild">
         <b>
           {{ tourData.priceChild }}
         </b>

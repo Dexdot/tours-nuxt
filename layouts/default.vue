@@ -17,7 +17,6 @@
     <CallbackModal :active="isCallbackActive" />
 
     <Cover />
-    <Intro v-show="!introCompleted" @complete="introCompleted = true" />
   </div>
 </template>
 
@@ -28,7 +27,6 @@ import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import Menu from '~/components/Menu'
 import Cover from '~/components/Cover'
-import Intro from '~/components/Intro'
 import BukzaModal from '~/components/BukzaModal'
 import CallbackModal from '~/components/CallbackModal'
 
@@ -40,7 +38,6 @@ export default {
     Header,
     Footer,
     Menu,
-    Intro,
     Cover,
     BukzaModal,
     CallbackModal

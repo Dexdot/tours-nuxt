@@ -71,6 +71,7 @@ const lang = {
   },
   blog: {
     title: "Блог",
+    categoryAll: "Все",
     otherTitle: "Другие статьи",
     readArticle: "Читать статью"
   },

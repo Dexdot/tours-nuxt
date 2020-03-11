@@ -7,6 +7,14 @@
             <h1 class="blog-title">{{ $t('blog.title') }}</h1>
             <ul class="blog-categories u-fxw u-center">
               <li
+                v-if="$route.params.filter && $route.params.filter.length > 0"
+              >
+                <nuxt-link class="btn-outline" :to="$cityLocalePath('/blog')">{{
+                  $t('blog.categoryAll')
+                }}</nuxt-link>
+              </li>
+
+              <li
                 :class="{
                   active: $route.params.filter
                     ? $route.params.filter === category.fields.slug

@@ -7,9 +7,7 @@ import { gsap } from 'gsap'
 
 export default {
   mounted() {
-    window.addEventListener('load', () => {
-      this.animate()
-    })
+    this.animate()
   },
   methods: {
     async animate() {
