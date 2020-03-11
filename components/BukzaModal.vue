@@ -47,7 +47,7 @@ export default {
         const s = d.createElement('script')
         s.type = 'text/javascript'
         s.async = true
-        s.src = `https://public.bukza.com/api/script/generate/12529/${
+        s.src = `https://public.bukza.com/api/script/generate/11417/${
           this.id
         }/BukzaContainer${this.id}?t=${new Date().getTime()}`
         const { ss } = this.$refs

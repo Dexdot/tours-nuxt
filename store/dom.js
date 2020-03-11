@@ -1,4 +1,4 @@
-const defaultBukzaID = "11621";
+const defaultBukzaID = "10597";
 
 export const state = () => ({
   bukzaID: defaultBukzaID,
