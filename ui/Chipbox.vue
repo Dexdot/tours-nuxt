@@ -1,6 +1,9 @@
 <template>
   <button
-    :class="['chipbox', { 'chipbox--white': white, active }]"
+    :class="[
+      'chipbox',
+      { 'chipbox--sm': small, 'chipbox--white': white, active }
+    ]"
     type="button"
     @click="$emit('click')"
   >
@@ -16,6 +19,10 @@ export default {
       default: false
     },
     white: {
+      type: Boolean,
+      default: false
+    },
+    small: {
       type: Boolean,
       default: false
     }
@@ -60,4 +67,11 @@ export default {
 
   &.active
     background: #fff
+
+
+.chipbox--sm
+  padding: 0 8px
+  height: 20px
+  line-height: 20px
+  font-size: 10px
 </style>

@@ -21,25 +21,18 @@
             <svg-icon name="logo" />
           </nuxt-link>
 
-          <div
-            class="select-text"
+          <button
+            @click="isCitiesSelectActive = !isCitiesSelectActive"
+            :class="['header__select t-ttu', { active: isCitiesSelectActive }]"
             v-if="
               $route.name &&
                 !$route.name.includes('tour-') &&
                 !$route.name.includes('blog-slug')
             "
           >
+            {{ $t('cities')[city] }}
             <svg-icon name="chevron" />
-
-            <select v-model="city">
-              <option
-                v-for="key in Object.keys($t('cities'))"
-                :key="key"
-                :value="key"
-                >{{ $t('cities')[key] }}</option
-              >
-            </select>
-          </div>
+          </button>
         </div>
 
         <nav class="header__nav">
@@ -95,6 +88,14 @@
         />
       </div>
     </div>
+
+    <ul :class="['header__cities', { active: isCitiesSelectActive }]">
+      <li v-for="key in Object.keys($t('cities'))" :key="key">
+        <Chipbox small @click="onChipboxClick(key)">{{
+          $t('cities')[key]
+        }}</Chipbox>
+      </li>
+    </ul>
   </header>
 </template>
 
@@ -102,6 +103,7 @@
 import { mapGetters } from 'vuex'
 
 import ButtonBurger from '~/ui/ButtonBurger'
+import Chipbox from '~/ui/Chipbox'
 import SocialList from '~/components/SocialList'
 
 import city from '~/mixins/city'
@@ -110,7 +112,8 @@ export default {
   mixins: [city],
   components: {
     ButtonBurger,
-    SocialList
+    SocialList,
+    Chipbox
   },
   props: {
     isCallbackActive: { type: Boolean, default: false },
@@ -120,7 +123,8 @@ export default {
   data: () => ({
     scrollY: 0,
     dir: 'down',
-    isMob: false
+    isMob: false,
+    isCitiesSelectActive: false
   }),
   computed: {
     ...mapGetters({
@@ -167,6 +171,10 @@ export default {
     },
     onResize() {
       this.isMob = window.innerWidth <= 1040
+    },
+    onChipboxClick(city) {
+      this.isCitiesSelectActive = false
+      this.$router.push({ params: { city } })
     }
   }
 }
@@ -265,26 +273,63 @@ export default {
 .header__logo
   height: 72px
 
+
+// Select
 .header:not(.header--fixed)
-  .header__logo-wrap .select-text
+  .header__select,
+  .header__cities
     opacity: 0
     pointer-events: none
 
-.header__logo-wrap .select-text
-  line-height: 1
-  transition: $trs
+.header__select
+  font-size: 10px
+  transition: opacity $trs
 
-  select
-    font-size: 10px
-    padding-right: 10px
+  margin-top: 4px
+  display: flex
+  align-items: center
 
   .i-chevron
+    margin-left: 4px
     width: 8px
     height: 8px
+    transform: rotate(90deg)
+    transition: $trs
+  
+  &.active .i-chevron
+    transform: rotate(-90deg)
+
+
+// Dropdown cities
+.header__cities
+  position: absolute
+  top: 100%
+  left: 0
+
+  width: 100%
+  height: 48px
+  padding: 0 $unit
+
+  display: flex
+  align-items: center
+
+  background: $beige-d
+  transition: opacity $trs
+
+  &:not(.active)
+    opacity: 0
+    pointer-events: none
+
+  > li
+    margin-right: 4px 
+
+  /deep/ .chipbox
+    border: 1px solid $black
 
 
 // Hide on tab/mob
-.header__logo-wrap .select-text,
+.header__cities,
+.header__select,
 .header__contact,
 .header .btn,
 .header__nav

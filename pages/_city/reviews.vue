@@ -374,6 +374,9 @@ $reviews-pt: calc(var(--header-h) + 13vh)
   @media (max-width: $tab)
     margin-bottom: 24px
 
+.reviews-control .t-ttu
+  +mont(m)
+
 .reviews-control p
   margin-bottom: 4px
 
