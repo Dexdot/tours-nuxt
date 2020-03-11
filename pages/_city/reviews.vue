@@ -9,6 +9,7 @@
             <div class="reviews-controls reviews-controls--desktop">
               <div class="reviews-control">
                 <p class="t-ttu">{{ $t('reviews.selectTypeTitle') }}</p>
+
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
@@ -25,6 +26,7 @@
                 <p class="t-ttu">
                   {{ $t('reviews.selectTourNotChosenTitle') }}
                 </p>
+
                 <div class="select-text">
                   <select v-model="selectedTour">
                     <option value="">{{
@@ -199,48 +201,33 @@ export default {
         )
 
         return tour.fields.reviews
-      } else {
-        return this.reviews.filter(({ fields }) => {
-          // City
-          const sameCity = fields.city === this.$route.params.city
-
-          // Locale
-          const sameLocale = fields.locale === this.locale
-
-          // Type
-          let sameType
-          switch (this.typeOfTours) {
-            case 'all':
-              sameType = true
-              break
-            case 'group':
-              sameType = !fields.makeIndividual
-              break
-            case 'individual':
-              sameType = fields.makeIndividual
-              break
-            default:
-              break
-          }
-
-          return sameCity && sameLocale && sameType
-        })
       }
-    },
-    localeTours() {
-      const { locale, $route } = this
-      const { city, id } = $route.params
 
-      return this.allTours
-        .filter(tour => {
-          const localeTour = tour[locale]
-          if (!localeTour) {
-            return false
-          }
+      return this.reviews.filter(({ fields }) => {
+        // City
+        const sameCity = fields.city === this.$route.params.city
 
-          return !!localeTour ? localeTour.fields.city === city : false
-        })
-        .map(tour => tour[locale])
+        // Locale
+        const sameLocale = fields.locale === this.locale
+
+        // Type
+        let sameType
+        switch (this.typeOfTours) {
+          case 'all':
+            sameType = true
+            break
+          case 'group':
+            sameType = !fields.makeIndividual
+            break
+          case 'individual':
+            sameType = fields.makeIndividual
+            break
+          default:
+            break
+        }
+
+        return sameCity && sameLocale && sameType
+      })
     },
     filteredTours() {
       return this.localeTours.filter(({ fields }) => {
@@ -262,6 +249,21 @@ export default {
     otherTours() {
       return this.localeTours.slice(0, 8)
     },
+    localeTours() {
+      const { locale, $route } = this
+      const { city, id } = $route.params
+
+      return this.allTours
+        .filter(tour => {
+          const localeTour = tour[locale]
+          if (!localeTour) {
+            return false
+          }
+
+          return !!localeTour ? localeTour.fields.city === city : false
+        })
+        .map(tour => tour[locale])
+    },
     aggregators() {
       return this.generalData.aggregators.map(img => {
         const copy = { ...img }
@@ -278,6 +280,19 @@ export default {
     }
   },
   watch: {
+    typeOfTours(typeOfTours) {
+      if (typeOfTours === 'all') return false
+
+      if (this.selectedTour) {
+        const tour = this.localeTours.find(
+          tour => tour.fields.slug === this.selectedTour
+        )
+        const tourType = tour.fields.makeIndividual ? 'individual' : 'group'
+        if (typeOfTours !== tourType) {
+          this.selectedTour = ''
+        }
+      }
+    },
     selectedTour(selectedTour) {
       if (selectedTour) {
         const tour = this.filteredTours.find(
