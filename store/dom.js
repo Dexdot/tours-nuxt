@@ -1,7 +1,5 @@
-const defaultBukzaID = "10597";
-
 export const state = () => ({
-  bukzaID: defaultBukzaID,
+  bukzaID: "",
   scrollTop: 0,
   scrollDisabled: false,
   isMenuActive: false,
@@ -93,8 +91,9 @@ export const actions = {
       commit("enableScroll");
     }
   },
-  showBukza({ commit }, bukzaID = defaultBukzaID) {
-    commit("setBukzaID", bukzaID);
+  showBukza({ commit, rootGetters }, bukzaID) {
+    const id = bukzaID || rootGetters["general/data"].bukzaId;
+    commit("setBukzaID", id);
     commit("setBukzaActive", true);
   },
   hideBukza({ commit }) {

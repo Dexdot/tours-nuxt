@@ -127,10 +127,13 @@
 
           <div class="tour-page__right">
             <FormOrder
-              :price="tourData.price"
-              :priceChild="tourData.priceChild"
-              :offerTitle="tourData.offerTitle"
-              :offerText="tourData.offerText"
+              :tourData="{
+                bukzaId: tourData.bukzaId,
+                price: tourData.price,
+                priceChild: tourData.priceChild,
+                offerTitle: tourData.offerTitle,
+                offerText: tourData.offerText
+              }"
             />
           </div>
         </div>

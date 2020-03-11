@@ -3,7 +3,7 @@
     <div class="form-order__price">
       <div class="form-order__price-item">
         <b>
-          {{ price }}
+          {{ tourData.price }}
         </b>
         <p>
           {{ $t('formOrder.price') }}
@@ -12,7 +12,7 @@
 
       <div class="form-order__price-item">
         <b>
-          {{ priceChild }}
+          {{ tourData.priceChild }}
         </b>
         <p>
           {{ $t('formOrder.priceChild') }}
@@ -22,16 +22,21 @@
 
     <div class="form-order__controls">
       <p>{{ $t('formOrder.title') }}</p>
-      <BaseButton>{{ $t('formOrder.button') }}</BaseButton>
+      <BaseButton @click="$store.dispatch('dom/showBukza', tourData.bukzaId)">{{
+        $t('formOrder.button')
+      }}</BaseButton>
       <small>
         {{ $t('formOrder.subtitle') }}
       </small>
     </div>
 
-    <div class="form-order__action" v-if="offerTitle || offerText">
+    <div
+      class="form-order__action"
+      v-if="tourData.offerTitle || tourData.offerText"
+    >
       <div class="form-order__action-text">
-        <b v-if="offerTitle">{{ offerTitle }}</b>
-        <p v-if="offerText">{{ offerText }}</p>
+        <b v-if="tourData.offerTitle">{{ tourData.offerTitle }}</b>
+        <p v-if="tourData.offerText">{{ tourData.offerText }}</p>
       </div>
       <img
         class="form-order__action-icon"
@@ -45,10 +50,10 @@
 <script>
 export default {
   props: {
-    price: { type: String, required: true },
-    priceChild: { type: String, required: true },
-    offerTitle: { type: String, required: false },
-    offerText: { type: String, required: false }
+    tourData: {
+      type: Object,
+      required: true
+    }
   }
 }
 </script>

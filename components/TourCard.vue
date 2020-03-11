@@ -31,9 +31,9 @@
         <svg-icon name="clock"></svg-icon>
         <p>{{ tour.fields.duration }}</p>
       </li>
-      <li>
+      <li v-if="tour.fields.venueShort || tour.fields.venue">
         <svg-icon name="pin"></svg-icon>
-        <p>{{ tour.fields.venue }}</p>
+        <p>{{ tour.fields.venueShort || tour.fields.venue }}</p>
       </li>
     </ul>
 
