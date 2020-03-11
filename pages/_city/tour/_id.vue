@@ -392,6 +392,10 @@ export default {
     margin-bottom: 48px
 
 
+.tour-page__content-inner /deep/ a
+  +link($acc)
+
+
 // Title
 .tour-page__title
   margin-bottom: 32px

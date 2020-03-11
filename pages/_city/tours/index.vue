@@ -7,16 +7,20 @@
             <h1 class="t-h3 catalog-title">{{ $t('tours.title') }}</h1>
             <ul class="catalog-tabs">
               <li v-for="key in Object.keys($t('tourTypes'))" :key="key">
-                <button
+                <nuxt-link
                   :class="[
                     'catalog-tab t-ttu',
-                    { active: key === typeOfTours }
+                    {
+                      active:
+                        key === 'all'
+                          ? !$route.params.filter || $route.params.filter === ''
+                          : key === $route.params.filter
+                    }
                   ]"
-                  type="button"
-                  @click="typeOfTours = key"
+                  :to="$cityLocalePath(`/tours/${key === 'all' ? '' : key}`)"
                 >
                   {{ $t('tourTypes')[key] }}
-                </button>
+                </nuxt-link>
               </li>
             </ul>
           </div>
@@ -36,7 +40,10 @@
           <div class="select-text">
             <svg-icon name="chevron" />
 
-            <select v-model="typeOfTours">
+            <select
+              v-model="selectedFilter"
+              @change="onSelectChange($event.target.value)"
+            >
               <option
                 v-for="key in Object.keys($t('tourTypes'))"
                 :key="key"
@@ -139,12 +146,18 @@ export default {
       ]
     }
   },
-  data: () => ({
-    typeOfTours: 'all'
-  }),
-  async asyncData({ store }) {
+  async asyncData({ store, route, error }) {
+    const { filter } = route.params
+    if (filter && !['group', 'individual'].includes(filter)) {
+      error({ statusCode: 404 })
+    }
+
     if (store.getters['tours/allTours'].length <= 1)
       await store.dispatch('tours/loadAllTours')
+
+    return {
+      selectedFilter: filter || 'all'
+    }
   },
   computed: {
     ...mapGetters({
@@ -162,10 +175,10 @@ export default {
     },
     filteredTours() {
       return this.cityLocaleTours.filter(({ fields }) => {
-        switch (this.typeOfTours) {
-          case 'all':
-            return true
-            break
+        const { filter } = this.$route.params
+        if (!filter) return true
+
+        switch (filter) {
           case 'group':
             return !fields.makeIndividual
             break
@@ -220,6 +233,10 @@ export default {
   methods: {
     onChipboxClick(city) {
       this.$router.push({ params: { city } })
+    },
+    onSelectChange(v) {
+      const filter = v === 'all' ? '' : v
+      this.$router.push(this.$cityLocalePath(`/tours/${filter}`))
     }
   }
 }

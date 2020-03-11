@@ -88,7 +88,19 @@ export default {
       return this.images[this.index]
     }
   },
+  mounted() {
+    window.addEventListener('keyup', this.onKeyup.bind(this))
+  },
+  beforeDestroy() {
+    window.removeEventListener('keyup', this.onKeyup)
+  },
   methods: {
+    onKeyup({ keyCode }) {
+      if (!this.active) return false
+
+      if ([37, 38].includes(keyCode)) this.prev()
+      if ([39, 40].includes(keyCode)) this.next()
+    },
     prev() {
       this.setIndex(this.index <= 0 ? this.images.length - 1 : this.index - 1)
     },

@@ -422,6 +422,9 @@ export default {
   padding-right: 0.16em
 
 .article-content /deep/
+  a
+    +link($acc)
+
   p
     margin-bottom: 24px
 
