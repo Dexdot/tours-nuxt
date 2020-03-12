@@ -31,7 +31,10 @@ export const mutations = {
 
 export const actions = {
   async loadAllTours({ commit, rootGetters }) {
-    const tours = await fetchTours({ locale: rootGetters["lang/localeCode"] });
+    const tours = await fetchTours({
+      locale: rootGetters["lang/localeCode"],
+      "fields.city": rootGetters["lang/city"]
+    });
 
     const toursMap = {};
     tours.forEach(tour => {

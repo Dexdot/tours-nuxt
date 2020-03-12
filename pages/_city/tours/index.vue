@@ -232,7 +232,7 @@ export default {
   },
   methods: {
     onChipboxClick(city) {
-      this.$router.push({ params: { city } })
+      this.city = city
     },
     onSelectChange(v) {
       const filter = v === 'all' ? '' : v

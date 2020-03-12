@@ -1,5 +1,7 @@
-export default ({ app, route }, inject) => {
+export default ({ app }, inject) => {
   inject("cityLocalePath", (path, city) => {
+    const route = app.router.currentRoute;
+
     // City
     let routeCity = route.params.city;
 

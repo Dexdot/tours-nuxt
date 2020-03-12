@@ -174,7 +174,7 @@ export default {
     },
     onChipboxClick(city) {
       this.isCitiesSelectActive = false
-      this.$router.push({ params: { city } })
+      this.city = city
     }
   }
 }

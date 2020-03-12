@@ -294,7 +294,7 @@ export default {
   },
   methods: {
     onChipboxClick(city) {
-      this.$router.push({ params: { city } })
+      this.city = city
     }
   }
 }
