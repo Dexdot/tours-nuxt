@@ -240,37 +240,38 @@ export default {
   }),
   async asyncData({ store, params, error }) {
     // Tours
-    const toursInStore = store.getters['tours/tours']
+    const cachedTours = store.getters['tours/cached']
 
-    // Current locale
+    // Current city and locale
     const locale = store.getters['lang/locale']
+    const { city } = params
 
     // Tour ID
     const slug = params.id
 
     let tour
 
-    // Find tour in store
-    if (toursInStore[slug] && toursInStore[slug][locale]) {
-      tour = toursInStore[slug][locale]
+    // Find tour in cache store
+    if (cachedTours[city][locale] && cachedTours[city][locale][slug]) {
+      tour = cachedTours[city][locale][slug]
     }
 
     // Load tour from API
     else {
       try {
         tour = await store.dispatch('tours/loadTour', slug)
+        if (!tour) error({ statusCode: 404 })
       } catch (e) {
         error({ statusCode: 404 })
       }
     }
 
     // 404
-    if (!tour || params.city !== tour.fields.city) {
+    if (tour.fields.city !== city) {
       error({ statusCode: 404 })
     }
 
-    if (store.getters['tours/allTours'].length <= 1)
-      await store.dispatch('tours/loadAllTours')
+    await store.dispatch('tours/loadTours')
 
     return { tour }
   },
@@ -286,19 +287,9 @@ export default {
       return this.tour.fields
     },
     otherTours() {
-      const { locale, $route } = this
-      const { city, id } = $route.params
-
-      const filteredTours = this.allTours.filter(tour => {
-        const localeTour = tour[locale]
-        if (!localeTour || localeTour.fields.slug === id) {
-          return false
-        }
-
-        return !!localeTour ? localeTour.fields.city === city : false
-      })
-
-      return filteredTours.map(tour => tour[locale]).slice(0, 8)
+      return this.allTours
+        .filter(({ fields }) => fields.slug !== this.tourData.slug)
+        .slice(0, 8)
     }
   },
   methods: {

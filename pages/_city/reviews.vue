@@ -170,17 +170,14 @@ export default {
       ]
     }
   },
-  async asyncData({ store }) {
+  async fetch({ store }) {
     // Tours
-    if (store.getters['tours/allTours'].length <= 1)
-      await store.dispatch('tours/loadAllTours')
+    await store.dispatch('tours/loadTours')
 
     // Reviews
     const reviewsInStore = store.getters['reviews/reviews']
     if (reviewsInStore.length <= 0)
       await store.dispatch('reviews/loadAllReviews')
-
-    return {}
   },
   data: () => ({
     isReviewRatesModalVisible: false,
@@ -230,7 +227,7 @@ export default {
       })
     },
     filteredTours() {
-      return this.localeTours.filter(({ fields }) => {
+      return this.allTours.filter(({ fields }) => {
         switch (this.typeOfTours) {
           case 'all':
             return true
@@ -247,22 +244,7 @@ export default {
       })
     },
     otherTours() {
-      return this.localeTours.slice(0, 8)
-    },
-    localeTours() {
-      const { locale, $route } = this
-      const { city, id } = $route.params
-
-      return this.allTours
-        .filter(tour => {
-          const localeTour = tour[locale]
-          if (!localeTour) {
-            return false
-          }
-
-          return !!localeTour ? localeTour.fields.city === city : false
-        })
-        .map(tour => tour[locale])
+      return this.allTours.slice(0, 8)
     },
     aggregators() {
       return this.generalData.aggregators.map(img => {
@@ -284,7 +266,7 @@ export default {
       if (typeOfTours === 'all') return false
 
       if (this.selectedTour) {
-        const tour = this.localeTours.find(
+        const tour = this.allTours.find(
           tour => tour.fields.slug === this.selectedTour
         )
         const tourType = tour.fields.makeIndividual ? 'individual' : 'group'

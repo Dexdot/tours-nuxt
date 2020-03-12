@@ -85,17 +85,13 @@ export default {
       ]
     }
   },
-  async asyncData({ store }) {
-    // Tours
-    if (store.getters['tours/allTours'].length <= 1)
-      await store.dispatch('tours/loadAllTours')
+  async fetch({ store }) {
+    await store.dispatch('tours/loadTours')
 
     // Reviews
     const reviewsInStore = store.getters['reviews/reviews']
     if (reviewsInStore.length <= 0)
       await store.dispatch('reviews/loadAllReviews')
-
-    return {}
   },
   computed: {
     ...mapGetters({
@@ -118,23 +114,8 @@ export default {
         return sameCity && sameLocale
       })
     },
-    localeTours() {
-      const { locale, $route } = this
-      const { city, id } = $route.params
-
-      return this.allTours
-        .filter(tour => {
-          const localeTour = tour[locale]
-          if (!localeTour) {
-            return false
-          }
-
-          return !!localeTour ? localeTour.fields.city === city : false
-        })
-        .map(tour => tour[locale])
-    },
     otherTours() {
-      return this.localeTours.slice(0, 8)
+      return this.allTours.slice(0, 8)
     }
   }
 }

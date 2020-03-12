@@ -14,13 +14,12 @@ export const fetchTours = options =>
       });
   });
 
-export const fetchTour = ({ slug, locale }) =>
+export const fetchTour = options =>
   new Promise((resolve, reject) => {
     client
       .getEntries({
         content_type: "tour",
-        "fields.slug": slug,
-        locale
+        ...options
       })
       .then(({ items }) => {
         const tour = items[0] && "fields" in items[0] ? items[0] : null;

@@ -152,8 +152,7 @@ export default {
       error({ statusCode: 404 })
     }
 
-    if (store.getters['tours/allTours'].length <= 1)
-      await store.dispatch('tours/loadAllTours')
+    await store.dispatch('tours/loadTours')
 
     return {
       selectedFilter: filter || 'all'
@@ -174,7 +173,7 @@ export default {
       return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i)
     },
     filteredTours() {
-      return this.cityLocaleTours.filter(({ fields }) => {
+      return this.allTours.filter(({ fields }) => {
         const { filter } = this.$route.params
         if (!filter) return true
 
@@ -189,22 +188,6 @@ export default {
             break
         }
       })
-    },
-    cityLocaleTours() {
-      const { locale, $route } = this
-
-      const filteredTours = this.allTours.filter(tour => {
-        const localeTour = tour[locale]
-        if (!localeTour) {
-          return false
-        }
-
-        return !!localeTour
-          ? localeTour.fields.city === $route.params.city
-          : false
-      })
-
-      return filteredTours.map(tour => tour[locale])
     },
     instagramData() {
       const { general } = this

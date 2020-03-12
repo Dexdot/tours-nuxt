@@ -30,7 +30,7 @@ export default {
   props: ['error'],
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
+      popularTours: 'tours/popularTours',
       locale: 'lang/locale'
     }),
     city() {
@@ -48,35 +48,17 @@ export default {
       }
 
       return city
-    },
-    popularTours() {
-      const { locale, city, allTours } = this
-
-      const filteredTours = allTours.filter(tour => {
-        const localeTour = tour[locale]
-        if (!localeTour) {
-          return false
-        }
-
-        return !!localeTour ? localeTour.fields.city === city : false
-      })
-
-      return filteredTours
-        .map(tour => tour[locale])
-        .filter(tour => tour.fields.showInPopularSection)
     }
   },
   serverPrefetch() {
     return this.loadTours()
   },
   mounted() {
-    if (!this.allTours || this.allTours.length <= 0) {
-      this.loadTours()
-    }
+    this.loadTours()
   },
   methods: {
     loadTours() {
-      return this.$store.dispatch('tours/loadAllTours')
+      return this.$store.dispatch('tours/loadTours', this.city)
     }
   }
 }

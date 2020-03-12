@@ -229,15 +229,13 @@ export default {
       ]
     }
   },
-  async asyncData({ store, route }) {
+  async fetch({ store, route }) {
     await store.dispatch('main/load', route.params.city)
-
-    if (store.getters['tours/allTours'].length <= 1)
-      await store.dispatch('tours/loadAllTours')
+    await store.dispatch('tours/loadTours')
   },
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
+      tours: 'tours/popularTours',
       main: 'main/data',
       general: 'general/data',
       locale: 'lang/locale'
@@ -249,24 +247,6 @@ export default {
 
       const ids = reviews.map(r => r.sys.id)
       return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i)
-    },
-    tours() {
-      const { locale, $route } = this
-
-      const filteredTours = this.allTours.filter(tour => {
-        const localeTour = tour[locale]
-        if (!localeTour) {
-          return false
-        }
-
-        return !!localeTour
-          ? localeTour.fields.city === $route.params.city
-          : false
-      })
-
-      return filteredTours
-        .map(tour => tour[locale])
-        .filter(tour => tour.fields.showInPopularSection)
     },
     instagramData() {
       const { general } = this

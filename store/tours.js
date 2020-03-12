@@ -1,58 +1,99 @@
+import { copyObject } from "~/assets/scripts/helpers";
 import { fetchTours, fetchTour } from "~/api/tours";
 
 export const state = () => ({
-  tours: {}
+  data: {},
+  cached: {
+    spb: {
+      ru: null,
+      en: null
+    },
+    tallin: {
+      ru: null,
+      en: null
+    }
+  }
 });
 
 export const getters = {
-  tours({ tours }) {
-    return tours;
+  popularTours({ data }, { allTours }) {
+    return allTours.filter(tour => tour.fields.showInPopularSection);
   },
-  allTours({ tours }) {
-    return Object.values(tours);
+  allTours({ data }) {
+    return Object.values(data);
+  },
+  data({ data }) {
+    return data;
+  },
+  cached({ cached }) {
+    return cached;
   }
 };
 
 export const mutations = {
-  setTours(state, tours) {
-    state.tours = { ...tours };
+  setData(state, data) {
+    state.data = data;
   },
-  setTour({ tours }, { tour, locale }) {
-    const tourInStore = tours[tour.fields.slug];
+  setCached(state, cached) {
+    state.cached = cached;
+  },
+  setTour(state, { tour, city, locale }) {
+    const data = copyObject(state.data);
+    const cached = copyObject(state.cached);
 
-    if (tourInStore) {
-      tours[tour.fields.slug][locale] = tour;
-    } else {
-      tours[tour.fields.slug] = {};
-      tours[tour.fields.slug][locale] = tour;
-    }
+    data[tour.fields.slug] = tour;
+    state.data = { ...data };
+
+    if (!cached[city][locale]) cached[city][locale] = {};
+
+    cached[city][locale][tour.fields.slug] = tour;
+    state.cached = { ...cached };
   }
 };
 
 export const actions = {
-  async loadAllTours({ commit, rootGetters }) {
-    const tours = await fetchTours({
-      locale: rootGetters["lang/localeCode"],
-      "fields.city": rootGetters["lang/city"]
-    });
+  async loadTours({ commit, getters, rootGetters }, paramCity) {
+    const currentLocale = rootGetters["lang/locale"];
+    const locale = rootGetters["lang/localeCode"];
+    const city = paramCity || rootGetters["lang/city"];
+
+    const cached = copyObject(getters.cached);
+
+    let tours;
+    if (cached[city][currentLocale]) {
+      tours = Object.values(cached[city][currentLocale]);
+    } else {
+      tours = await fetchTours({
+        "fields.city": city,
+        locale
+      });
+    }
 
     const toursMap = {};
     tours.forEach(tour => {
-      const locale = rootGetters["lang/locale"];
-      toursMap[tour.fields.slug] = {};
-      toursMap[tour.fields.slug][locale] = tour;
+      toursMap[tour.fields.slug] = tour;
     });
 
-    commit("setTours", toursMap);
+    // Set & save data in cache
+    cached[city][currentLocale] = toursMap;
+    commit("setCached", cached);
+
+    // Set data
+    commit("setData", toursMap);
     return toursMap;
   },
   async loadTour({ commit, rootGetters }, slug) {
+    const locale = rootGetters["lang/locale"];
+    const localeCode = rootGetters["lang/localeCode"];
+    const city = rootGetters["lang/city"];
+
     const tour = await fetchTour({
-      slug,
-      locale: rootGetters["lang/localeCode"]
+      "fields.slug": slug,
+      "fields.city": city,
+      locale: localeCode
     });
 
-    commit("setTour", { tour, locale: rootGetters["lang/locale"] });
+    commit("setTour", { tour, city, locale });
     return tour;
   }
 };
