@@ -103,9 +103,8 @@ export default {
     ArticleCard,
     Pagen
   },
-  async asyncData({ store }) {
-    if (store.getters['blog/allArticles'].length <= 1)
-      await store.dispatch('blog/loadAllArticles')
+  async fetch({ store }) {
+    await store.dispatch('blog/loadArticles')
   },
   computed: {
     ...mapGetters({
@@ -116,7 +115,7 @@ export default {
     categories() {
       const filter = this.$route.params.filter || ''
 
-      return this.cityLocaleArticles.reduce((currentTags, { fields }) => {
+      return this.allArticles.reduce((currentTags, { fields }) => {
         const currentSlugs = currentTags.map(({ fields }) => fields.slug)
         const articleCategories = fields.categories || []
 
@@ -129,7 +128,7 @@ export default {
       }, [])
     },
     sortedArticles() {
-      const articles = [...this.cityLocaleArticles]
+      const articles = [...this.allArticles]
 
       // Sort
       articles.sort((a, b) => {
@@ -148,27 +147,10 @@ export default {
 
         return filter ? articleCategories.includes(filter) : true
       })
-    },
-    cityLocaleArticles() {
-      const { locale, $route } = this
-
-      const filteredArticles = this.allArticles.filter(article => {
-        const localeArticle = article[locale]
-        if (!localeArticle) {
-          return false
-        }
-
-        return !!localeArticle
-          ? localeArticle.fields.city === $route.params.city
-          : false
-      })
-
-      return filteredArticles.map(article => article[locale])
     }
   }
 }
 </script>
-
 
 <style lang="sass" scoped>
 .blog-section

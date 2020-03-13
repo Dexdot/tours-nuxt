@@ -36,18 +36,6 @@ export const mutations = {
   },
   setCached(state, cached) {
     state.cached = cached;
-  },
-  setTour(state, { tour, city, locale }) {
-    const data = copyObject(state.data);
-    const cached = copyObject(state.cached);
-
-    data[tour.fields.slug] = tour;
-    state.data = { ...data };
-
-    if (!cached[city][locale]) cached[city][locale] = {};
-
-    cached[city][locale][tour.fields.slug] = tour;
-    state.cached = { ...cached };
   }
 };
 
@@ -81,19 +69,5 @@ export const actions = {
     // Set data
     commit("setData", toursMap);
     return toursMap;
-  },
-  async loadTour({ commit, rootGetters }, slug) {
-    const locale = rootGetters["lang/locale"];
-    const localeCode = rootGetters["lang/localeCode"];
-    const city = rootGetters["lang/city"];
-
-    const tour = await fetchTour({
-      "fields.slug": slug,
-      "fields.city": city,
-      locale: localeCode
-    });
-
-    commit("setTour", { tour, city, locale });
-    return tour;
   }
 };

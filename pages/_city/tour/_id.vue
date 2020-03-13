@@ -239,39 +239,19 @@ export default {
     sightsIndex: 0
   }),
   async asyncData({ store, params, error }) {
-    // Tours
-    const cachedTours = store.getters['tours/cached']
-
-    // Current city and locale
-    const locale = store.getters['lang/locale']
+    // Current city
     const { city } = params
 
     // Tour ID
     const slug = params.id
 
-    let tour
-
-    // Find tour in cache store
-    if (cachedTours[city][locale] && cachedTours[city][locale][slug]) {
-      tour = cachedTours[city][locale][slug]
-    }
-
-    // Load tour from API
-    else {
-      try {
-        tour = await store.dispatch('tours/loadTour', slug)
-        if (!tour) error({ statusCode: 404 })
-      } catch (e) {
-        error({ statusCode: 404 })
-      }
-    }
+    const toursMap = await store.dispatch('tours/loadTours')
+    const tour = toursMap[slug]
 
     // 404
-    if (tour.fields.city !== city) {
+    if (!tour || (tour && tour.fields.city !== city)) {
       error({ statusCode: 404 })
     }
-
-    await store.dispatch('tours/loadTours')
 
     return { tour }
   },

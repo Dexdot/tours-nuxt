@@ -182,38 +182,19 @@ export default {
     }
   },
   async asyncData({ store, params, error }) {
-    // Articles
-    const articlesInStore = store.getters['blog/articles']
+    // Current city
+    const { city } = params
 
-    // Current locale
-    const locale = store.getters['lang/locale']
-
-    // Article slug (ID)
+    // Article ID
     const { slug } = params
 
-    let article
-
-    // Find article in store
-    if (articlesInStore[slug] && articlesInStore[slug][locale]) {
-      article = articlesInStore[slug][locale]
-    }
-
-    // Load article from API
-    else {
-      try {
-        article = await store.dispatch('blog/loadArticle', slug)
-      } catch (e) {
-        error({ statusCode: 404 })
-      }
-    }
+    const articlesMap = await store.dispatch('blog/loadArticles')
+    const article = articlesMap[slug]
 
     // 404
-    if (!article || params.city !== article.fields.city) {
+    if (!article || (article && article.fields.city !== city)) {
       error({ statusCode: 404 })
     }
-
-    if (store.getters['blog/allArticles'].length <= 1)
-      await store.dispatch('blog/loadAllArticles')
 
     return { article }
   },
@@ -230,19 +211,9 @@ export default {
       return this.article.fields
     },
     otherArticles() {
-      const { locale, $route } = this
-      const { city, slug } = $route.params
-
-      const filteredArticles = this.allArticles.filter(article => {
-        const localeArticle = article[locale]
-        if (!localeArticle || localeArticle.fields.slug === slug) {
-          return false
-        }
-
-        return !!localeArticle ? localeArticle.fields.city === city : false
-      })
-
-      return filteredArticles.map(article => article[locale]).slice(0, 2)
+      return this.allArticles
+        .filter(({ fields }) => fields.slug !== this.articleData.slug)
+        .slice(0, 2)
     }
   },
   mounted() {
@@ -355,6 +326,7 @@ export default {
     margin-bottom: 48px
 
   @media (min-width: $tab + 1)
+    max-width: mix(2)
     float: left
 
 .article-author
@@ -377,6 +349,7 @@ export default {
     margin: 40px 0
 
 .article-social /deep/
+  max-width: 100%
   @media (max-width: $tab)
     width: 100%
     margin-top: 24px

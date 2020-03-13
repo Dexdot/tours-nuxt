@@ -14,13 +14,12 @@ export const fetchArticles = options =>
       });
   });
 
-export const fetchArticle = ({ slug, locale }) =>
+export const fetchArticle = options =>
   new Promise((resolve, reject) => {
     client
       .getEntries({
         content_type: "article",
-        "fields.slug": slug,
-        locale
+        ...options
       })
       .then(({ items }) => {
         const article = items[0] && "fields" in items[0] ? items[0] : null;

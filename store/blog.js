@@ -1,58 +1,71 @@
+import { copyObject } from "~/assets/scripts/helpers";
 import { fetchArticles, fetchArticle } from "~/api/blog";
 
 export const state = () => ({
-  articles: {}
+  data: {},
+  cached: {
+    spb: {
+      ru: null,
+      en: null
+    },
+    tallin: {
+      ru: null,
+      en: null
+    }
+  }
 });
 
 export const getters = {
-  articles({ articles }) {
-    return articles;
+  allArticles({ data }) {
+    return Object.values(data);
   },
-  allArticles({ articles }) {
-    return Object.values(articles);
+  data({ data }) {
+    return data;
+  },
+  cached({ cached }) {
+    return cached;
   }
 };
 
 export const mutations = {
-  setArticles(state, articles) {
-    state.articles = { ...articles };
+  setData(state, data) {
+    state.data = data;
   },
-  setArticle({ articles }, { article, locale }) {
-    const articleInStore = articles[article.fields.slug];
-
-    if (articleInStore) {
-      articles[article.fields.slug][locale] = article;
-    } else {
-      articles[article.fields.slug] = {};
-      articles[article.fields.slug][locale] = article;
-    }
+  setCached(state, cached) {
+    state.cached = cached;
   }
 };
 
 export const actions = {
-  async loadAllArticles({ commit, rootGetters }) {
-    const articles = await fetchArticles({
-      locale: rootGetters["lang/localeCode"]
-    });
+  async loadArticles({ commit, getters, rootGetters }, paramCity) {
+    const currentLocale = rootGetters["lang/locale"];
+    const locale = rootGetters["lang/localeCode"];
+    const city = paramCity || rootGetters["lang/city"];
+
+    const cached = copyObject(getters.cached);
+
+    let articles;
+    if (cached[city][currentLocale]) {
+      articles = Object.values(cached[city][currentLocale]);
+    } else {
+      articles = await fetchArticles({
+        "fields.city": city,
+        locale
+      });
+    }
 
     const articlesMap = {};
-
     articles.forEach(article => {
-      const locale = rootGetters["lang/locale"];
-      articlesMap[article.fields.slug] = {};
-      articlesMap[article.fields.slug][locale] = article;
+      articlesMap[article.fields.slug] = article;
     });
 
-    commit("setArticles", articlesMap);
+    // Set & save data in cache
+    cached[city][currentLocale] = articlesMap;
+    commit("setCached", cached);
+
+    // Set data
+    commit("setData", articlesMap);
+
     return articlesMap;
-  },
-  async loadArticle({ commit, rootGetters }, slug) {
-    const article = await fetchArticle({
-      slug,
-      locale: rootGetters["lang/localeCode"]
-    });
-
-    commit("setArticle", { article, locale: rootGetters["lang/locale"] });
-    return article;
   }
 };
