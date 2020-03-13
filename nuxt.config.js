@@ -42,7 +42,69 @@ const i18n = [
   }
 ];
 
+const getRedirects = (from, to) => [
+  {
+    from: `^${from}`,
+    to: `${to}`
+  },
+  {
+    from: `^/spb${from}`,
+    to: `/spb${to}`
+  },
+  {
+    from: `^/tallin${from}`,
+    to: `/tallin${to}`
+  },
+  {
+    from: `^/en/tallin${from}`,
+    to: `/en/tallin${to}`
+  }
+];
+
+const redirect = [
+  // Tours
+  ...getRedirects("/tours-cal", "/tours"),
+  ...getRedirects("/individualnye-ekskursii", "/tours/individual"),
+  ...getRedirects("/obzornye-ekskursii", "/tours/group"),
+  ...getRedirects("/tour-category/obzornye-ekskursii/", "/tours/group"),
+  // Tour
+  ...getRedirects(
+    "/tour/obzornaya-peshehodnaya-ekskursiya-po-sankt-peterburgu",
+    "/tour/obzornaya-ekskursiya-gulyaj-kak-peterburzhec"
+  ),
+  ...getRedirects(
+    "/tour/individualnaya-obzornaya-po-peterburgu",
+    "/tour/individual'naya-obzornaya-excursia-po-Petersburgu"
+  ),
+  ...getRedirects(
+    "/tour/detskaya_excursia_sankt-peterburg",
+    "/tour/detskaya-excursia-po-peterburgu"
+  ),
+  // Article
+  ...getRedirects(
+    "/za-chto-peterburzhtsy-lyubyat-petra-pervogo",
+    "/blog/za-chto-peterburzhtsy-lyubyat-petra-pervogo"
+  ),
+  ...getRedirects(
+    "/kak-pereimenovyvali-peterburg",
+    "/blog/kak-pereimenovyvali-peterburg"
+  ),
+  ...getRedirects(
+    "/odevatsa-kak-peterburzhec",
+    "/blog/odevatsya-kak-peterburzhec"
+  ),
+  // Policy
+  ...getRedirects("/privacy-policy", "/policy")
+];
+
 module.exports = {
+  /*
+   ** Redirects
+   */
+  redirect,
+  /*
+   ** Server
+   */
   server: {
     port: 3001,
     host: "127.0.0.1"
@@ -158,10 +220,6 @@ module.exports = {
     "@nuxtjs/redirect-module",
     "dex-nuxt-svg-sprite"
   ],
-  /*
-   ** Redirects
-   */
-  redirect: [],
   /*
    ** SVG Sprite
    */
