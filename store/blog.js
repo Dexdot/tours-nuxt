@@ -1,5 +1,5 @@
 import { copyObject } from "~/assets/scripts/helpers";
-import { fetchArticles, fetchArticle } from "~/api/blog";
+import { fetchArticles } from "~/api/blog";
 
 export const state = () => ({
   data: {},

@@ -13,21 +13,3 @@ export const fetchArticles = options =>
         resolve(articles);
       });
   });
-
-export const fetchArticle = options =>
-  new Promise((resolve, reject) => {
-    client
-      .getEntries({
-        content_type: "article",
-        ...options
-      })
-      .then(({ items }) => {
-        const article = items[0] && "fields" in items[0] ? items[0] : null;
-
-        if (article) {
-          resolve(article);
-        } else {
-          reject();
-        }
-      });
-  });

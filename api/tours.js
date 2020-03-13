@@ -13,21 +13,3 @@ export const fetchTours = options =>
         resolve(tours);
       });
   });
-
-export const fetchTour = options =>
-  new Promise((resolve, reject) => {
-    client
-      .getEntries({
-        content_type: "tour",
-        ...options
-      })
-      .then(({ items }) => {
-        const tour = items[0] && "fields" in items[0] ? items[0] : null;
-
-        if (tour) {
-          resolve(tour);
-        } else {
-          reject();
-        }
-      });
-  });

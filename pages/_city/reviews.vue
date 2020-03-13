@@ -171,13 +171,8 @@ export default {
     }
   },
   async fetch({ store }) {
-    // Tours
     await store.dispatch('tours/loadTours')
-
-    // Reviews
-    const reviewsInStore = store.getters['reviews/reviews']
-    if (reviewsInStore.length <= 0)
-      await store.dispatch('reviews/loadAllReviews')
+    await store.dispatch('reviews/loadReviews')
   },
   data: () => ({
     isReviewRatesModalVisible: false,
@@ -187,7 +182,7 @@ export default {
   computed: {
     ...mapGetters({
       allTours: 'tours/allTours',
-      reviews: 'reviews/reviews',
+      reviews: 'reviews/allReviews',
       generalData: 'general/data',
       locale: 'lang/locale'
     }),
@@ -201,29 +196,19 @@ export default {
       }
 
       return this.reviews.filter(({ fields }) => {
-        // City
-        const sameCity = fields.city === this.$route.params.city
-
-        // Locale
-        const sameLocale = fields.locale === this.locale
-
-        // Type
-        let sameType
         switch (this.typeOfTours) {
           case 'all':
-            sameType = true
+            return true
             break
           case 'group':
-            sameType = !fields.makeIndividual
+            return !fields.makeIndividual
             break
           case 'individual':
-            sameType = fields.makeIndividual
+            return fields.makeIndividual
             break
           default:
             break
         }
-
-        return sameCity && sameLocale && sameType
       })
     },
     filteredTours() {

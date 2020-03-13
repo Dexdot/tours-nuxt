@@ -1,5 +1,5 @@
 import { copyObject } from "~/assets/scripts/helpers";
-import { fetchTours, fetchTour } from "~/api/tours";
+import { fetchTours } from "~/api/tours";
 
 export const state = () => ({
   data: {},

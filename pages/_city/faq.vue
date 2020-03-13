@@ -17,7 +17,7 @@
       </div>
     </section>
 
-    <ReviewsSlider v-if="hasReviews" :reviews="filteredReviews" />
+    <ReviewsSlider v-if="hasReviews" :reviews="reviews" />
 
     <ToursSlider
       :title="$t('reviews.otherToursTitle')"
@@ -87,32 +87,17 @@ export default {
   },
   async fetch({ store }) {
     await store.dispatch('tours/loadTours')
-
-    // Reviews
-    const reviewsInStore = store.getters['reviews/reviews']
-    if (reviewsInStore.length <= 0)
-      await store.dispatch('reviews/loadAllReviews')
+    await store.dispatch('reviews/loadReviews')
   },
   computed: {
     ...mapGetters({
       allTours: 'tours/allTours',
-      reviews: 'reviews/reviews',
+      reviews: 'reviews/allReviews',
       general: 'general/data',
       locale: 'lang/locale'
     }),
     hasReviews() {
-      return this.filteredReviews && this.filteredReviews.length > 0
-    },
-    filteredReviews() {
-      return this.reviews.filter(({ fields }) => {
-        // City
-        const sameCity = fields.city === this.$route.params.city
-
-        // Locale
-        const sameLocale = fields.locale === this.locale
-
-        return sameCity && sameLocale
-      })
+      return this.reviews && this.reviews.length > 0
     },
     otherTours() {
       return this.allTours.slice(0, 8)
