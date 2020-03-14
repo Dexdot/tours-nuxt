@@ -11,5 +11,7 @@ export const fetchReviews = options =>
       .then(async ({ items }) => {
         const reviews = items.filter(review => "fields" in review);
         resolve(reviews);
-      });
+        skip += limit;
+      })
+      .catch(err => {});
   });

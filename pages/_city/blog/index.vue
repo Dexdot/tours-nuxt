@@ -39,7 +39,7 @@
           </ul>
 
           <div class="blog-pagen u-center">
-            <Pagen :list="[]"></Pagen>
+            <Pagen :list="[]" />
           </div>
         </div>
       </div>

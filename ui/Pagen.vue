@@ -1,10 +1,10 @@
 <template>
   <ul :class="['pagen', { 'pagen--outline': outlined }]">
-    <li v-for="item in list" :key="item.text">
+    <li v-for="(item, i) in list" :key="item.text">
       <button
-        :class="['u-center', { active: item.active }]"
+        :class="['u-center', { active: index === i }]"
         type="button"
-        @click="$emit('click', item)"
+        @click="$emit('click', i)"
       >
         {{ item.text }}
       </button>
@@ -22,6 +22,10 @@ export default {
     list: {
       type: Array,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
   }
 }
@@ -38,7 +42,7 @@ export default {
   li
     margin-left: 8px
 
-  a
+  button
     width: 48px
     height: 48px
 
@@ -71,7 +75,7 @@ export default {
     @media (max-width: $mob)
       margin-top: 8px
 
-  a
+  button
     width: 72px
     height: 72px
 

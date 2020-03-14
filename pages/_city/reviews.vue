@@ -70,14 +70,18 @@
 
           <div class="reviews-content">
             <ul class="reviews-list">
-              <li v-for="review in filteredReviews" :key="review.sys.id">
+              <li v-for="review in pagenReviews" :key="review.sys.id">
                 <ReviewCard :review="review" />
               </li>
             </ul>
 
-            <!-- <div class="reviews-pagen">
-              <Pagen :list="[]" />
-            </div> -->
+            <div class="reviews-pagen">
+              <Pagen
+                :list="pagenList"
+                :index="pagen.index"
+                @click="onPagenClick"
+              />
+            </div>
           </div>
 
           <div v-if="hasAggregators" class="reviews-right">
@@ -175,10 +179,17 @@ export default {
     await store.dispatch('reviews/loadReviews')
   },
   data: () => ({
+    pagen: {
+      index: 0,
+      limit: 6
+    },
     isReviewRatesModalVisible: false,
     typeOfTours: 'all',
     selectedTour: ''
   }),
+  mounted() {
+    window.$r = this
+  },
   computed: {
     ...mapGetters({
       allTours: 'tours/allTours',
@@ -210,6 +221,12 @@ export default {
             break
         }
       })
+    },
+    pagenReviews() {
+      return this.filteredReviews.slice(
+        this.pagenSkip,
+        this.pagenSkip + this.pagen.limit
+      )
     },
     filteredTours() {
       return this.allTours.filter(({ fields }) => {
@@ -244,10 +261,32 @@ export default {
     },
     hasAggregators() {
       return this.aggregators && this.aggregators.length > 0
+    },
+    pagenSkip() {
+      return this.pagen.index * this.pagen.limit
+    },
+    pagenList() {
+      let pagenLen = this.filteredReviews.length / Math.floor(this.pagen.limit)
+
+      if (!Number.isInteger(pagenLen)) {
+        pagenLen = Math.floor(pagenLen) + 1
+      }
+
+      const arr = []
+      for (let i = 0; i < pagenLen; i++) {
+        arr.push({ text: i + 1 })
+      }
+
+      return arr
     }
   },
   watch: {
+    'pagen.index'() {
+      window.scrollTo(0, 0)
+    },
     typeOfTours(typeOfTours) {
+      this.pagen.index = 0
+
       if (typeOfTours === 'all') return false
 
       if (this.selectedTour) {
@@ -261,6 +300,8 @@ export default {
       }
     },
     selectedTour(selectedTour) {
+      this.pagen.index = 0
+
       if (selectedTour) {
         const tour = this.filteredTours.find(
           tour => tour.fields.slug === selectedTour
@@ -275,6 +316,9 @@ export default {
     },
     hideReviewRatesModal() {
       this.isReviewRatesModalVisible = false
+    },
+    onPagenClick(i) {
+      this.pagen.index = i
     }
   }
 }
