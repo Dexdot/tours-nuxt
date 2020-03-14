@@ -33,6 +33,7 @@ import FaqList from '~/components/FaqList'
 import ReviewsSlider from '~/components/ReviewsSlider'
 import ToursSlider from '~/components/ToursSlider'
 import page from '~/mixins/page'
+import { getRandomEntries } from '~/assets/scripts/helpers'
 
 export default {
   mixins: [page],
@@ -100,7 +101,7 @@ export default {
       return this.reviews && this.reviews.length > 0
     },
     otherTours() {
-      return this.allTours.slice(0, 8)
+      return getRandomEntries(this.allTours, 8)
     }
   }
 }

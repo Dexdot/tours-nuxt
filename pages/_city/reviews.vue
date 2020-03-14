@@ -75,7 +75,7 @@
               </li>
             </ul>
 
-            <div class="reviews-pagen">
+            <div class="reviews-pagen" v-show="pagenList.length > 1">
               <Pagen
                 :list="pagenList"
                 :index="pagen.index"
@@ -116,19 +116,20 @@ import ToursSlider from '~/components/ToursSlider'
 import ReviewCard from '~/components/ReviewCard'
 import ReviewRates from '~/components/ReviewRates'
 import ReviewRatesModal from '~/components/ReviewRatesModal'
-import Pagen from '~/ui/Pagen'
 
-import render from '~/mixins/render'
 import page from '~/mixins/page'
+import render from '~/mixins/render'
+import pagen from '~/mixins/pagen'
+
+import { getRandomEntries } from '~/assets/scripts/helpers'
 
 export default {
-  mixins: [page, render],
+  mixins: [page, render, pagen],
   components: {
     ToursSlider,
     ReviewCard,
     ReviewRates,
-    ReviewRatesModal,
-    Pagen
+    ReviewRatesModal
   },
   head() {
     const title = 'Отзывы'
@@ -179,17 +180,10 @@ export default {
     await store.dispatch('reviews/loadReviews')
   },
   data: () => ({
-    pagen: {
-      index: 0,
-      limit: 6
-    },
     isReviewRatesModalVisible: false,
     typeOfTours: 'all',
     selectedTour: ''
   }),
-  mounted() {
-    window.$r = this
-  },
   computed: {
     ...mapGetters({
       allTours: 'tours/allTours',
@@ -246,7 +240,7 @@ export default {
       })
     },
     otherTours() {
-      return this.allTours.slice(0, 8)
+      return getRandomEntries(this.allTours, 8)
     },
     aggregators() {
       return this.generalData.aggregators.map(img => {
@@ -261,9 +255,6 @@ export default {
     },
     hasAggregators() {
       return this.aggregators && this.aggregators.length > 0
-    },
-    pagenSkip() {
-      return this.pagen.index * this.pagen.limit
     },
     pagenList() {
       let pagenLen = this.filteredReviews.length / Math.floor(this.pagen.limit)
@@ -281,9 +272,6 @@ export default {
     }
   },
   watch: {
-    'pagen.index'() {
-      window.scrollTo(0, 0)
-    },
     typeOfTours(typeOfTours) {
       this.pagen.index = 0
 
@@ -316,9 +304,6 @@ export default {
     },
     hideReviewRatesModal() {
       this.isReviewRatesModalVisible = false
-    },
-    onPagenClick(i) {
-      this.pagen.index = i
     }
   }
 }

@@ -130,6 +130,7 @@ import ArticleCard from '~/components/ArticleCard'
 import SocialList from '~/components/SocialList'
 import render from '~/mixins/render'
 import page from '~/mixins/page'
+import { getRandomEntries } from '~/assets/scripts/helpers'
 
 export default {
   components: {
@@ -211,9 +212,11 @@ export default {
       return this.article.fields
     },
     otherArticles() {
-      return this.allArticles
-        .filter(({ fields }) => fields.slug !== this.articleData.slug)
-        .slice(0, 2)
+      const filtered = this.allArticles.filter(
+        ({ fields }) => fields.slug !== this.articleData.slug
+      )
+
+      return getRandomEntries(filtered, 2)
     }
   },
   mounted() {

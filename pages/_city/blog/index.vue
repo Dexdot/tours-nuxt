@@ -33,13 +33,18 @@
           </div>
 
           <ul class="blog-list">
-            <li v-for="article in sortedArticles" :key="article.fields.slug">
+            <li v-for="article in pagenArticles" :key="article.fields.slug">
               <ArticleCard :article="article"></ArticleCard>
             </li>
           </ul>
 
-          <div class="blog-pagen u-center">
-            <Pagen :list="[]" />
+          <div class="blog-pagen u-center" v-show="pagenList.length > 1">
+            <Pagen
+              :list="pagenList"
+              :index="pagen.index"
+              @click="onPagenClick"
+              outlined
+            />
           </div>
         </div>
       </div>
@@ -49,12 +54,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import page from '~/mixins/page'
-import Pagen from '~/ui/Pagen'
 import ArticleCard from '~/components/ArticleCard'
 
+import page from '~/mixins/page'
+import pagen from '~/mixins/pagen'
+
 export default {
-  mixins: [page],
+  mixins: [page, pagen],
   head() {
     const title = 'Блог'
 
@@ -100,8 +106,7 @@ export default {
     }
   },
   components: {
-    ArticleCard,
-    Pagen
+    ArticleCard
   },
   async fetch({ store }) {
     await store.dispatch('blog/loadArticles')
@@ -147,6 +152,26 @@ export default {
 
         return filter ? articleCategories.includes(filter) : true
       })
+    },
+    pagenArticles() {
+      return this.sortedArticles.slice(
+        this.pagenSkip,
+        this.pagenSkip + this.pagen.limit
+      )
+    },
+    pagenList() {
+      let pagenLen = this.sortedArticles.length / Math.floor(this.pagen.limit)
+
+      if (!Number.isInteger(pagenLen)) {
+        pagenLen = Math.floor(pagenLen) + 1
+      }
+
+      const arr = []
+      for (let i = 0; i < pagenLen; i++) {
+        arr.push({ text: i + 1 })
+      }
+
+      return arr
     }
   }
 }

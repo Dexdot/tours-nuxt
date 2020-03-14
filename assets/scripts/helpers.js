@@ -15,6 +15,20 @@ export const getRandomFromRange = (min, max) =>
 export const getRandomElementFromArray = arr =>
   arr[Math.floor(Math.random() * arr.length)];
 
+export const getSomeRandomElements = function(sourceArray, n) {
+  const result = [];
+  for (let i = 0; i < n; i++) {
+    result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
+  }
+  return result;
+};
+
+export const getRandomEntries = function(entries, n) {
+  const randomed = getSomeRandomElements(entries, n);
+  const ids = randomed.map(({ sys }) => sys.id);
+  return randomed.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
+};
+
 export const addItemToArrayAt = (item, i, arr) => {
   const copy = [...arr];
   copy.splice(i, 0, item);

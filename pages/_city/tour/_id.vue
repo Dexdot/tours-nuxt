@@ -176,6 +176,7 @@ import FormOrder from '~/components/FormOrder'
 
 import render from '~/mixins/render'
 import page from '~/mixins/page'
+import { getRandomEntries } from '~/assets/scripts/helpers'
 
 export default {
   mixins: [page, render],
@@ -267,9 +268,11 @@ export default {
       return this.tour.fields
     },
     otherTours() {
-      return this.allTours
-        .filter(({ fields }) => fields.slug !== this.tourData.slug)
-        .slice(0, 8)
+      const filtered = this.allTours.filter(
+        ({ fields }) => fields.slug !== this.tourData.slug
+      )
+
+      return getRandomEntries(filtered, 8)
     }
   },
   methods: {
