@@ -190,6 +190,7 @@ export default {
 
     return {
       title,
+      titleTemplate: null,
       meta: [
         {
           hid: 'twitter:title',

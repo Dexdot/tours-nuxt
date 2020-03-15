@@ -139,10 +139,13 @@ export default {
   },
   mixins: [page, render],
   head() {
-    const { title, previewImage } = this.article.fields
+    const { seoTitle, seoDescription, previewImage } = this.articleData
+    const title = seoTitle || this.articleData.title
+    const description = seoDescription || ''
 
     return {
       title,
+      titleTemplate: null,
       meta: [
         {
           hid: 'twitter:title',
@@ -152,7 +155,7 @@ export default {
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: title
+          content: description
         },
         {
           hid: 'twitter:image',
@@ -167,7 +170,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: title
+          content: description
         },
         {
           hid: 'og:image',
@@ -177,7 +180,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: title
+          content: description
         }
       ]
     }
