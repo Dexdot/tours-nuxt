@@ -29,15 +29,15 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+$wh-header: calc(100vh - var(--header-h))
+
 .modal--callback-modal
   display: flex
 
 .modal--callback-modal /deep/
   .modal__container > .modal__close
     top: unset
-    right: unset
-    bottom: calc(77.77vh + 20px)
-    left: 0
+    bottom: calc(#{$wh-header} - 48px)
 
     width: 64px
     height: 64px
@@ -69,7 +69,7 @@ export default {
 
     @media (min-width: $tab + 1)
       margin-top: auto
-      height: 77.77vh
+      height: $wh-header
 
   .modal__content > .modal__close
     color: $black
