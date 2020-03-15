@@ -43,7 +43,8 @@ export default {
     ToursSlider
   },
   head() {
-    const { title, description } = this.general.seo.faq
+    const { seo, contactsImage } = this.general
+    const { title, description } = seo.faq
 
     return {
       title,
@@ -62,7 +63,7 @@ export default {
         {
           hid: 'twitter:image',
           name: 'twitter:image',
-          content: '/favicon/projectName.png'
+          content: contactsImage.fields.file.url || ''
         },
         {
           hid: 'og:title',
@@ -77,7 +78,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/favicon/projectName.png'
+          content: contactsImage.fields.file.url || ''
         },
         {
           hid: 'description',

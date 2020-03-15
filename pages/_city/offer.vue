@@ -33,7 +33,8 @@ export default {
     Policy
   },
   head() {
-    const { title, description } = this.general.seo.offer
+    const { seo, contactsImage } = this.general
+    const { title, description } = seo.offer
 
     return {
       title,
@@ -52,7 +53,7 @@ export default {
         {
           hid: 'twitter:image',
           name: 'twitter:image',
-          content: '/favicon/projectName.png'
+          content: contactsImage.fields.file.url || ''
         },
         {
           hid: 'og:title',
@@ -67,7 +68,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/favicon/projectName.png'
+          content: contactsImage.fields.file.url || ''
         },
         {
           hid: 'description',
