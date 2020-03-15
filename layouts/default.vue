@@ -68,8 +68,6 @@ export default {
     if (document.readyState === 'complete' && !this.introCompleted)
       this.introCompleted = true
 
-    window.$app = this
-
     initCSSProps()
     this.detect = detectDevices()
 

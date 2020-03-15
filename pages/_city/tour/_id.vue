@@ -242,7 +242,10 @@ export default {
     isSightsModalVisible: false,
     sightsIndex: 0
   }),
-  async asyncData({ store, params, error }) {
+  middleware({ app, params, redirect }) {
+    if (!params.id) return redirect(app.$cityLocalePath('/tours'))
+  },
+  async asyncData({ app, store, params, error }) {
     // Current city
     const { city } = params
 
