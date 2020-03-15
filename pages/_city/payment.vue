@@ -32,6 +32,50 @@ export default {
   components: {
     Policy
   },
+  head() {
+    const { title, description } = this.general.seo.payment
+
+    return {
+      title,
+      meta: [
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: title
+        },
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: description
+        },
+        {
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: '/favicon/projectName.png'
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: '/favicon/projectName.png'
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: description
+        }
+      ]
+    }
+  },
   computed: {
     ...mapGetters({
       general: 'general/data'

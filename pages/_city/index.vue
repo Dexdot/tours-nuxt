@@ -186,7 +186,7 @@ export default {
     Chipbox
   },
   head() {
-    const title = 'Главная'
+    const { title, description } = this.general.seo.index
 
     return {
       title,
@@ -199,7 +199,7 @@ export default {
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: title
+          content: description
         },
         {
           hid: 'twitter:image',
@@ -214,7 +214,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: title
+          content: description
         },
         {
           hid: 'og:image',
@@ -224,7 +224,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: title
+          content: description
         }
       ]
     }

@@ -103,7 +103,7 @@ export default {
     Chipbox
   },
   head() {
-    const title = 'Каталог'
+    const { title, description } = this.general.seo.tours
 
     return {
       title,
@@ -116,7 +116,7 @@ export default {
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: title
+          content: description
         },
         {
           hid: 'twitter:image',
@@ -131,7 +131,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: title
+          content: description
         },
         {
           hid: 'og:image',
@@ -141,7 +141,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: title
+          content: description
         }
       ]
     }

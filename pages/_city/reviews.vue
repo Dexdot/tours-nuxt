@@ -132,7 +132,7 @@ export default {
     ReviewRatesModal
   },
   head() {
-    const title = 'Отзывы'
+    const { title, description } = this.general.seo.reviews
 
     return {
       title,
@@ -145,7 +145,7 @@ export default {
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: title
+          content: description
         },
         {
           hid: 'twitter:image',
@@ -160,7 +160,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: title
+          content: description
         },
         {
           hid: 'og:image',
@@ -170,7 +170,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: title
+          content: description
         }
       ]
     }
@@ -188,7 +188,7 @@ export default {
     ...mapGetters({
       allTours: 'tours/allTours',
       reviews: 'reviews/allReviews',
-      generalData: 'general/data',
+      general: 'general/data',
       locale: 'lang/locale'
     }),
     filteredReviews() {
@@ -243,7 +243,7 @@ export default {
       return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
     },
     aggregators() {
-      return this.generalData.aggregators.map(img => {
+      return this.general.aggregators.map(img => {
         const copy = { ...img }
         const [rate, ratesLength] = copy.fields.description.split('|')
 

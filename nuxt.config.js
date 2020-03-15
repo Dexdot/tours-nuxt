@@ -120,7 +120,6 @@ module.exports = {
       { charset: "utf-8" },
       { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
       { name: "viewport", content: "width=device-width,initial-scale=1.0" },
-      { name: "author", content: "dexdot" },
       { hid: "description", name: "description", content: baseDescription },
       // OG
       { property: "og:locale", content: "ru_RU" },
@@ -135,7 +134,7 @@ module.exports = {
         property: "og:description",
         content: baseDescription
       },
-      { property: "og:url", content: "https://" },
+      { property: "og:url", content: "https://peshehodtour.ru" },
       { property: "og:site_name", content: "Пешеход Тур" },
       {
         hid: "og:image",
@@ -152,7 +151,7 @@ module.exports = {
       {
         hid: "twitter:title",
         name: "twitter:title",
-        content: "Пешеход Тур"
+        content: baseTitle
       },
       {
         hid: "twitter:image",
