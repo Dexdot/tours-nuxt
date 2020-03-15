@@ -5,18 +5,18 @@
         <ul>
           <li>
             <nuxt-link class="t-ttu" :to="$cityLocalePath('/policy')">
-              <b>{{ $t('footer.policy') }}</b>
+              {{ $t('footer.policy') }}
             </nuxt-link>
           </li>
           <li>
-            <nuxt-link class="t-ttu" :to="$cityLocalePath('/offer')">{{
-              $t('footer.offer')
-            }}</nuxt-link>
+            <nuxt-link class="t-ttu" :to="$cityLocalePath('/offer')">
+              {{ $t('footer.offer') }}
+            </nuxt-link>
           </li>
           <li>
-            <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">{{
-              $t('footer.payment')
-            }}</nuxt-link>
+            <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">
+              <b>{{ $t('footer.payment') }}</b>
+            </nuxt-link>
           </li>
         </ul>
       </nav>
@@ -37,13 +37,13 @@ export default {
       general: 'general/data'
     }),
     content() {
-      return this.general.policyContent.content
+      return this.general.paymentContent.content
     },
     hasContent() {
       return (
-        this.general.policyContent &&
-        this.general.policyContent.content &&
-        this.general.policyContent.content.length > 0
+        this.general.paymentContent &&
+        this.general.paymentContent.content &&
+        this.general.paymentContent.content.length > 0
       )
     }
   }

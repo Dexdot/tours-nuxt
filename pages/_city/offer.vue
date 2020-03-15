@@ -13,6 +13,11 @@
               <b>{{ $t('footer.offer') }}</b>
             </nuxt-link>
           </li>
+          <li>
+            <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">{{
+              $t('footer.payment')
+            }}</nuxt-link>
+          </li>
         </ul>
       </nav>
     </Policy>

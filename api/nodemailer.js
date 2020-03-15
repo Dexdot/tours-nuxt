@@ -11,8 +11,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/", (req, res) => {
-  const { cb_name: name, cb_email: email, cb_text: text } = req.body;
-  sendMail({ name, email, text })
+  const {
+    cb_city: city,
+    cb_name: name,
+    cb_email: email,
+    cb_text: text
+  } = req.body;
+
+  sendMail({ toEmail: TO_EMAIL[city], name, email, text })
     .then(() => {
       res.status(200).json({ message: "Message has been sent", success: true });
     })
@@ -26,7 +32,7 @@ module.exports = {
   handler: app
 };
 
-function sendMail({ name, email, text }) {
+function sendMail({ toEmail, name, email, text }) {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
       host: "smtp.yandex.ru",
@@ -46,7 +52,7 @@ function sendMail({ name, email, text }) {
 
     const msg = {
       from: FROM_EMAIL,
-      to: TO_EMAIL,
+      to: toEmail,
       subject: `Пешеход Тур - заявка с сайта`,
       html
     };

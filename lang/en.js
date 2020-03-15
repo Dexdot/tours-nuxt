@@ -47,7 +47,8 @@ const lang = {
     companyName: "Peshehod Tour",
     reservedRights: "All rights reserved",
     policy: "Policy",
-    offer: "Offer"
+    offer: "Offer",
+    payment: "Methods of payment and refund policy"
   },
   formOrder: {
     price: "for adults",

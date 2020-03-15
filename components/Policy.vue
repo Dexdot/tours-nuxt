@@ -34,14 +34,20 @@ export default {
   padding: calc(var(--header-h) + 80px) 0 80px
 
 .policy__aside
+  line-height: 1
+
   @media (min-width: $tab + 1)
     z-index: 2
     position: sticky
     top: calc(var(--header-h) + 16px)
     float: left
+    max-width: mix(2)
 
   @media (max-width: $tab)
     margin-bottom: 64px
+
+.policy__aside li:not(:last-child)
+  margin-bottom: 8px
 
 .policy__content
   margin: 0 auto

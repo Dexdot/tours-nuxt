@@ -124,9 +124,10 @@ export default {
       // })
 
       const objectData = {}
-      data.forEach(function(value, key) {
+      data.forEach((value, key) => {
         objectData[key] = value
       })
+      objectData['cb_city'] = this.$route.params.city
 
       return objectData
     },
