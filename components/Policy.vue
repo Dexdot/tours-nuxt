@@ -49,7 +49,51 @@ export default {
   @media (min-width: $tab + 1)
     max-width: column-spans(6)
 
-  /deep/ p
+.policy__content /deep/
+  p
     margin-bottom: 16px
+
+  ol, ul
+    margin-bottom: 16px
+
+  ol
+    counter-reset: counter
+    margin-bottom: 16px
+    padding-left: 32px
+
+  ol li
+    position: relative
+
+    &:not(:last-child)
+      margin-bottom: 16px
+
+  ol li::before
+    content: counter(counter)'.'
+    counter-increment: counter
+    display: inline-block
+
+    position: absolute
+    top: 0
+    left: -32px
+
+  ol p
+    display: inline
+
+  ul li
+    position: relative
+    padding-left: 30px
+    &:not(:last-child)
+      margin-bottom: 16px
+
+  ul li::before
+    content: ''
+    position: absolute
+    top: 0.5em
+    left: 0
+
+    width: 6px
+    height: 6px
+    background: $black
+    border-radius: 50%
 </style>
 

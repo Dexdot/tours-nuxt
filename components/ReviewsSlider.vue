@@ -195,12 +195,16 @@ export default {
   +yo('font-size', (375px: 18px, 1920px: 24px, 2550px: 26px))
   line-height: 1.4
 
+.reviews-slide__text /deep/ 
   p
     margin-bottom: 24px
     display: -webkit-box
     -webkit-line-clamp: 8
     overflow: hidden
     -webkit-box-orient: vertical
+
+  a
+    +link($acc)
 
 .reviews-slide__name
   +mont(sb)

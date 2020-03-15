@@ -86,10 +86,14 @@ export default {
   font-size: 16px
   letter-spacing: -0.02em
 
+.review-li__text /deep/
   p
     margin-bottom: 8px
     @media (max-width: $tab)
       margin-bottom: 16px
+
+  a
+    +link($acc)
 
 .review-li__avatar
   margin-right: 16px
