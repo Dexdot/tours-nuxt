@@ -34,7 +34,7 @@ export default {
       locale: 'lang/locale'
     }),
     city() {
-      const cities = ['tallin', 'spb']
+      const cities = ['tallinn', 'spb']
       const { fullPath, params } = this.$route
       let { city } = params
 

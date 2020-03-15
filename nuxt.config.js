@@ -52,12 +52,12 @@ const getRedirects = (from, to) => [
     to: `/spb${to}`
   },
   {
-    from: `^/tallin${from}`,
-    to: `/tallin${to}`
+    from: `^/tallinn${from}`,
+    to: `/tallinn${to}`
   },
   {
-    from: `^/en/tallin${from}`,
-    to: `/en/tallin${to}`
+    from: `^/en/tallinn${from}`,
+    to: `/en/tallinn${to}`
   }
 ];
 

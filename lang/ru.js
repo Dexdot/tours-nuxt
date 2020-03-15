@@ -4,7 +4,7 @@ const lang = {
   orderTicket: "Купить билет",
   cities: {
     spb: "Санкт-Петербург",
-    tallin: "Таллин"
+    tallinn: "Таллин"
   },
   navLinks: [
     {

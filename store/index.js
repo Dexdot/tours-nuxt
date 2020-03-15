@@ -5,7 +5,7 @@ export const actions = {
       return redirect(route.fullPath.replace("/ru", ""));
 
     const { city } = route.params;
-    const isValidCity = city && ["spb", "tallin"].includes(city);
+    const isValidCity = city && ["spb", "tallinn"].includes(city);
 
     return Promise.resolve(
       dispatch("general/load", isValidCity ? city : "spb")
