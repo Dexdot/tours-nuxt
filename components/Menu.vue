@@ -9,6 +9,24 @@
                 link.text
               }}</nuxt-link>
             </li>
+
+            <li class="menu__li">
+              <nuxt-link
+                class="menu__lang t-ttu"
+                v-if="$i18n.locale === 'ru' && city !== 'spb'"
+                :to="switchLocalePath('en')"
+              >
+                EN
+              </nuxt-link>
+
+              <nuxt-link
+                class="menu__lang t-ttu"
+                v-if="$i18n.locale === 'en'"
+                :to="switchLocalePath('ru')"
+              >
+                RU
+              </nuxt-link>
+            </li>
           </ul>
         </nav>
 
@@ -38,8 +56,10 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SocialList from '~/components/SocialList'
+import city from '~/mixins/city'
 
 export default {
+  mixins: [city],
   components: {
     SocialList
   },
@@ -120,8 +140,19 @@ export default {
   line-height: 1
   letter-spacing: -0.02em
 
-.menu__nav li:not(:last-child)
+.menu__li:not(:last-child)
   margin-bottom: 8px
+
+.menu__lang
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  
+  padding: 0 12px
+  height: 32px
+
+  border-radius: 32px
+  border: 1px solid $black
 
 .menu__social
   margin-top: auto

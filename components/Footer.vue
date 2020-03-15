@@ -17,7 +17,12 @@
         </nav>
 
         <div class="footer__info">
-          <BaseButton classDark classPulse>{{ $t('orderTicket') }}</BaseButton>
+          <BaseButton
+            classDark
+            classPulse
+            @click="$store.dispatch('dom/showBukza')"
+            >{{ $t('orderTicket') }}</BaseButton
+          >
 
           <div class="footer__contact">
             <a :href="`tel:${general.phoneNumber}`">
