@@ -8,11 +8,11 @@
               <b>{{ $t('footer.policy') }}</b>
             </nuxt-link>
           </li>
-          <li>
+          <!-- <li>
             <nuxt-link class="t-ttu" :to="$cityLocalePath('/offer')">{{
               $t('footer.offer')
             }}</nuxt-link>
-          </li>
+          </li> -->
           <li>
             <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">{{
               $t('footer.payment')
