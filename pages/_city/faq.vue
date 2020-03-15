@@ -101,7 +101,7 @@ export default {
       return this.reviews && this.reviews.length > 0
     },
     otherTours() {
-      return getRandomEntries(this.allTours, 8)
+      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
     }
   }
 }

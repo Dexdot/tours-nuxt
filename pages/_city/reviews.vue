@@ -240,7 +240,7 @@ export default {
       })
     },
     otherTours() {
-      return getRandomEntries(this.allTours, 8)
+      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
     },
     aggregators() {
       return this.generalData.aggregators.map(img => {

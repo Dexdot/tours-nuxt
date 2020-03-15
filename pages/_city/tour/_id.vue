@@ -272,7 +272,7 @@ export default {
         ({ fields }) => fields.slug !== this.tourData.slug
       )
 
-      return getRandomEntries(filtered, 8)
+      return filtered.length > 0 ? getRandomEntries(filtered, 8) : []
     }
   },
   methods: {

@@ -216,7 +216,7 @@ export default {
         ({ fields }) => fields.slug !== this.articleData.slug
       )
 
-      return getRandomEntries(filtered, 2)
+      return filtered.length > 0 ? getRandomEntries(filtered, 8) : []
     }
   },
   mounted() {
