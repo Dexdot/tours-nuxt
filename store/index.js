@@ -1,13 +1,14 @@
 export const actions = {
   nuxtServerInit({ dispatch }, { route, redirect, error }) {
+    // RU
     if (route.fullPath.startsWith("/ru"))
       return redirect(route.fullPath.replace("/ru", ""));
 
-    const { city: routeCity } = route.params;
-    const isValidRouteCity = routeCity && ["spb", "tallin"].includes(routeCity);
+    const { city } = route.params;
+    const isValidCity = city && ["spb", "tallin"].includes(city);
 
     return Promise.resolve(
-      dispatch("general/load", isValidRouteCity ? routeCity : "spb")
+      dispatch("general/load", isValidCity ? city : "spb")
     );
   }
 };

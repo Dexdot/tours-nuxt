@@ -1,4 +1,5 @@
 const defaultCity = "spb";
+const cities = ["tallin", "spb"];
 
 export default ({ app, isHMR, store, params, error, route, redirect }) => {
   // HMR
@@ -10,7 +11,16 @@ export default ({ app, isHMR, store, params, error, route, redirect }) => {
   if (route.fullPath.startsWith("/ru"))
     return redirect(route.fullPath.replace("/ru", ""));
 
-  const city = params.city || defaultCity;
+  let { city } = params;
+
+  if (!city || !cities.includes(city)) {
+    city = cities.find(city => route.fullPath.split("/").includes(city));
+
+    if (!city) {
+      city = defaultCity;
+    }
+  }
+
   app.store.dispatch("lang/setCity", city);
 
   // Set locale "ru" if city "spb"

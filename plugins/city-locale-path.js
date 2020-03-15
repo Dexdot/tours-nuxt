@@ -1,14 +1,13 @@
 export default ({ app }, inject) => {
   inject("cityLocalePath", (path, city) => {
+    const cities = ["tallin", "spb"];
     const route = app.router.currentRoute;
 
     // City
     let routeCity = route.params.city;
 
-    if (!routeCity) {
-      routeCity = ["tallin", "spb"].find(city =>
-        route.fullPath.split("/").includes(city)
-      );
+    if (!routeCity || !cities.includes(routeCity)) {
+      routeCity = cities.find(city => route.fullPath.split("/").includes(city));
     }
 
     if (!routeCity) {

@@ -34,17 +34,16 @@ export default {
       locale: 'lang/locale'
     }),
     city() {
+      const cities = ['tallin', 'spb']
       const { fullPath, params } = this.$route
       let { city } = params
 
-      if (!city) {
-        city = ['tallin', 'spb'].find(city =>
-          fullPath.split('/').includes(city)
-        )
-      }
+      if (!city || !cities.includes(city)) {
+        city = cities.find(city => fullPath.split('/').includes(city))
 
-      if (!city) {
-        city = 'spb'
+        if (!city) {
+          city = 'spb'
+        }
       }
 
       return city
