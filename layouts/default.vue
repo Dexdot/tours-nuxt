@@ -13,6 +13,7 @@
 
     <Footer />
 
+    <CreditsModal :active="isCreditsActive" />
     <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
     <CallbackModal :active="isCallbackActive" />
 
@@ -27,6 +28,7 @@ import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import Menu from '~/components/Menu'
 import Cover from '~/components/Cover'
+import CreditsModal from '~/components/CreditsModal'
 import BukzaModal from '~/components/BukzaModal'
 import CallbackModal from '~/components/CallbackModal'
 
@@ -39,6 +41,7 @@ export default {
     Footer,
     Menu,
     Cover,
+    CreditsModal,
     BukzaModal,
     CallbackModal
   },
@@ -52,6 +55,7 @@ export default {
   computed: {
     ...mapGetters({
       isMenuActive: 'dom/isMenuActive',
+      isCreditsActive: 'dom/isCreditsActive',
       isBukzaActive: 'dom/isBukzaActive',
       isCallbackActive: 'dom/isCallbackActive',
       isHeaderTransparent: 'dom/isHeaderTransparent'

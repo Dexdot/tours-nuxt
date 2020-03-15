@@ -48,7 +48,7 @@
           <nuxt-link :to="$cityLocalePath('/policy')">{{
             $t('footer.policy')
           }}</nuxt-link>
-          <nuxt-link :to="$cityLocalePath('/credits')">Credits</nuxt-link>
+          <button @click="$store.dispatch('dom/toggleCredits')">Credits</button>
         </div>
 
         <div class="footer__social">
@@ -200,7 +200,7 @@ export default {
     font-size: 12px
     margin-left: -8px
 
-  p, a
+  p, a, button
     opacity: 0.4
     margin-left: 24px
     @media (max-width: $tab)
@@ -213,7 +213,7 @@ export default {
     @media (max-width: $tab)
       display: none
 
-  a
+  a, button
     transition: $trs
     &:hover
       opacity: 1
