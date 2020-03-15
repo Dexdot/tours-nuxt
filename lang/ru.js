@@ -47,7 +47,7 @@ const lang = {
     companyName: "Пешеход Тур",
     reservedRights: "Все права защищены",
     policy: "Соглашение",
-    offer: "Оферта",
+    offer: "Общие положения",
     payment: "Способы оплаты и правила возврата средств"
   },
   formOrder: {
