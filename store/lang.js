@@ -1,5 +1,7 @@
 export const state = () => ({
-  locales: ["ru", "en"],
+  // LANGSWITCH
+  // locales: ["ru", "en"],
+  locales: ["ru"],
   locale: "ru",
   city: "spb"
 });
@@ -27,8 +29,9 @@ export const actions = {
     dispatch(
       "i18n/setRouteParams",
       {
-        ru: { city },
-        en: { city }
+        ru: { city }
+        // LANGSWITCH
+        // en: { city }
       },
       { root: true }
     );

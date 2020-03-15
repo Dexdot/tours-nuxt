@@ -30,8 +30,9 @@ export default ({ app, isHMR, store, params, error, route, redirect }) => {
 
   if (!params.city && route.matched.length > 0) {
     app.store.dispatch("i18n/setRouteParams", {
-      ru: { city },
-      en: { city }
+      ru: { city }
+      // LANGSWITCH
+      // en: { city }
     });
 
     const isRU = app.i18n.locale === "ru";

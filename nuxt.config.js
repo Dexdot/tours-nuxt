@@ -27,11 +27,12 @@ const i18n = [
       {
         code: "ru",
         file: "ru.js"
-      },
-      {
-        code: "en",
-        file: "en.js"
       }
+      // LANGSWITCH
+      // {
+      //   code: "en",
+      //   file: "en.js"
+      // }
     ],
     defaultLocale: "ru",
     vueI18n: {
@@ -54,11 +55,12 @@ const getRedirects = (from, to) => [
   {
     from: `^/tallinn${from}`,
     to: `/tallinn${to}`
-  },
-  {
-    from: `^/en/tallinn${from}`,
-    to: `/en/tallinn${to}`
   }
+  // LANGSWITCH
+  // {
+  //   from: `^/en/tallinn${from}`,
+  //   to: `/en/tallinn${to}`
+  // }
 ];
 
 const redirect = [

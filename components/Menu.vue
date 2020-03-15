@@ -10,7 +10,8 @@
               }}</nuxt-link>
             </li>
 
-            <li class="menu__li">
+            <!-- LANGSWITCH -->
+            <!-- <li class="menu__li">
               <nuxt-link
                 class="menu__lang t-ttu"
                 v-if="$i18n.locale === 'ru' && city !== 'spb'"
@@ -26,7 +27,7 @@
               >
                 RU
               </nuxt-link>
-            </li>
+            </li> -->
           </ul>
         </nav>
 

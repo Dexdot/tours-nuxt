@@ -43,7 +43,8 @@
               }}</nuxt-link>
             </li>
 
-            <li>
+            <!-- LANGSWITCH -->
+            <!-- <li>
               <nuxt-link
                 v-if="$i18n.locale === 'ru' && city !== 'spb'"
                 :to="switchLocalePath('en')"
@@ -59,7 +60,7 @@
               >
                 RU
               </nuxt-link>
-            </li>
+            </li> -->
           </ul>
         </nav>
 
