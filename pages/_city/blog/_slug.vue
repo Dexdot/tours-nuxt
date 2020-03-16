@@ -5,20 +5,27 @@
         <h1 class="article-title" v-if="articleData.title">
           {{ articleData.title }}
         </h1>
-        <ul
-          class="article-categories"
-          v-if="articleData.categories && articleData.categories.length > 0"
-        >
-          <li
-            v-for="category in articleData.categories"
-            :key="category.fields.slug"
+        <ul class="article-categories">
+          <template
+            v-if="articleData.categories && articleData.categories.length > 0"
           >
-            <nuxt-link
-              class="btn-outline"
-              :to="$cityLocalePath(`/blog/filter/${category.fields.slug}`)"
-              >{{ category.fields.text }}</nuxt-link
+            <li>
+              <nuxt-link class="btn-outline" :to="$cityLocalePath('/blog')">{{
+                $t('blog.categoryAll')
+              }}</nuxt-link>
+            </li>
+
+            <li
+              v-for="category in articleData.categories"
+              :key="category.fields.slug"
             >
-          </li>
+              <nuxt-link
+                class="btn-outline"
+                :to="$cityLocalePath(`/blog/filter/${category.fields.slug}`)"
+                >{{ category.fields.text }}</nuxt-link
+              >
+            </li>
+          </template>
         </ul>
       </div>
 
@@ -338,6 +345,9 @@ export default {
 .article-author
   line-height: 1
   letter-spacing: -0.02em
+
+  @media (max-width: $tab)
+    max-width: 50%
 
 .article-author b
   display: block

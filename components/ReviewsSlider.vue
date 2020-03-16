@@ -94,9 +94,12 @@ export default {
   },
   methods: {
     setHeight() {
+      const { slides, slider } = this.$refs
+      if (!slides || !slider) return false
+
       let height = 0
 
-      this.$refs.slides.forEach(slide => {
+      slides.forEach(slide => {
         const slideHeight = slide.scrollHeight
 
         if (slideHeight > height) {
@@ -104,7 +107,7 @@ export default {
         }
       })
 
-      this.$refs.slider.style.height = `${height}px`
+      slider.style.height = `${height}px`
     },
     prev() {
       this.index = this.index <= 0 ? this.reviews.length - 1 : this.index - 1

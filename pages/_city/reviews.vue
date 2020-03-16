@@ -354,6 +354,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
   min-width: unit-plus(column-spans(3))
   width: unit-plus(column-spans(3))
   height: 100vh
+  min-height: 670px
 
   @media (max-width: $tab)
     display: none
