@@ -14,14 +14,14 @@
             </nuxt-link>
           </li> -->
           <li>
-            <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">
-              <b>{{ $t('footer.payment') }}</b>
-            </nuxt-link>
+            <nuxt-link class="t-ttu" :to="$cityLocalePath('/payment')">{{
+              $t('footer.payment')
+            }}</nuxt-link>
           </li>
           <li>
-            <nuxt-link class="t-ttu" :to="$cityLocalePath('/requisites')">{{
-              $t('footer.requisites')
-            }}</nuxt-link>
+            <nuxt-link class="t-ttu" :to="$cityLocalePath('/requisites')">
+              <b>{{ $t('footer.requisites') }}</b>
+            </nuxt-link>
           </li>
         </ul>
       </nav>
@@ -39,7 +39,7 @@ export default {
   },
   head() {
     const { seo, contactsImage } = this.general
-    const { title, description } = seo.payment
+    const { title, description } = seo.requisites
 
     return {
       title,
@@ -88,13 +88,13 @@ export default {
       general: 'general/data'
     }),
     content() {
-      return this.general.paymentContent.content
+      return this.general.requisitesContent.content
     },
     hasContent() {
       return (
-        this.general.paymentContent &&
-        this.general.paymentContent.content &&
-        this.general.paymentContent.content.length > 0
+        this.general.requisitesContent &&
+        this.general.requisitesContent.content &&
+        this.general.requisitesContent.content.length > 0
       )
     }
   }
