@@ -1,25 +1,26 @@
 <template>
   <div>
     <section class="hero">
-      <div class="hero__bg img">
+      <div
+        :class="[
+          'hero__bg img',
+          {
+            'js-parallax-scale': main.heroImages && main.heroImages.length <= 2
+          }
+        ]"
+      >
         <template v-if="main.heroImages">
           <BaseImage
-            class="img__i"
-            :img="main.heroImages[0]"
-            :alt="main.heroImages[0].fields.title"
-          />
-          <!-- <BaseImage
-            class="img__i"
+            :class="['img__i', { 'hero__bg-anim': main.heroImages.length > 2 }]"
             v-for="(img, i) in main.heroImages"
             :key="img.sys.id"
             :img="img"
             :alt="img.fields.title"
             :style="{
-              animation: `kenburns ${main.heroImages.length *
-                6}s ease-in-out infinite`,
-              'animation-delay': `${i * 6}s`
+              'animation-name': `kenburns-${i + 1}`,
+              'z-index': main.heroImages.length - (i + 1)
             }"
-          /> -->
+          />
         </template>
       </div>
 
@@ -57,7 +58,7 @@
         <div class="features-section__inner">
           <div class="feature-section__img">
             <div class="feature-section__cover"></div>
-            <div class="feature-img" v-if="main.featuresCover">
+            <div class="feature-img js-parallax" v-if="main.featuresCover">
               <BaseImage
                 :img="main.featuresCover"
                 :alt="main.featuresCover.fields.title"
@@ -91,7 +92,7 @@
 
     <section class="about-section">
       <div class="container">
-        <div class="about-section__first-img">
+        <div class="about-section__first-img js-parallax">
           <BaseImage
             v-if="main.aboutImages[0]"
             :img="main.aboutImages[0]"
@@ -122,14 +123,18 @@
             class="about-section__text-img"
             v-if="main.aboutImages.length >= 3"
           >
-            <BaseImage
-              :img="main.aboutImages[1]"
-              :alt="main.aboutImages[1].fields.title"
-            />
-            <BaseImage
-              :img="main.aboutImages[2]"
-              :alt="main.aboutImages[2].fields.title"
-            />
+            <div class="js-parallax">
+              <BaseImage
+                :img="main.aboutImages[1]"
+                :alt="main.aboutImages[1].fields.title"
+              />
+            </div>
+            <div>
+              <BaseImage
+                :img="main.aboutImages[2]"
+                :alt="main.aboutImages[2].fields.title"
+              />
+            </div>
           </div>
         </div>
 
@@ -137,21 +142,28 @@
           class="about-section__last-img"
           v-if="main.aboutImages.length >= 5"
         >
-          <div>
+          <div class="about-section__last-inner">
+            <div class="js-parallax">
+              <BaseImage
+                :img="main.aboutImages[3]"
+                :alt="main.aboutImages[3].fields.title"
+              />
+            </div>
+            <div>
+              <BaseImage
+                :img="main.aboutImages[4]"
+                :alt="main.aboutImages[4].fields.title"
+              />
+            </div>
+          </div>
+
+          <div class="js-parallax">
             <BaseImage
-              :img="main.aboutImages[3]"
-              :alt="main.aboutImages[3].fields.title"
-            />
-            <BaseImage
-              :img="main.aboutImages[4]"
-              :alt="main.aboutImages[4].fields.title"
+              v-if="main.aboutImages[5]"
+              :img="main.aboutImages[5]"
+              :alt="main.aboutImages[5].fields.title"
             />
           </div>
-          <BaseImage
-            v-if="main.aboutImages[5]"
-            :img="main.aboutImages[5]"
-            :alt="main.aboutImages[5].fields.title"
-          />
         </div>
       </div>
     </section>
@@ -185,9 +197,10 @@ import page from '~/mixins/page'
 import render from '~/mixins/render'
 import city from '~/mixins/city'
 import animate from '~/mixins/animate'
+import parallax from '~/mixins/parallax'
 
 export default {
-  mixins: [page, render, city, animate],
+  mixins: [page, render, city, animate, parallax],
   components: {
     ToursPopular,
     HowSection,

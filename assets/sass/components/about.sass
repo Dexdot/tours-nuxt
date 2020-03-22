@@ -6,6 +6,7 @@
     padding-bottom: 56px
 
 .about-section__first-img
+  overflow: hidden
   width: unit-plus(column-spans(4))
   margin-top: -68px
 
@@ -56,28 +57,34 @@
 .about-section__text-img
   margin-left: auto
 
-.about-section__text-img > img
+.about-section__text-img img
   display: block
+  width: 100%
+  height: auto
 
-.about-section__text-img > img:first-child
+.about-section__text-img > div
+  overflow: hidden
+
+.about-section__text-img > div:first-child
   transform: translateX($unit)
   width: calc(#{mix(4)} + #{gutters(1)} / 2)
-  height: auto
   margin-bottom: 20%
 
   @media (max-width: $tab)
     width: 49vw
     margin-bottom: 104px
 
-.about-section__text-img > img:last-child
+.about-section__text-img > div:last-child
   width: calc(#{column-spans(2)} + #{gutters(1)} / 2)
-  height: calc(#{column-spans(2)} + #{gutters(1)} / 2)
   margin-right: calc(#{columns(1)} + #{gutters(1)} / 2)
   margin-left: auto
-  object-fit: cover
 
   @media (max-width: $tab)
     display: none
+
+  img
+    height: calc(#{column-spans(2)} + #{gutters(1)} / 2)
+    object-fit: cover
 
 
 .about-section__last-img
@@ -90,7 +97,7 @@
   @media (max-width: $tab)
     flex-direction: column
 
-.about-section__last-img > div
+.about-section__last-inner
   position: relative
 
   @media (min-width: $tab + 1)
@@ -99,33 +106,43 @@
   @media (max-width: $tab)
     margin-bottom: 23.466666666666665vw
 
-.about-section__last-img > div img:first-child
-  display: block
+.about-section__last-inner div
+  overflow: hidden
+  
+.about-section__last-inner div:first-child
   width: column-spans(3)
-  height: auto
+
   @media (max-width: $tab)
     width: 62.13333333333333vw
 
-.about-section__last-img > div img:last-child
+  img
+    display: block
+    width: 100%
+    height: auto
+
+.about-section__last-inner div:last-child
   position: absolute
   bottom: 0
   left: 100%
   transform: translate(-28%, 50%)
 
-  display: block
   width: 10.416666666666668vw
   height: 10.416666666666668vw
-  object-fit: cover
 
   @media (max-width: $tab)
     width: 38.4vw
     height: 38.4vw
 
+  img
+    object-fit: cover
+    width: 100%
+    height: 100%
+    display: block
 
-.about-section__last-img > img
-  display: block
+
+.about-section__last-img > div:last-child
+  overflow: hidden
   margin-right: auto
-  height: auto
   width: unit-plus(column-spans(2))
 
   @media (min-width: $tab + 1)
@@ -134,4 +151,8 @@
   @media (max-width: $tab)
     width: 42.666666666666664vw
 
+  img
+    display: block
+    width: 100%
+    height: auto
 
