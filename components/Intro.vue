@@ -1,49 +1,55 @@
 <template>
-  <section class="intro"></section>
+  <section class="preloader u-center">
+    <img src="~assets/img/umbrella.svg" alt="Logo" />
+  </section>
 </template>
 
 <script>
-import { gsap } from 'gsap'
-
 export default {
   mounted() {
-    this.animate()
+    if (document.readyState === 'complete') {
+      this.complete()
+    } else {
+      window.addEventListener('load', this.complete.bind(this))
+    }
   },
   methods: {
-    async animate() {
-      gsap.fromTo(
-        this.$el,
-        {
-          opacity: 1
-        },
-        {
-          opacity: 0,
-          duration: 0.8,
-          delay: 0.2,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            gsap.set(this.$el, { 'pointer-events': 'none' })
-            this.$emit('complete')
-          }
-        }
-      )
+    complete() {
+      this.$el.style.opacity = 0
+      this.$el.style.pointerEvents = 'none'
+      setTimeout(() => {
+        this.$emit('complete')
+      }, 200)
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-.intro
+.preloader
   z-index: 10
   position: fixed
   top: 0
   left: 0
+
   width: 100vw
   height: 100vh
 
-  display: flex
-  align-items: center
-  justify-content: center
+  background: #EFE5DA
+  transition: opacity 0.2s ease
 
-  background: #000
+.preloader img
+  animation: jump 1s cubic-bezier(0.165, 0.44, 0.64, 1) 0s infinite normal forwards
+
+@keyframes jump
+  20%
+    transform: translateY(2px) scaleY(0.9)
+  40%
+    transform: translateY(-48px) scaleY(1.2)
+  50%
+    transform: translateY(8px) scaleY(0.8)
+  70%
+    transform: translateY(-4px) scaleY(1)
+  80%, 100%
+    transform: translateY(0px) scaleY(1)
 </style>

@@ -17,7 +17,7 @@
     <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
     <CallbackModal :active="isCallbackActive" />
 
-    <Cover />
+    <Intro @complete="introCompleted = true" />
   </div>
 </template>
 
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex'
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
 import Menu from '~/components/Menu'
-import Cover from '~/components/Cover'
+import Intro from '~/components/Intro'
 import CreditsModal from '~/components/CreditsModal'
 import BukzaModal from '~/components/BukzaModal'
 import CallbackModal from '~/components/CallbackModal'
@@ -40,7 +40,7 @@ export default {
     Header,
     Footer,
     Menu,
-    Cover,
+    Intro,
     CreditsModal,
     BukzaModal,
     CallbackModal
