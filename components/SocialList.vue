@@ -24,6 +24,7 @@ export default {
   data: () => ({
     allSocials: {
       tripadvisor: 'tripadvisor',
+      whatsapp: 'whatsapp',
       inst: 'instagram',
       vk: 'vk',
       fb: 'facebook',
