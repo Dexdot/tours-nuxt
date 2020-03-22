@@ -2,6 +2,7 @@
   <Modal
     name="bukza-modal"
     type="aside"
+    side="right"
     :active="active"
     @close-click="$store.dispatch('dom/hideBukza')"
   >

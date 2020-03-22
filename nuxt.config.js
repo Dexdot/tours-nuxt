@@ -96,7 +96,8 @@ const redirect = [
     "/blog/odevatsya-kak-peterburzhec"
   ),
   // Policy
-  ...getRedirects("/privacy-policy", "/policy")
+  ...getRedirects("/policy", "/info/policy"),
+  ...getRedirects("/privacy-policy", "/info/policy")
 ];
 
 module.exports = {
