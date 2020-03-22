@@ -2,8 +2,8 @@
   <section class="popular-tours">
     <div class="popular-tours__container">
       <div class="popular-tours__info">
-        <h2 v-if="title" class="t-h3">{{ title }}</h2>
-        <p v-if="text">{{ text }}</p>
+        <h2 v-if="title" class="t-h3" data-animate="fade">{{ title }}</h2>
+        <p v-if="text" data-animate="fade">{{ text }}</p>
         <BaseButton classScale isLink :to="$cityLocalePath('/tours')">{{
           $t('main.toursButton')
         }}</BaseButton>
@@ -31,9 +31,10 @@
 <script>
 import TourCard from '~/components/TourCard'
 import scrollbooster from '~/mixins/scrollbooster'
+import animate from '~/mixins/animate'
 
 export default {
-  mixins: [scrollbooster],
+  mixins: [scrollbooster, animate],
   components: {
     TourCard
   },

@@ -25,7 +25,7 @@
 
       <div class="hero__text">
         <div class="container">
-          <div class="hero__chipbox-list">
+          <div class="hero__chipbox-list" data-animate="fade">
             <Chipbox
               white
               :active="key === city"
@@ -35,8 +35,10 @@
               >{{ $t('cities')[key] }}
             </Chipbox>
           </div>
-          <h1 v-if="main.heroTitle" class="t-h1">{{ main.heroTitle }}</h1>
-          <p v-if="main.heroText">{{ main.heroText }}</p>
+          <h1 v-if="main.heroTitle" class="t-h1" data-animate="fadeup">
+            {{ main.heroTitle }}
+          </h1>
+          <p v-if="main.heroText" data-animate="fadeup">{{ main.heroText }}</p>
         </div>
       </div>
     </section>
@@ -69,12 +71,14 @@
           >
             <li v-for="img in main.featuresIcons" :key="img.sys.id">
               <div class="feature">
-                <div class="feature__icon u-center">
+                <div class="feature__icon u-center" data-animate="scalein">
                   <img :src="img.fields.file.url" :alt="img.fields.title" />
                 </div>
                 <div class="feature__info">
-                  <h3 class="t-h5 feature__title">{{ img.fields.title }}</h3>
-                  <p>{{ img.fields.description }}</p>
+                  <h3 class="t-h5 feature__title" data-animate="fade">
+                    {{ img.fields.title }}
+                  </h3>
+                  <p data-animate="fade">{{ img.fields.description }}</p>
                 </div>
               </div>
             </li>
@@ -102,7 +106,11 @@
                 v-for="(item, i) in main.aboutText.content"
                 :key="i + item.nodeType"
               >
-                <p v-if="isText(item)" v-html="render(item)"></p>
+                <p
+                  v-if="isText(item)"
+                  v-html="render(item)"
+                  data-animate="fade"
+                ></p>
               </div>
             </template>
             <BaseButton isLink :to="$cityLocalePath('/tours')">{{
@@ -150,7 +158,9 @@
 
     <section class="faq-section" v-if="general.faq">
       <div class="container">
-        <h2 class="t-h3 faq-section__title">{{ $t('main.faqTitle') }}</h2>
+        <h2 class="t-h3 faq-section__title" data-animate="fade">
+          {{ $t('main.faqTitle') }}
+        </h2>
         <div class="faq-section__content">
           <FaqList :content="general.faq.content" />
         </div>
@@ -174,9 +184,10 @@ import Chipbox from '~/ui/Chipbox'
 import page from '~/mixins/page'
 import render from '~/mixins/render'
 import city from '~/mixins/city'
+import animate from '~/mixins/animate'
 
 export default {
-  mixins: [page, render, city],
+  mixins: [page, render, city, animate],
   components: {
     ToursPopular,
     HowSection,

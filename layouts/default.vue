@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Intro @complete="introCompleted = true" />
+
     <Menu :active="isMenuActive" />
     <Header
       :isMenuActive="isMenuActive"
@@ -16,8 +18,6 @@
     <CreditsModal :active="isCreditsActive" />
     <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
     <CallbackModal :active="isCallbackActive" />
-
-    <Intro @complete="introCompleted = true" />
   </div>
 </template>
 

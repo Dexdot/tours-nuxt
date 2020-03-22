@@ -12,8 +12,10 @@
         <li class="inst-li" v-for="(img, i) in data.images" :key="img.sys.id">
           <div v-if="i === 1" class="inst-info t-tac">
             <div class="inst-info__inner u-center u-flex-col">
-              <h2 class="t-h3 inst-info__title">{{ data.title }}</h2>
-              <p>{{ data.text }}</p>
+              <h2 class="t-h3 inst-info__title" data-animate="fade">
+                {{ data.title }}
+              </h2>
+              <p data-animate="fade">{{ data.text }}</p>
               <BaseButton isLink classScale classLight :to="data.buttonUrl">{{
                 data.buttonText
               }}</BaseButton>
@@ -43,9 +45,10 @@
 
 <script>
 import scrollbooster from '~/mixins/scrollbooster'
+import animate from '~/mixins/animate'
 
 export default {
-  mixins: [scrollbooster],
+  mixins: [scrollbooster, animate],
   props: {
     data: {
       type: Object,

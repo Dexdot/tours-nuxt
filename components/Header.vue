@@ -5,13 +5,15 @@
       {
         'header--callback-active': isCallbackActive,
         'header--menu-active': isMenuActive,
-        'header--uphidden': isUphidden,
+        'header--uphidden': isUphidden && animated,
         'header--transparent': isTrasparent,
-        'header--fixed': isFixed
+        'header--fixed': isFixed,
+        'header--animated': preAnimated,
+        'header--trs': animated
       }
     ]"
   >
-    <div class="container">
+    <div class="container" ref="container">
       <div class="header__inner">
         <div class="header__logo-wrap">
           <nuxt-link
@@ -125,7 +127,9 @@ export default {
     scrollY: 0,
     dir: 'down',
     isMob: false,
-    isCitiesSelectActive: false
+    isCitiesSelectActive: false,
+    preAnimated: false,
+    animated: false
   }),
   computed: {
     ...mapGetters({
@@ -151,12 +155,28 @@ export default {
   mounted() {
     this.handleScroll()
     this.handleResize()
+
+    if (document.readyState === 'complete') {
+      this.animate()
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          this.animate()
+        }, 200)
+      })
+    }
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.onScroll)
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
+    animate() {
+      this.preAnimated = true
+      setTimeout(() => {
+        this.animated = true
+      }, 1000)
+    },
     handleScroll() {
       this.onScroll()
       window.addEventListener('scroll', this.onScroll.bind(this))
@@ -201,6 +221,16 @@ export default {
 
   @media (min-width: $tab + 1)
     background: $beige-l
+
+.header
+  transition: 1s ease
+
+.header:not(.header--animated)
+  transform: translateY(-20%)
+  opacity: 0
+
+.header--trs
+  transition: $trs
 
 .header--fixed:not(.header--transparent):not(.header--menu-active)
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16)
