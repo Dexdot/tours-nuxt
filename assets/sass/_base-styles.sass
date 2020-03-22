@@ -31,6 +31,12 @@ html, body
 
 
 // Animations
+.page-enter-active, .page-leave-active
+  transition: opacity .4s ease
+
+.page-enter, .page-leave-active
+  opacity: 0
+
 [data-animate="fade"]
   opacity: 0
   transition: opacity .6s cubic-bezier(.645,.045,.355,1)

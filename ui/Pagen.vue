@@ -34,6 +34,7 @@ export default {
 <style lang="sass" scoped>
 .pagen
   display: flex
+  flex-wrap: wrap
 
 .pagen:not(.pagen--outline)
   font-size: 18px

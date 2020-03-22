@@ -27,6 +27,7 @@
             :href="data.buttonUrl"
             class="inst-block img"
             target="_blank"
+            data-animate="fade"
           >
             <BaseImage class="img__i" :img="img" :alt="img.fields.title" />
             <svg-icon name="inst"></svg-icon>
