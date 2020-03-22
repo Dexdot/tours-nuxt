@@ -45,7 +45,7 @@
             <span>{{ $t('footer.reservedRights') }}</span>
           </p>
 
-          <nuxt-link :to="$cityLocalePath('/policy')">{{
+          <nuxt-link :to="$cityLocalePath('/info/policy')">{{
             $t('footer.policy')
           }}</nuxt-link>
           <button @click="$store.dispatch('dom/toggleCredits')">Credits</button>

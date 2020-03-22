@@ -46,10 +46,7 @@ const lang = {
   footer: {
     companyName: "Peshehod Tour",
     reservedRights: "All rights reserved",
-    policy: "Legal Information",
-    offer: "Offer",
-    requisites: "Requisites",
-    payment: "Methods of payment and refund policy"
+    policy: "Legal Information"
   },
   formOrder: {
     price: "for adults",

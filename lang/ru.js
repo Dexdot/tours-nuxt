@@ -46,10 +46,7 @@ const lang = {
   footer: {
     companyName: "Пешеход Тур",
     reservedRights: "Все права защищены",
-    policy: "Правовая информация",
-    offer: "Общие положения",
-    requisites: "Реквизиты",
-    payment: "Способы оплаты и правила возврата средств"
+    policy: "Правовая информация"
   },
   formOrder: {
     price: "для взрослых",
