@@ -1,14 +1,7 @@
 <template>
   <div>
     <section class="hero">
-      <div
-        :class="[
-          'hero__bg img',
-          {
-            'js-parallax-scale': main.heroImages && main.heroImages.length <= 2
-          }
-        ]"
-      >
+      <div :class="['hero__bg img']">
         <template v-if="main.heroImages">
           <BaseImage
             :class="['img__i', { 'hero__bg-anim': main.heroImages.length > 2 }]"
@@ -58,7 +51,7 @@
         <div class="features-section__inner">
           <div class="feature-section__img">
             <div class="feature-section__cover"></div>
-            <div class="feature-img js-parallax" v-if="main.featuresCover">
+            <div class="feature-img" v-if="main.featuresCover">
               <BaseImage
                 :img="main.featuresCover"
                 :alt="main.featuresCover.fields.title"
@@ -92,7 +85,7 @@
 
     <section class="about-section">
       <div class="container">
-        <div class="about-section__first-img js-parallax">
+        <div class="about-section__first-img">
           <BaseImage
             v-if="main.aboutImages[0]"
             :img="main.aboutImages[0]"
@@ -123,7 +116,7 @@
             class="about-section__text-img"
             v-if="main.aboutImages.length >= 3"
           >
-            <div class="js-parallax">
+            <div>
               <BaseImage
                 :img="main.aboutImages[1]"
                 :alt="main.aboutImages[1].fields.title"
@@ -143,7 +136,7 @@
           v-if="main.aboutImages.length >= 5"
         >
           <div class="about-section__last-inner">
-            <div class="js-parallax">
+            <div>
               <BaseImage
                 :img="main.aboutImages[3]"
                 :alt="main.aboutImages[3].fields.title"
@@ -157,7 +150,7 @@
             </div>
           </div>
 
-          <div class="js-parallax">
+          <div>
             <BaseImage
               v-if="main.aboutImages[5]"
               :img="main.aboutImages[5]"
@@ -174,7 +167,10 @@
           {{ $t('main.faqTitle') }}
         </h2>
         <div class="faq-section__content">
-          <FaqList :content="general.faq.content" />
+          <FaqList
+            :content="general.faq.content"
+            @accordion-click="onAccordionClick"
+          />
         </div>
       </div>
     </section>
@@ -197,10 +193,9 @@ import page from '~/mixins/page'
 import render from '~/mixins/render'
 import city from '~/mixins/city'
 import animate from '~/mixins/animate'
-import parallax from '~/mixins/parallax'
 
 export default {
-  mixins: [page, render, city, animate, parallax],
+  mixins: [page, render, city, animate],
   components: {
     ToursPopular,
     HowSection,
@@ -301,6 +296,11 @@ export default {
   methods: {
     onChipboxClick(city) {
       this.city = city
+    },
+    onAccordionClick() {
+      setTimeout(() => {
+        this.updateScroll()
+      }, 200)
     }
   }
 }

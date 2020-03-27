@@ -1,6 +1,8 @@
+import locoscroll from "~/mixins/locoscroll";
 import Footer from "~/components/Footer";
 
 export default {
+  mixins: [locoscroll],
   components: {
     Footer
   },

@@ -1,5 +1,8 @@
 <template>
-  <Accordion :content="normalizedContent" />
+  <Accordion
+    @accordion-click="$emit('accordion-click', $event)"
+    :content="normalizedContent"
+  />
 </template>
 
 <script>

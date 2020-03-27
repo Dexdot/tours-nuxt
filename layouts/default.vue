@@ -7,13 +7,13 @@
       :isMenuActive="isMenuActive"
       :isCallbackActive="isCallbackActive"
       :transparent="isHeaderTransparent"
+      :isZero="isHeaderZeroZindex"
     />
 
     <div class="page-container">
       <nuxt ref="page" />
+      <Footer />
     </div>
-
-    <Footer />
 
     <CreditsModal :active="isCreditsActive" />
     <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
@@ -58,6 +58,7 @@ export default {
       isCreditsActive: 'dom/isCreditsActive',
       isBukzaActive: 'dom/isBukzaActive',
       isCallbackActive: 'dom/isCallbackActive',
+      isHeaderZeroZindex: 'dom/isHeaderZeroZindex',
       isHeaderTransparent: 'dom/isHeaderTransparent'
     }),
     page() {
@@ -85,3 +86,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.page-container
+  overflow: hidden
+</style>

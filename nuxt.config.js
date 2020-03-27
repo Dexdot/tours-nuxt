@@ -248,6 +248,10 @@ module.exports = {
     "~/plugins/i18n",
     "~/plugins/global",
     { src: "~/plugins/inputmask", ssr: false },
+    {
+      src: "~/plugins/locoscroll",
+      mode: "client"
+    },
     { src: "~/plugins/scrollbooster", mode: "client" },
     { src: "~/plugins/ymapPlugin.js", mode: "client" }
   ],
@@ -260,7 +264,10 @@ module.exports = {
   /**
    * Css / Sass / scss
    */
-  css: [{ src: "~assets/sass/main.sass", lang: "sass" }],
+  css: [
+    "loco-scroll/dist/locomotive-scroll.min.css",
+    { src: "~assets/sass/main.sass", lang: "sass" }
+  ],
   /*
    ** Build configuration
    */

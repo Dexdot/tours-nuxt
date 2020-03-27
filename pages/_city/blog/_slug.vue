@@ -121,7 +121,7 @@
         <div class="article-more__container">
           <ul class="blog-list">
             <li v-for="article in otherArticles" :key="article.sys.id">
-              <ArticleCard disableParallax :article="article" />
+              <ArticleCard :article="article" />
             </li>
           </ul>
         </div>

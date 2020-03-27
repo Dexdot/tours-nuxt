@@ -3,6 +3,7 @@
     <no-ssr>
       <GalleryModal
         v-if="tourData.gallery"
+        :style="translateY"
         :active="isGalleryModalVisible"
         :images="tourData.gallery"
         @close-click="hideGalleryModal"
@@ -10,6 +11,7 @@
       />
       <SightsModal
         v-if="tourData.gallery"
+        :style="translateY"
         :active="isSightsModalVisible"
         :img="tourData.routeGallery[sightsIndex]"
         :counter="sightsIndex + 1"
@@ -102,11 +104,9 @@
                       >
                         {{ img.fields.description }}
                         <span class="roadmap__btn-icon"></span>
-                        <BaseImage
-                          :img="img"
-                          :alt="img.fields.title"
-                          class="roadmap__img"
-                        />
+                        <div class="roadmap__img" :style="translateY">
+                          <BaseImage :img="img" :alt="img.fields.title" />
+                        </div>
                       </button>
                     </li>
                   </ul>
@@ -322,6 +322,30 @@ export default {
     },
     hideSightsModal() {
       this.isSightsModalVisible = false
+    }
+  },
+  watch: {
+    isGalleryModalVisible(isGalleryModalVisible) {
+      this.$store.dispatch('dom/setHeaderZero', isGalleryModalVisible)
+
+      if (this.lmS.isMobile) return false
+
+      if (isGalleryModalVisible) {
+        this.stopScroll()
+      } else {
+        this.startScroll()
+      }
+    },
+    isSightsModalVisible(isSightsModalVisible) {
+      this.$store.dispatch('dom/setHeaderZero', isSightsModalVisible)
+
+      if (this.lmS.isMobile) return false
+
+      if (isSightsModalVisible) {
+        this.stopScroll()
+      } else {
+        this.startScroll()
+      }
     }
   }
 }

@@ -105,6 +105,12 @@ export default {
 
     return { page }
   },
+  mounted() {
+    this.updateScroll()
+    this.$nextTick(() => {
+      this.updateScroll()
+    })
+  },
   computed: {
     ...mapGetters({
       general: 'general/data',

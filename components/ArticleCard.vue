@@ -3,7 +3,7 @@
     class="blog-li"
     :to="$cityLocalePath(`/blog/${article.fields.slug}`)"
   >
-    <div class="blog-li__img img js-parallax">
+    <div class="blog-li__img img">
       <BaseImage
         class="img__i"
         v-if="article.fields.previewImage"
@@ -21,18 +21,11 @@
 </template>
 
 <script>
-import parallax from '~/mixins/parallax'
-
 export default {
-  mixins: [parallax],
   props: {
     article: {
       type: Object,
       required: true
-    },
-    disableParallax: {
-      type: Boolean,
-      default: false
     }
   }
 }

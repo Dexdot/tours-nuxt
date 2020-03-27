@@ -6,12 +6,16 @@ export const state = () => ({
   isBukzaActive: false,
   isCallbackActive: false,
   isCreditsActive: false,
+  isHeaderZeroZindex: false,
   isHeaderTransparent: false
 });
 
 export const getters = {
   bukzaID({ bukzaID }) {
     return bukzaID;
+  },
+  isHeaderZeroZindex({ isHeaderZeroZindex }) {
+    return isHeaderZeroZindex;
   },
   isMenuActive({ isMenuActive }) {
     return isMenuActive;
@@ -39,8 +43,10 @@ export const mutations = {
     state.scrollDisabled = true;
 
     const { body } = document;
+
     state.scrollTop = window.pageYOffset;
     body.style.top = `-${state.scrollTop}px`;
+
     body.classList.add("no-scroll");
   },
   enableScroll(state) {
@@ -49,6 +55,7 @@ export const mutations = {
 
     const { body } = document;
     body.style.top = "";
+
     body.classList.remove("no-scroll");
 
     setTimeout(() => {
@@ -72,6 +79,9 @@ export const mutations = {
   },
   setHeaderTransparent(state, isHeaderTransparent) {
     state.isHeaderTransparent = isHeaderTransparent;
+  },
+  setHeaderZero(state, isHeaderZeroZindex) {
+    state.isHeaderZeroZindex = isHeaderZeroZindex;
   }
 };
 
@@ -123,5 +133,8 @@ export const actions = {
   },
   setHeaderTransparent({ commit }, isHeaderTransparent) {
     commit("setHeaderTransparent", isHeaderTransparent);
+  },
+  setHeaderZero({ commit }, isHeaderZeroZindex) {
+    commit("setHeaderZero", isHeaderZeroZindex);
   }
 };

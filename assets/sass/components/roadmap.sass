@@ -61,10 +61,10 @@
   text-align: left
 
   &:hover
-    .roadmap__img
+    .roadmap__img img
       @media (min-width: $tab + 1)
         opacity: 1
-        transform: translateX(0)
+        transform: translate(0, -100%)
         transition: 0.3s $cubic-io 0.1s
 
     .roadmap__btn-icon
@@ -103,20 +103,21 @@
     border-radius: 50%
     border: 1px solid $black
 
-.roadmap__img
-  z-index: 1
-  position: fixed
-  left: $unit
-  bottom: $unit
+.roadmap__img img
+  transform: translate(-8px, -100%)
+  opacity: 0
+  pointer-events: none
+  transition: 0.3s $cubic-io
 
   display: block
   width: column-spans(3)
   height: auto
 
-  transform: translateX(-8px)
-  opacity: 0
-  pointer-events: none
-  transition: 0.3s $cubic-io
+.roadmap__img
+  z-index: 1
+  position: fixed
+  left: $unit
+  top: calc(100vh - #{$unit})
 
   @media (max-width: $tab)
     display: none

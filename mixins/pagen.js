@@ -15,11 +15,6 @@ export default {
       return this.pagen.index * this.pagen.limit;
     }
   },
-  watch: {
-    "pagen.index"() {
-      window.scrollTo(0, 0);
-    }
-  },
   methods: {
     onPagenClick(i) {
       this.pagen.index = i;

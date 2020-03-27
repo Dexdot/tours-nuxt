@@ -175,6 +175,12 @@ export default {
 
       return arr
     }
+  },
+  watch: {
+    'pagen.index'() {
+      this.scrollTo(0)
+      this.updateScroll()
+    }
   }
 }
 </script>

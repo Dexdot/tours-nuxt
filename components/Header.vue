@@ -3,6 +3,7 @@
     :class="[
       'header',
       {
+        'header--zero-zindex': isZero,
         'header--callback-active': isCallbackActive,
         'header--menu-active': isMenuActive,
         'header--uphidden': isUphidden && animated,
@@ -121,6 +122,7 @@ export default {
   props: {
     isCallbackActive: { type: Boolean, default: false },
     isMenuActive: { type: Boolean, default: false },
+    isZero: { type: Boolean, default: false },
     transparent: { type: Boolean, default: false }
   },
   data: () => ({
@@ -167,7 +169,7 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll)
+    this.$root.$off('locoscroll', this.onScroll)
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
@@ -179,16 +181,18 @@ export default {
     },
     handleScroll() {
       this.onScroll()
-      window.addEventListener('scroll', this.onScroll.bind(this))
+      this.$root.$on('locoscroll', this.onScroll)
     },
     handleResize() {
       this.onResize()
       window.addEventListener('resize', this.onResize.bind(this))
     },
-    onScroll() {
-      let y = window.pageYOffset
-      this.dir = y > this.scrollY ? 'down' : 'up'
-      this.scrollY = y
+    onScroll(e) {
+      if (e) {
+        const { scroll } = e
+        this.dir = scroll.direction
+        this.scrollY = scroll.scroll.y
+      }
     },
     onResize() {
       this.isMob = window.innerWidth <= 1040
@@ -221,6 +225,9 @@ export default {
 
   @media (min-width: $tab + 1)
     background: $beige-l
+
+.header--zero-zindex
+  z-index: 0
 
 .header
   transition: 1s ease

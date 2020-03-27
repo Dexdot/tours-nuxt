@@ -29,6 +29,7 @@ export default {
   methods: {
     onClick(i) {
       this.index = this.index === i ? -1 : i
+      this.$emit('accordion-click', this.index)
     }
   }
 }

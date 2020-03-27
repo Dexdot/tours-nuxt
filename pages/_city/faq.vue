@@ -2,9 +2,15 @@
   <main>
     <section class="faq-page">
       <div class="container">
-        <h2 class="t-h3 faq-page__title">{{ $t('faq.title') }}</h2>
+        <h2 class="t-h3 faq-page__title">
+          {{ $t('faq.title') }}
+        </h2>
         <div class="faq-page__content">
-          <FaqList v-if="general.faq" :content="general.faq.content" />
+          <FaqList
+            v-if="general.faq"
+            :content="general.faq.content"
+            @accordion-click="onAccordionClick"
+          />
 
           <p class="faq-page__text">
             <b>{{ $t('faq.subtitle') }}</b>
@@ -104,6 +110,13 @@ export default {
     },
     otherTours() {
       return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
+    }
+  },
+  methods: {
+    onAccordionClick() {
+      setTimeout(() => {
+        this.updateScroll()
+      }, 200)
     }
   }
 }

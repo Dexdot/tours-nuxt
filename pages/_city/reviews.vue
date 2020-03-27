@@ -100,6 +100,7 @@
     <no-ssr>
       <ReviewRatesModal
         v-if="hasAggregators"
+        :style="translateY"
         :active="isReviewRatesModalVisible"
         @close-click="hideReviewRatesModal"
       >
@@ -297,6 +298,21 @@ export default {
           tour => tour.fields.slug === selectedTour
         )
         this.typeOfTours = tour.fields.makeIndividual ? 'individual' : 'group'
+      }
+    },
+    'pagen.index'() {
+      this.scrollTo(0)
+      this.updateScroll()
+    },
+    isReviewRatesModalVisible(isReviewRatesModalVisible) {
+      this.$store.dispatch('dom/setHeaderZero', isReviewRatesModalVisible)
+
+      if (this.lmS.isMobile) return false
+
+      if (isReviewRatesModalVisible) {
+        this.stopScroll()
+      } else {
+        this.startScroll()
       }
     }
   },
