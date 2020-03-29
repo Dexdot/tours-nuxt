@@ -5,6 +5,7 @@
   "author": "dexdot",
   "private": true,
   "scripts": {
+    "deploy": "now",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
