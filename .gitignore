@@ -16,6 +16,7 @@ dist
 # Env vars
 .env
 .env.*
+*.env
 now.json
 api/credits.js
 
