@@ -1119,6 +1119,11 @@
     glob-all "^3.1.0"
     sass-resources-loader "^2.0.0"
 
+"@nuxtjs/yandex-metrika@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/yandex-metrika/-/yandex-metrika-1.0.3.tgz#13b967d0569d7356c5f3a89be90cf74de9466d0f"
+  integrity sha512-2UkWQ7EKS5zTW+CyO426meqBxoESz5IDPwhcmZWZPBEjhD6abSBTpVb4DjBVODCELn0K7PdvfM5Ogkiq7W2YFQ==
+
 "@nuxtjs/youch@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/youch/-/youch-4.2.3.tgz#36f8b22df5a0efaa81373109851e1d857aca6bed"
@@ -5592,6 +5597,11 @@ nuxt-i18n@^6.5.0:
     js-cookie "^2.2.1"
     vue-i18n "^8.12.0"
     vue-i18n-extensions "^0.2.1"
+
+nuxt-vk-rtrg@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/nuxt-vk-rtrg/-/nuxt-vk-rtrg-0.0.5.tgz#74effda1e09525a490bcfe7ba2e6d609cfe34fce"
+  integrity sha512-vafL1GuTw97FSOmQjYBLzLHwtngzT+x7K6MXDS4ew2f+jVdQM8GWAWmys3jW+ASH7dzdby5iF3oU3Zdl5YzRog==
 
 nuxt@^2.0.0:
   version "2.11.0"

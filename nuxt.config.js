@@ -220,7 +220,23 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
     "@nuxtjs/redirect-module",
-    "dex-nuxt-svg-sprite"
+    "dex-nuxt-svg-sprite",
+    [
+      "@nuxtjs/yandex-metrika",
+      {
+        id: "49681447",
+        webvisor: true,
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true
+      }
+    ],
+    [
+      "nuxt-vk-rtrg",
+      {
+        id: "VK-RTRG-474822-9nKyq"
+      }
+    ]
   ],
   /*
    ** SVG Sprite
