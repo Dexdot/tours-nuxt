@@ -6,7 +6,7 @@
           {{ tourData.price }}
         </b>
         <p>
-          {{ $t('formOrder.price') }}
+          {{ tourData.priceLabel || $t('formOrder.price') }}
         </p>
       </div>
 
@@ -15,7 +15,7 @@
           {{ tourData.priceChild }}
         </b>
         <p>
-          {{ $t('formOrder.priceChild') }}
+          {{ tourData.priceChildLabel || $t('formOrder.priceChild') }}
         </p>
       </div>
     </div>
@@ -26,7 +26,7 @@
         $t('formOrder.button')
       }}</BaseButton>
       <small>
-        {{ $t('formOrder.subtitle') }}
+        {{ tourData.offerFormLabel || $t('formOrder.subtitle') }}
       </small>
     </div>
 

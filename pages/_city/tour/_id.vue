@@ -130,7 +130,10 @@
               :tourData="{
                 bukzaId: tourData.bukzaId,
                 price: tourData.price,
+                priceLabel: tourData.priceLabel,
                 priceChild: tourData.priceChild,
+                priceChildLabel: tourData.priceChildLabel,
+                offerFormLabel: tourData.offerFormLabel,
                 offerTitle: tourData.offerTitle,
                 offerText: tourData.offerText
               }"
