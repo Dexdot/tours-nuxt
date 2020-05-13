@@ -14,7 +14,7 @@
             </a>
           </li>
           <li>
-            <a href="http://hvxzcb.ru/" target="_blank">
+            <a href="http://hvxzcb.com/" target="_blank">
               <small>Development</small>
               <b>Kamil Sometimes</b>
             </a>
