@@ -267,7 +267,11 @@ export default {
       locale: 'lang/locale'
     }),
     reviews() {
-      const reviews = this.tours.reduce((reviews, tour) => {
+      const toursWithReviews = this.tours.filter(
+        tour => 'reviews' in tour.fields
+      )
+
+      const reviews = toursWithReviews.reduce((reviews, tour) => {
         return [...reviews, ...tour.fields.reviews]
       }, [])
 

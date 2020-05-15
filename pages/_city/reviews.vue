@@ -199,7 +199,7 @@ export default {
           tour => tour.fields.slug === this.selectedTour
         )
 
-        return tour.fields.reviews
+        return 'reviews' in tour.fields ? tour.fields.reviews : []
       }
 
       return this.reviews.filter(({ fields }) => {
