@@ -1,5 +1,5 @@
 <template>
-  <ul class="social">
+  <ul :class="['social', { 'social--white': isWhite }]">
     <li
       v-for="socialName in computedList"
       :key="socialName"
@@ -16,6 +16,10 @@
 <script>
 export default {
   props: {
+    isWhite: {
+      type: Boolean,
+      default: false
+    },
     socialLinks: {
       type: Array,
       required: true
@@ -88,4 +92,10 @@ export default {
 
   &:hover::before
     transform: translate(-50%, -50%) scale(1.1)
+
+.social--white svg
+  color: #fff
+
+.social--white a::before
+  border: 1px solid #fff
 </style>

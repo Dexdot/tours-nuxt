@@ -36,6 +36,36 @@
             </a>
           </div>
         </div>
+
+        <no-ssr>
+          <div class="footer__award">
+            <div
+              id="TA_certificateOfExcellence944"
+              class="TA_certificateOfExcellence"
+            >
+              <ul id="96WJlmyEl" class="TA_links WieT8XTRCCE4">
+                <li id="8H3FlImwIp" class="ARoy9Qf2Cwq">
+                  <a
+                    target="_blank"
+                    href="https://www.tripadvisor.ru/Attraction_Review-g298507-d14893132-Reviews-Peshekhod_Tour-St_Petersburg_Northwestern_District.html"
+                    ><img
+                      src="https://www.tripadvisor.ru/img/cdsi/img2/awards/v2/tchotel_2020_LL-14348-2.png"
+                      alt="TripAdvisor"
+                      class="widCOEImg"
+                      id="CDSWIDCOELOGO"
+                  /></a>
+                </li>
+              </ul>
+            </div>
+
+            <script
+              async
+              src="https://www.jscache.com/wejs?wtype=certificateOfExcellence&amp;uniq=944&amp;locationId=14893132&amp;lang=ru&amp;year=2020&amp;display_version=2"
+              data-loadtrk
+              onload="this.loadtrk=true"
+            ></script>
+          </div>
+        </no-ssr>
       </div>
 
       <div class="footer__bottom">
@@ -52,7 +82,7 @@
         </div>
 
         <div class="footer__social">
-          <SocialList :socialLinks="general.socialLinks" />
+          <SocialList :socialLinks="general.socialLinks" isWhite />
         </div>
       </div>
     </div>
@@ -75,7 +105,6 @@ export default {
 }
 </script>
 
-
 <style lang="sass" scoped>
 .footer
   background: $black
@@ -84,9 +113,10 @@ export default {
 .footer a
   +link(#fff)
 
-
 // Inner
 .footer__inner
+  position: relative
+
   display: flex
   align-items: flex-start
 
@@ -95,7 +125,24 @@ export default {
 
   @media (max-width: $tab)
     padding-top: 64px
+    padding-bottom: 142px
     flex-direction: column
+
+
+// Award
+.footer__award
+  position: absolute
+  bottom: 48px
+  left: 0
+
+  /deep/ #CDSWIDCOE
+    margin: 0
+    height: 80px
+    width: auto
+
+    img
+      height: 100%
+      object-fit: contain
 
 
 // Logo
@@ -248,7 +295,4 @@ export default {
       border: 0
       width: auto
       height: auto
-    
-  svg
-    color: #fff
 </style>
