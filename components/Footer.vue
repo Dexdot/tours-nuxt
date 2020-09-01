@@ -135,7 +135,7 @@ export default {
   bottom: 48px
   left: 0
 
-  /deep/ > div > div
+  /deep/ .TA_certificateOfExcellence > *
     height: 80px
     width: auto !important
     margin: 0 !important
