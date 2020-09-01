@@ -135,10 +135,10 @@ export default {
   bottom: 48px
   left: 0
 
-  /deep/ #CDSWIDCOE
-    margin: 0
+  /deep/ > div > div
     height: 80px
-    width: auto
+    width: auto !important
+    margin: 0 !important
 
     img
       height: 100%
