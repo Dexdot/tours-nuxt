@@ -22,3 +22,5 @@ api/credits.js
 
 # PHP
 ajax/config.php
+
+.DS_Store
