@@ -49,6 +49,11 @@
             />
           </div>
         </div>
+
+        <BaseButton
+          @click="$store.dispatch('dom/showBukza', pageData.bukzaId)"
+          >{{ $t('certificate.button') }}</BaseButton
+        >
       </section>
     </div>
   </main>

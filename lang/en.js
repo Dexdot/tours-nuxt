@@ -97,6 +97,9 @@ const lang = {
     text:
       "This page does not seem to exist. Below in the section you need a section or see the most popular excursions",
     button: "Home page"
+  },
+  certificate: {
+    button: "Buy certificate"
   }
 };
 

@@ -9,7 +9,13 @@ export const fetchCertificates = options =>
         ...options
       })
       .then(async ({ items }) => {
-        const certPages = items.filter(certPage => "fields" in certPage);
-        resolve(certPages);
+        const temp = [...items];
+        const filtered = temp.filter(certPage => "fields" in certPage);
+        filtered.sort((a, b) => {
+          const aTime = new Date(a.sys.createdAt).getTime();
+          const bTime = new Date(b.sys.createdAt).getTime();
+          return aTime - bTime;
+        });
+        resolve(filtered);
       });
   });
