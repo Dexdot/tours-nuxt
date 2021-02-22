@@ -50,10 +50,24 @@
           </div>
         </div>
 
-        <BaseButton
-          @click="$store.dispatch('dom/showBukza', pageData.bukzaId)"
-          >{{ $t('certificate.button') }}</BaseButton
-        >
+        <div class="certificate-footer">
+          <div
+            v-if="pageData.price || pageData.priceOld"
+            class="certificate-price-wrap"
+          >
+            <b class="certificate-priceold" v-if="pageData.priceOld">{{
+              pageData.priceOld
+            }}</b>
+            <b class="certificate-price" v-if="pageData.price">{{
+              pageData.price
+            }}</b>
+          </div>
+
+          <BaseButton
+            @click="$store.dispatch('dom/showBukza', pageData.bukzaId)"
+            >{{ $t('certificate.button') }}</BaseButton
+          >
+        </div>
       </section>
     </div>
   </main>
@@ -242,4 +256,35 @@ export default {
 .certificate-img
   margin-top: 24px
   margin-bottom: 16px
+
+.certificate-footer
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.certificate-price-wrap
+  +mont(sb)
+  font-size: 24px
+  line-height: 1
+
+.certificate-priceold
+  font-size: 16px
+  opacity: 0.4
+  display: inline-block
+  margin-bottom: 2px
+
+  position: relative
+  &::before
+    content: ''
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 100%
+    height: 2px
+    background: $black
+
+.certificate-price
+  display: block
+
 </style>
