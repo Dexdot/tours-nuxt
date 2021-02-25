@@ -1,13 +1,13 @@
 <template>
   <main class="container">
-    <div class="certificate">
-      <aside class="certificate__aside">
+    <div class="shop">
+      <aside class="shop__aside">
         <nav>
           <ul>
             <li v-for="page in slugs" :key="page.slug">
               <nuxt-link
                 class="t-ttu"
-                :to="$cityLocalePath(`/certificate/${page.slug}`)"
+                :to="$cityLocalePath(`/shop/${page.slug}`)"
               >
                 <template v-if="page.slug === $route.params.id">
                   <b>{{ page.name }}</b>
@@ -21,10 +21,10 @@
         </nav>
       </aside>
 
-      <section class="certificate__content">
+      <section class="shop__content">
         <div v-for="(item, i) in content" :key="i + item.nodeType">
           <h1
-            class="certificate__title t-h4"
+            class="shop__title t-h4"
             v-if="isH1(item)"
             v-html="render(item)"
           ></h1>
@@ -32,7 +32,7 @@
           <ol v-if="isOL(item)" v-html="render(item)"></ol>
           <ul v-if="isUL(item)" v-html="render(item)"></ul>
 
-          <div class="certificate-img" v-if="isImage(item) || isVideo(item)">
+          <div class="shop-img" v-if="isImage(item) || isVideo(item)">
             <BaseImage
               v-if="isImage(item)"
               :img="item.data.target"
@@ -50,22 +50,20 @@
           </div>
         </div>
 
-        <div class="certificate-footer">
+        <div class="shop-footer">
           <div
             v-if="pageData.price || pageData.priceOld"
-            class="certificate-price-wrap"
+            class="shop-price-wrap"
           >
-            <b class="certificate-priceold" v-if="pageData.priceOld">{{
+            <b class="shop-priceold" v-if="pageData.priceOld">{{
               pageData.priceOld
             }}</b>
-            <b class="certificate-price" v-if="pageData.price">{{
-              pageData.price
-            }}</b>
+            <b class="shop-price" v-if="pageData.price">{{ pageData.price }}</b>
           </div>
 
           <BaseButton
             @click="$store.dispatch('dom/showBukza', pageData.bukzaId)"
-            >{{ $t('certificate.button') }}</BaseButton
+            >{{ $t('shop.button') }}</BaseButton
           >
         </div>
       </section>
@@ -171,10 +169,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.certificate
+.shop
   padding: calc(var(--header-h) + 80px) 0 80px
 
-.certificate__aside
+.shop__aside
   line-height: 1
 
   @media (min-width: $tab + 1)
@@ -187,19 +185,19 @@ export default {
   @media (max-width: $tab)
     margin-bottom: 64px
 
-.certificate__aside li:not(:last-child)
+.shop__aside li:not(:last-child)
   margin-bottom: 8px
 
-.certificate__title
+.shop__title
   margin-bottom: 1em
   
-.certificate__content
+.shop__content
   margin: 0 auto
 
   @media (min-width: $tab + 1)
     max-width: column-spans(6)
 
-.certificate__content /deep/
+.shop__content /deep/
   p
     margin-bottom: 16px
 
@@ -246,28 +244,28 @@ export default {
     background: $black
     border-radius: 50%
 
-.certificate-img
+.shop-img
   img
     display: block
     width: 100%
     height: auto
     margin-bottom: 8px
   
-.certificate-img
+.shop-img
   margin-top: 24px
   margin-bottom: 16px
 
-.certificate-footer
+.shop-footer
   display: flex
   align-items: center
   justify-content: space-between
 
-.certificate-price-wrap
+.shop-price-wrap
   +mont(sb)
   font-size: 24px
   line-height: 1
 
-.certificate-priceold
+.shop-priceold
   font-size: 16px
   opacity: 0.4
   display: inline-block
@@ -284,7 +282,7 @@ export default {
     height: 2px
     background: $black
 
-.certificate-price
+.shop-price
   display: block
 
 </style>
