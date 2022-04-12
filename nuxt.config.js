@@ -221,16 +221,16 @@ module.exports = {
     "@nuxtjs/style-resources",
     "@nuxtjs/redirect-module",
     "dex-nuxt-svg-sprite",
-    [
-      "@nuxtjs/yandex-metrika",
-      {
-        id: "49681447",
-        webvisor: true,
-        clickmap: true,
-        trackLinks: true,
-        accurateTrackBounce: true
-      }
-    ],
+    // [
+    //   "@nuxtjs/yandex-metrika",
+    //   {
+    //     id: "88239579",
+    //     webvisor: true,
+    //     clickmap: true,
+    //     trackLinks: true,
+    //     accurateTrackBounce: true
+    //   }
+    // ],
     [
       "nuxt-vk-rtrg",
       {
