@@ -220,7 +220,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
     "@nuxtjs/redirect-module",
-    "dex-nuxt-svg-sprite",
+    "dex-nuxt-svg-sprite"
     // [
     //   "@nuxtjs/yandex-metrika",
     //   {
@@ -231,12 +231,12 @@ module.exports = {
     //     accurateTrackBounce: true
     //   }
     // ],
-    [
-      "nuxt-vk-rtrg",
-      {
-        id: "VK-RTRG-474822-9nKyq"
-      }
-    ]
+    // [
+    //   "nuxt-vk-rtrg",
+    //   {
+    //     id: "VK-RTRG-474822-9nKyq"
+    //   }
+    // ]
   ],
   /*
    ** SVG Sprite
