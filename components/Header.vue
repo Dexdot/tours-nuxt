@@ -32,7 +32,7 @@
                 !$route.name.includes('blog-slug')
             "
           >
-            {{ $t('cities')[city] }}
+            {{ $t("cities")[city] }}
             <svg-icon name="chevron" />
           </button>
         </div>
@@ -72,7 +72,7 @@
               {{ general.phoneText }}
             </a>
             <button @click="$store.dispatch('dom/toggleCallback')">
-              {{ $t('orderCall') }}
+              {{ $t("orderCall") }}
             </button>
           </div>
 
@@ -81,7 +81,7 @@
           </div>
 
           <BaseButton classPulse @click="$store.dispatch('dom/showBukza')">{{
-            $t('orderTicket')
+            $t("orderTicket")
           }}</BaseButton>
         </div>
 
@@ -95,7 +95,7 @@
     <ul :class="['header__cities', { active: isCitiesSelectActive }]">
       <li v-for="key in Object.keys($t('cities'))" :key="key">
         <Chipbox small @click="onChipboxClick(key)">{{
-          $t('cities')[key]
+          $t("cities")[key]
         }}</Chipbox>
       </li>
     </ul>
@@ -103,13 +103,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import ButtonBurger from '~/ui/ButtonBurger'
-import Chipbox from '~/ui/Chipbox'
-import SocialList from '~/components/SocialList'
+import ButtonBurger from "~/ui/ButtonBurger";
+import Chipbox from "~/ui/Chipbox";
+import SocialList from "~/components/SocialList";
 
-import city from '~/mixins/city'
+import city from "~/mixins/city";
 
 export default {
   mixins: [city],
@@ -125,7 +125,7 @@ export default {
   },
   data: () => ({
     scrollY: 0,
-    dir: 'down',
+    dir: "down",
     isMob: false,
     isCitiesSelectActive: false,
     preAnimated: false,
@@ -133,72 +133,72 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      general: 'general/data'
+      general: "general/data"
     }),
     onTop() {
-      return this.scrollY <= 1
+      return this.scrollY <= 1;
     },
     isUphidden() {
       if (this.onTop) {
-        return false
+        return false;
       } else {
-        return this.dir === 'down'
+        return this.dir === "down";
       }
     },
     isTrasparent() {
-      return this.transparent && this.onTop
+      return this.transparent && this.onTop;
     },
     isFixed() {
-      return !this.onTop
+      return !this.onTop;
     }
   },
   mounted() {
-    this.handleScroll()
-    this.handleResize()
+    this.handleScroll();
+    this.handleResize();
 
-    if (document.readyState === 'complete') {
-      this.animate()
+    if (document.readyState === "complete") {
+      this.animate();
     } else {
-      window.addEventListener('load', () => {
+      window.addEventListener("load", () => {
         setTimeout(() => {
-          this.animate()
-        }, 200)
-      })
+          this.animate();
+        }, 200);
+      });
     }
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScroll)
-    window.removeEventListener('resize', this.onResize)
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     animate() {
-      this.preAnimated = true
+      this.preAnimated = true;
       setTimeout(() => {
-        this.animated = true
-      }, 1000)
+        this.animated = true;
+      }, 1000);
     },
     handleScroll() {
-      this.onScroll()
-      window.addEventListener('scroll', this.onScroll.bind(this))
+      this.onScroll();
+      window.addEventListener("scroll", this.onScroll.bind(this));
     },
     handleResize() {
-      this.onResize()
-      window.addEventListener('resize', this.onResize.bind(this))
+      this.onResize();
+      window.addEventListener("resize", this.onResize.bind(this));
     },
     onScroll() {
-      let y = window.pageYOffset
-      this.dir = y > this.scrollY ? 'down' : 'up'
-      this.scrollY = y
+      let y = window.pageYOffset;
+      this.dir = y > this.scrollY ? "down" : "up";
+      this.scrollY = y;
     },
     onResize() {
-      this.isMob = window.innerWidth <= 1040
+      this.isMob = window.innerWidth <= 1040;
     },
     onChipboxClick(city) {
-      this.isCitiesSelectActive = false
-      this.city = city
+      this.isCitiesSelectActive = false;
+      this.city = city;
     }
   }
-}
+};
 </script>
 
 <style lang="sass">
@@ -208,7 +208,7 @@ export default {
     --header-h: 104px
 </style>
 
-<style lang="sass" scoped>  
+<style lang="sass" scoped>
 .header
   z-index: 5
   position: fixed
@@ -246,7 +246,7 @@ export default {
 .header--transparent
   background: 0
   color: #fff
-  
+
   /deep/
     a, svg
       +link(#fff)
@@ -297,7 +297,7 @@ export default {
   margin-right: 80px
   @media (max-width: 1540px)
     margin-right: 40px
-    
+
   @media (max-width: 1110px)
     margin-right: 16px
 
@@ -326,7 +326,7 @@ export default {
     height: 8px
     transform: rotate(90deg)
     transition: $trs
-  
+
   &.active .i-chevron
     transform: rotate(-90deg)
 
@@ -352,7 +352,7 @@ export default {
     pointer-events: none
 
   > li
-    margin-right: 4px 
+    margin-right: 4px
 
   /deep/ .chipbox
     border: 1px solid $black
@@ -415,7 +415,7 @@ export default {
     letter-spacing: 0.04em
     line-height: 1
     display: block
-    
+
     @media (max-width: 1540px)
       font-size: 14px
 

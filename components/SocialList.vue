@@ -27,34 +27,34 @@ export default {
   },
   data: () => ({
     allSocials: {
-      tripadvisor: 'tripadvisor',
-      whatsapp: 'whatsapp',
-      inst: 'instagram',
-      vk: 'vk',
-      fb: 'facebook',
-      telegram: 't.me'
+      vk: "vk",
+      tripadvisor: "tripadvisor",
+      whatsapp: "whatsapp",
+      inst: "instagram",
+      fb: "facebook",
+      telegram: "t.me"
     }
   }),
   computed: {
     computedList() {
       return Object.keys(this.allSocials).filter(key =>
         this.socialLinks.some(link => link.includes(this.allSocials[key]))
-      )
+      );
     },
     socialMap() {
-      const socialMap = {}
+      const socialMap = {};
 
       this.computedList.forEach(key => {
         const href = this.socialLinks.find(link =>
           link.includes(this.allSocials[key])
-        )
-        socialMap[key] = href
-      })
+        );
+        socialMap[key] = href;
+      });
 
-      return socialMap
+      return socialMap;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -64,7 +64,7 @@ export default {
 
   margin-top: -8px
   margin-left: -8px
-  
+
 .social li
   margin-top: 8px
   margin-left: 8px
