@@ -31,7 +31,9 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      if (this.id) this.init()
+      if (this.id) {
+        this.init()
+      }
     })
   },
   computed: {

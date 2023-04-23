@@ -186,10 +186,8 @@ export default {
         switch (filter) {
           case 'group':
             return !fields.makeIndividual
-            break
           case 'individual':
             return fields.makeIndividual
-            break
           default:
             break
         }
