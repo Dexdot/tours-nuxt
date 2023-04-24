@@ -5,10 +5,10 @@
         <div class="ntf__inner">
           <img src="~assets/img/404.png" alt="404" class="ntf__img" />
           <div class="ntf__text">
-            <h1 class="t-h2">{{ $t('ntf.title') }}</h1>
-            <p>{{ $t('ntf.text') }}</p>
+            <h1 class="t-h2">{{ $t("ntf.title") }}</h1>
+            <p>{{ $t("ntf.text") }}</p>
             <BaseButton isLink :to="$cityLocalePath('index')">{{
-              $t('ntf.button')
+              $t("ntf.button")
             }}</BaseButton>
           </div>
         </div>
@@ -20,47 +20,49 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import ToursSlider from '~/components/ToursSlider'
+import { mapGetters } from "vuex";
+import ToursSlider from "~/components/ToursSlider";
 
 export default {
   components: {
     ToursSlider
   },
-  props: ['error'],
+  props: ["error"],
   computed: {
     ...mapGetters({
-      popularTours: 'tours/popularTours',
-      locale: 'lang/locale'
+      popularTours: "tours/popularTours",
+      locale: "lang/locale"
     }),
     city() {
-      const cities = ['tallinn', 'spb']
-      const { fullPath, params } = this.$route
-      let { city } = params
+      // CITYSWITCH
+      // const cities = ["tallinn", "spb"];
+      const cities = ["spb"];
+      const { fullPath, params } = this.$route;
+      let { city } = params;
 
       if (!city || !cities.includes(city)) {
-        city = cities.find(city => fullPath.split('/').includes(city))
+        city = cities.find(city => fullPath.split("/").includes(city));
 
         if (!city) {
-          city = 'spb'
+          city = "spb";
         }
       }
 
-      return city
+      return city;
     }
   },
   serverPrefetch() {
-    return this.loadTours()
+    return this.loadTours();
   },
   mounted() {
-    this.loadTours()
+    this.loadTours();
   },
   methods: {
     loadTours() {
-      return this.$store.dispatch('tours/loadTours', this.city)
+      return this.$store.dispatch("tours/loadTours", this.city);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -72,7 +74,7 @@ export default {
 
   @media (max-width: $tab)
     padding-top: calc(var(--header-h) + 32px)
-  
+
 .ntf__inner
   display: flex
   align-items: center

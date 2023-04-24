@@ -33,7 +33,8 @@ const lang = {
     }
   ],
   tours: {
-    title: "Экскурсии"
+    title: "Экскурсии",
+    choose: "Выбери свою экскурсию"
   },
   tour: {
     routeTitle: "Что увидим",

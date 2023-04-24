@@ -26,7 +26,7 @@
 
       <div class="hero__text">
         <div class="container">
-          <div class="hero__chipbox-list" data-animate="fade">
+          <!-- <div class="hero__chipbox-list" data-animate="fade">
             <Chipbox
               white
               :active="key === city"
@@ -35,7 +35,7 @@
               @click="onChipboxClick(key)"
               >{{ $t('cities')[key] }}
             </Chipbox>
-          </div>
+          </div> -->
           <h1 v-if="main.heroTitle" class="t-h1" data-animate="fadeup">
             {{ main.heroTitle }}
           </h1>
@@ -115,7 +115,7 @@
               </div>
             </template>
             <BaseButton isLink :to="$cityLocalePath('/tours')">{{
-              $t('chooseTour')
+              $t("chooseTour")
             }}</BaseButton>
           </div>
 
@@ -171,7 +171,7 @@
     <section class="faq-section" v-if="general.faq">
       <div class="container">
         <h2 class="t-h3 faq-section__title" data-animate="fade">
-          {{ $t('main.faqTitle') }}
+          {{ $t("main.faqTitle") }}
         </h2>
         <div class="faq-section__content">
           <FaqList :content="general.faq.content" />
@@ -184,20 +184,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import ToursPopular from '~/components/ToursPopular'
-import HowSection from '~/components/HowSection'
-import ReviewsSlider from '~/components/ReviewsSlider'
-import FaqList from '~/components/FaqList'
-import Instagram from '~/components/Instagram'
-import Chipbox from '~/ui/Chipbox'
+import ToursPopular from "~/components/ToursPopular";
+import HowSection from "~/components/HowSection";
+import ReviewsSlider from "~/components/ReviewsSlider";
+import FaqList from "~/components/FaqList";
+import Instagram from "~/components/Instagram";
+import Chipbox from "~/ui/Chipbox";
 
-import page from '~/mixins/page'
-import render from '~/mixins/render'
-import city from '~/mixins/city'
-import animate from '~/mixins/animate'
-import parallax from '~/mixins/parallax'
+import page from "~/mixins/page";
+import render from "~/mixins/render";
+import city from "~/mixins/city";
+import animate from "~/mixins/animate";
+import parallax from "~/mixins/parallax";
 
 export default {
   mixins: [page, render, city, animate, parallax],
@@ -210,86 +210,86 @@ export default {
     Chipbox
   },
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.index
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.index;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   async fetch({ store, route }) {
-    await store.dispatch('main/load', route.params.city)
-    await store.dispatch('tours/loadTours')
+    await store.dispatch("main/load", route.params.city);
+    await store.dispatch("tours/loadTours");
   },
   computed: {
     ...mapGetters({
-      tours: 'tours/popularTours',
-      main: 'main/data',
-      general: 'general/data',
-      locale: 'lang/locale'
+      tours: "tours/popularTours",
+      main: "main/data",
+      general: "general/data",
+      locale: "lang/locale"
     }),
     reviews() {
       const toursWithReviews = this.tours.filter(
-        tour => 'reviews' in tour.fields
-      )
+        tour => "reviews" in tour.fields
+      );
 
       const reviews = toursWithReviews.reduce((reviews, tour) => {
-        return [...reviews, ...tour.fields.reviews]
-      }, [])
+        return [...reviews, ...tour.fields.reviews];
+      }, []);
 
-      const ids = reviews.map(r => r.sys.id)
-      return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i)
+      const ids = reviews.map(r => r.sys.id);
+      return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
     },
     instagramData() {
-      const { general } = this
+      const { general } = this;
 
-      const instagramImages = [...general.instagramImages].reverse()
-      const images = []
+      const instagramImages = [...general.instagramImages].reverse();
+      const images = [];
 
-      images.push(instagramImages[0])
-      images.push({ sys: { id: new Date().getTime() } })
+      images.push(instagramImages[0]);
+      images.push({ sys: { id: new Date().getTime() } });
 
       instagramImages.slice(1).forEach(img => {
-        images.push(img)
-      })
+        images.push(img);
+      });
 
       const data = {
         images: images.slice(0, 7),
@@ -297,17 +297,17 @@ export default {
         text: general.instagramText,
         buttonUrl: general.instagramButtonUrl,
         buttonText: general.instagramButtonText
-      }
+      };
 
-      return data
+      return data;
     }
   },
   methods: {
     onChipboxClick(city) {
-      this.city = city
+      this.city = city;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -319,7 +319,7 @@ export default {
   @media (max-width: $tab)
     padding-top: 48px
     padding-bottom: 56px
-    
+
 
 .faq-section__title
   text-align: center
@@ -330,7 +330,7 @@ export default {
 
 .faq-section__content
   margin: 0 auto
-  
+
   @media (min-width: $tab + 1)
     max-width: column-spans(8)
 

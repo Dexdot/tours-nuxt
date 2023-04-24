@@ -23,7 +23,8 @@
             <svg-icon name="logo" />
           </nuxt-link>
 
-          <button
+          <!-- CITYSWITCH -->
+          <!-- <button
             @click="isCitiesSelectActive = !isCitiesSelectActive"
             :class="['header__select t-ttu', { active: isCitiesSelectActive }]"
             v-if="
@@ -34,7 +35,7 @@
           >
             {{ $t("cities")[city] }}
             <svg-icon name="chevron" />
-          </button>
+          </button> -->
         </div>
 
         <nav class="header__nav">
@@ -92,13 +93,14 @@
       </div>
     </div>
 
-    <ul :class="['header__cities', { active: isCitiesSelectActive }]">
+    <!-- CITYSWITCH -->
+    <!-- <ul :class="['header__cities', { active: isCitiesSelectActive }]">
       <li v-for="key in Object.keys($t('cities'))" :key="key">
         <Chipbox small @click="onChipboxClick(key)">{{
           $t("cities")[key]
         }}</Chipbox>
       </li>
-    </ul>
+    </ul> -->
   </header>
 </template>
 
