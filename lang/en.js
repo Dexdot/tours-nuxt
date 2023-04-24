@@ -43,9 +43,11 @@ const lang = {
     otherToursTitle: "Other tours you will like"
   },
   tourTypes: {
-    all: "All",
     group: "Group",
-    individual: "Individual"
+    individual: "Individual",
+    children: "Children's",
+    newbie: "For newbies",
+    unusual: "Unusual routes"
   },
   footer: {
     companyName: "Peshehod Tour",

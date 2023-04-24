@@ -43,9 +43,11 @@ const lang = {
     otherToursTitle: "Другие экскурсии, которые вам понравятся"
   },
   tourTypes: {
-    all: "Все",
     group: "Групповые",
-    individual: "Индивидуальные"
+    individual: "Индивидуальные",
+    children: "Детские",
+    newbie: "Для новичков",
+    unusual: "Необычные маршруты"
   },
   footer: {
     companyName: "Пешеход Тур",

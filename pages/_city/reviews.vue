@@ -4,11 +4,11 @@
       <div class="container">
         <div class="reviews-container">
           <div class="reviews-left">
-            <h1 class="reviews-title">{{ $t('reviews.title') }}</h1>
+            <h1 class="reviews-title">{{ $t("reviews.title") }}</h1>
 
             <div class="reviews-controls reviews-controls--desktop">
               <div class="reviews-control">
-                <p class="t-ttu">{{ $t('reviews.selectTypeTitle') }}</p>
+                <p class="t-ttu">{{ $t("reviews.selectTypeTitle") }}</p>
 
                 <div class="select-text">
                   <select v-model="typeOfTours">
@@ -16,7 +16,7 @@
                       v-for="key in Object.keys($t('tourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t('tourTypes')[key] }}</option
+                      >{{ $t("tourTypes")[key] }}</option
                     >
                   </select>
                 </div>
@@ -24,13 +24,13 @@
 
               <div class="reviews-control" v-if="filteredTours.length > 0">
                 <p class="t-ttu">
-                  {{ $t('reviews.selectTourNotChosenTitle') }}
+                  {{ $t("reviews.selectTourNotChosenTitle") }}
                 </p>
 
                 <div class="select-text">
                   <select v-model="selectedTour">
                     <option value="">{{
-                      $t('reviews.selectTourNotChosenTitle')
+                      $t("reviews.selectTourNotChosenTitle")
                     }}</option>
                     <option
                       v-for="tour in filteredTours"
@@ -51,7 +51,7 @@
                       v-for="key in Object.keys($t('tourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t('tourTypes')[key] }}</option
+                      >{{ $t("tourTypes")[key] }}</option
                     >
                   </select>
                 </div>
@@ -62,7 +62,7 @@
                 type="button"
                 @click="showReviewRatesModal"
               >
-                {{ $t('reviews.watchReviews') }}
+                {{ $t("reviews.watchReviews") }}
                 <svg-icon name="chevron" />
               </button>
             </div>
@@ -110,18 +110,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import ToursSlider from '~/components/ToursSlider'
-import ReviewCard from '~/components/ReviewCard'
-import ReviewRates from '~/components/ReviewRates'
-import ReviewRatesModal from '~/components/ReviewRatesModal'
+import ToursSlider from "~/components/ToursSlider";
+import ReviewCard from "~/components/ReviewCard";
+import ReviewRates from "~/components/ReviewRates";
+import ReviewRatesModal from "~/components/ReviewRatesModal";
 
-import page from '~/mixins/page'
-import render from '~/mixins/render'
-import pagen from '~/mixins/pagen'
+import page from "~/mixins/page";
+import render from "~/mixins/render";
+import pagen from "~/mixins/pagen";
 
-import { getRandomEntries } from '~/assets/scripts/helpers'
+import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
   mixins: [page, render, pagen],
@@ -132,188 +132,182 @@ export default {
     ReviewRatesModal
   },
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.reviews
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.reviews;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   async fetch({ store }) {
-    await store.dispatch('tours/loadTours')
-    await store.dispatch('reviews/loadReviews')
+    await store.dispatch("tours/loadTours");
+    await store.dispatch("reviews/loadReviews");
   },
   data: () => ({
     isReviewRatesModalVisible: false,
-    typeOfTours: 'all',
-    selectedTour: ''
+    typeOfTours: "all",
+    selectedTour: ""
   }),
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
-      reviews: 'reviews/allReviews',
-      general: 'general/data',
-      locale: 'lang/locale'
+      allTours: "tours/allTours",
+      reviews: "reviews/allReviews",
+      general: "general/data",
+      locale: "lang/locale"
     }),
     filteredReviews() {
       if (this.selectedTour) {
         const tour = this.filteredTours.find(
           tour => tour.fields.slug === this.selectedTour
-        )
+        );
 
-        return 'reviews' in tour.fields ? tour.fields.reviews : []
+        return "reviews" in tour.fields ? tour.fields.reviews : [];
       }
 
       return this.reviews.filter(({ fields }) => {
         switch (this.typeOfTours) {
-          case 'all':
-            return true
-            break
-          case 'group':
-            return !fields.makeIndividual
-            break
-          case 'individual':
-            return fields.makeIndividual
-            break
+          case "all":
+            return true;
+          case "group":
+            return !fields.makeIndividual;
+          case "individual":
+            return fields.makeIndividual;
           default:
-            break
+            break;
         }
-      })
+      });
     },
     pagenReviews() {
       return this.filteredReviews.slice(
         this.pagenSkip,
         this.pagenSkip + this.pagen.limit
-      )
+      );
     },
     filteredTours() {
       return this.allTours.filter(({ fields }) => {
         switch (this.typeOfTours) {
-          case 'all':
-            return true
-            break
-          case 'group':
-            return !fields.makeIndividual
-            break
-          case 'individual':
-            return fields.makeIndividual
-            break
+          case "all":
+            return true;
+          case "group":
+            return !fields.makeIndividual;
+          case "individual":
+            return fields.makeIndividual;
           default:
-            break
+            break;
         }
-      })
+      });
     },
     otherTours() {
-      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
+      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : [];
     },
     aggregators() {
       return this.general.aggregators.map(img => {
-        const copy = { ...img }
-        const [rate, ratesLength] = copy.fields.description.split('|')
+        const copy = { ...img };
+        const [rate, ratesLength] = copy.fields.description.split("|");
 
-        copy.fields.rate = rate.trim()
-        copy.fields.ratesLength = ratesLength.trim()
+        copy.fields.rate = rate.trim();
+        copy.fields.ratesLength = ratesLength.trim();
 
-        return copy
-      })
+        return copy;
+      });
     },
     hasAggregators() {
-      return this.aggregators && this.aggregators.length > 0
+      return this.aggregators && this.aggregators.length > 0;
     },
     pagenList() {
-      let pagenLen = this.filteredReviews.length / Math.floor(this.pagen.limit)
+      let pagenLen = this.filteredReviews.length / Math.floor(this.pagen.limit);
 
       if (!Number.isInteger(pagenLen)) {
-        pagenLen = Math.floor(pagenLen) + 1
+        pagenLen = Math.floor(pagenLen) + 1;
       }
 
-      const arr = []
+      const arr = [];
       for (let i = 0; i < pagenLen; i++) {
-        arr.push({ text: i + 1 })
+        arr.push({ text: i + 1 });
       }
 
-      return arr
+      return arr;
     }
   },
   watch: {
     typeOfTours(typeOfTours) {
-      this.pagen.index = 0
+      this.pagen.index = 0;
 
-      if (typeOfTours === 'all') return false
+      if (typeOfTours === "all") return false;
 
       if (this.selectedTour) {
         const tour = this.allTours.find(
           tour => tour.fields.slug === this.selectedTour
-        )
-        const tourType = tour.fields.makeIndividual ? 'individual' : 'group'
+        );
+        const tourType = tour.fields.makeIndividual ? "individual" : "group";
         if (typeOfTours !== tourType) {
-          this.selectedTour = ''
+          this.selectedTour = "";
         }
       }
     },
     selectedTour(selectedTour) {
-      this.pagen.index = 0
+      this.pagen.index = 0;
 
       if (selectedTour) {
         const tour = this.filteredTours.find(
           tour => tour.fields.slug === selectedTour
-        )
-        this.typeOfTours = tour.fields.makeIndividual ? 'individual' : 'group'
+        );
+        this.typeOfTours = tour.fields.makeIndividual ? "individual" : "group";
       }
     }
   },
   methods: {
     showReviewRatesModal() {
-      this.isReviewRatesModalVisible = true
+      this.isReviewRatesModalVisible = true;
     },
     hideReviewRatesModal() {
-      this.isReviewRatesModalVisible = false
+      this.isReviewRatesModalVisible = false;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
 $reviews-pt: calc(var(--header-h) + 13vh)
-  
+
 .reviews-section
   padding-top: $reviews-pt
   padding-bottom: 80px
@@ -358,7 +352,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
 
   @media (max-width: $tab)
     display: none
-  
+
 .reviews-left,
 .reviews-right
   @media (min-width: $tab + 1)
