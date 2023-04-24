@@ -4,39 +4,70 @@
       <div class="container">
         <div class="catalog-head">
           <h1 class="t-h3 catalog-title">{{ $t("tours.title") }}</h1>
-        </div>
-
-        <div class="catalog-selects">
-          <div
-            :class="[
-              'select-text-multiple',
-              { 'select-text-multiple-open': isFiltersOpen }
-            ]"
-          >
-            <button type="button" @click="toggleFiltersOpen">
-              {{
-                selectedFilters.length
-                  ? selectedFilters.map(key => $t("tourTypes")[key]).join(", ")
-                  : $t("reviews.selectTypeTitle")
-              }}
-              <svg-icon name="chevron" />
-            </button>
-            <ul>
-              <li
-                v-for="key in Object.keys($t('tourTypes'))"
-                :key="key"
-                :value="key"
-              >
-                <button
-                  :class="{ active: selectedFilters.includes(key) }"
-                  type="button"
-                  @click="onSelectValueClick(key)"
+          <div class="catalog-selects">
+            <div
+              :class="[
+                'select-text-multiple',
+                { 'select-text-multiple-open': isFiltersOpen }
+              ]"
+            >
+              <button type="button" @click="toggleFiltersOpen">
+                {{
+                  selectedFilters.length
+                    ? selectedFilters
+                        .map(key => $t("tourTypes")[key])
+                        .join(", ")
+                    : $t("reviews.selectTypeTitle")
+                }}
+                <svg-icon name="chevron" />
+              </button>
+              <ul>
+                <li
+                  v-for="key in Object.keys($t('tourTypes'))"
+                  :key="key"
+                  :value="key"
                 >
-                  {{ $t("tourTypes")[key] }}
-                </button>
-              </li>
-            </ul>
+                  <button
+                    :class="{ active: selectedFilters.includes(key) }"
+                    type="button"
+                    @click="onSelectValueClick(key)"
+                  >
+                    {{ $t("tourTypes")[key] }}
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
+          <ul class="catalog-tabs">
+            <li>
+              <button
+                :class="[
+                  'catalog-tab t-ttu',
+                  {
+                    active: isAllSelected
+                  }
+                ]"
+                type="button"
+                @click="onSelectAllClick"
+              >
+                {{ $t("blog.categoryAll") }}
+              </button>
+            </li>
+            <li v-for="key in Object.keys($t('tourTypes'))" :key="key">
+              <button
+                :class="[
+                  'catalog-tab t-ttu',
+                  {
+                    active: selectedFilters.includes(key) && !isAllSelected
+                  }
+                ]"
+                type="button"
+                @click="onSelectValueClick(key)"
+              >
+                {{ $t("tourTypes")[key] }}
+              </button>
+            </li>
+          </ul>
         </div>
 
         <div class="catalog-list-container">
@@ -135,6 +166,12 @@ export default {
       isFiltersOpen: false
     };
   },
+  mounted() {
+    document.addEventListener("click", this.onDocumentClick.bind(this));
+  },
+  beforeDestroy() {
+    document.removeEventListener("click", this.onDocumentClick);
+  },
   computed: {
     ...mapGetters({
       allTours: "tours/allTours",
@@ -165,6 +202,14 @@ export default {
         return false;
       });
     },
+    isAllSelected() {
+      return (
+        this.selectedFilters.length <= 0 ||
+        Object.keys(this.$t("tourTypes")).every(key =>
+          this.selectedFilters.includes(key)
+        )
+      );
+    },
     instagramData() {
       const { general } = this;
 
@@ -190,6 +235,16 @@ export default {
     }
   },
   methods: {
+    onDocumentClick(e) {
+      const tabsParent = e.target.closest(".catalog-selects");
+      if (!tabsParent) {
+        this.isFiltersOpen = false;
+      }
+    },
+    onSelectAllClick() {
+      this.selectedFilters = [];
+      this.$router.replace(this.$cityLocalePath(`/tours`));
+    },
     onSelectValueClick(v) {
       const result = this.selectedFilters.includes(v)
         ? this.selectedFilters.filter(f => f !== v)
@@ -264,26 +319,53 @@ export default {
     margin-left: 12px
 
 .catalog-head
-  display: flex
-  align-items: flex-start
   margin-bottom: 64px
-
-  @media (min-width: $tab + 1)
-    justify-content: space-between
 
   @media (max-width: $tab)
     margin-bottom: 24px
 
 .catalog-title
   display: block
+  margin-bottom: 24px
+
+.catalog-tabs
+  display: flex
+  align-items: center
+  margin-left: -16px
+  @media (max-width: $tab)
+    display: none
+
+.catalog-tabs > li
+  margin-left: 16px
+
+.catalog-tab
+  position: relative
+  &::before
+    content: ''
+    position: absolute
+    bottom: -4px
+    left: 0
+    width: 100%
+    height: 1px
+    background: $black
+    transition: $trs
+    transform-origin: 0% 50%
+    transform: scaleX(0)
+
+  &:hover,
+  &.active
+    &::before
+      transform: scaleX(1)
+
+.catalog-tab.active
+  +mont(b)
+
 
 .catalog-selects
   display: flex
   align-items: center
   justify-content: space-between
-  margin-bottom: 32px
 
-.catalog-selects .select-text select
-  @media (max-width: $mob)
-    font-size: 10px
+  @media (min-width: $tab + 1)
+    display: none
 </style>
