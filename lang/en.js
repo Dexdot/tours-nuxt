@@ -49,6 +49,11 @@ const lang = {
     newbie: "For newbies",
     unusual: "Unusual routes"
   },
+  reviewsTourTypes: {
+    all: "All",
+    group: "Group",
+    individual: "Individual"
+  },
   footer: {
     companyName: "Peshehod Tour",
     reservedRights: "All rights reserved",

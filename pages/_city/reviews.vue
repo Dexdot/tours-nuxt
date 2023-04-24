@@ -13,10 +13,10 @@
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
-                      v-for="key in Object.keys($t('tourTypes'))"
+                      v-for="key in Object.keys($t('reviewsTourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t("tourTypes")[key] }}</option
+                      >{{ $t("reviewsTourTypes")[key] }}</option
                     >
                   </select>
                 </div>
@@ -48,10 +48,10 @@
                 <div class="select-text">
                   <select v-model="typeOfTours">
                     <option
-                      v-for="key in Object.keys($t('tourTypes'))"
+                      v-for="key in Object.keys($t('reviewsTourTypes'))"
                       :key="key"
                       :value="key"
-                      >{{ $t("tourTypes")[key] }}</option
+                      >{{ $t("reviewsTourTypes")[key] }}</option
                     >
                   </select>
                 </div>

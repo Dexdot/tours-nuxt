@@ -49,6 +49,11 @@ const lang = {
     newbie: "Для новичков",
     unusual: "Необычные маршруты"
   },
+  reviewsTourTypes: {
+    all: "Все",
+    group: "Групповые",
+    individual: "Индивидуальные"
+  },
   footer: {
     companyName: "Пешеход Тур",
     reservedRights: "Все права защищены",
