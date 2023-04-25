@@ -71,7 +71,7 @@ const lang = {
     title: "Отзывы",
     otherToursTitle: "Время выбирать свое приключение",
     sectionButton: "Все отзывы",
-    selectTourNotChosenTitle: "Экскурсия",
+    selectTourNotChosenTitle: "Название экскурсии",
     selectTourNotChosen: "Не выбрано",
     selectTypeTitle: "Тип экскурсии",
     watchReviews: "Смотреть отзывы",

@@ -8,53 +8,35 @@
 
             <div class="reviews-controls reviews-controls--desktop">
               <div class="reviews-control">
-                <p class="t-ttu">{{ $t("reviews.selectTypeTitle") }}</p>
-
-                <div class="select-text">
-                  <select v-model="typeOfTours">
-                    <option
-                      v-for="key in Object.keys($t('reviewsTourTypes'))"
-                      :key="key"
-                      :value="key"
-                      >{{ $t("reviewsTourTypes")[key] }}</option
-                    >
-                  </select>
-                </div>
+                <MultipleSelect
+                  :list="selectList"
+                  :selected="selectedFilters"
+                  :className="'reviews-selects'"
+                  :placeholder="$t('reviews.selectTypeTitle')"
+                  @change="onSelectValueClick"
+                />
               </div>
 
               <div class="reviews-control" v-if="filteredTours.length > 0">
-                <p class="t-ttu">
-                  {{ $t("reviews.selectTourNotChosenTitle") }}
-                </p>
-
-                <div class="select-text">
-                  <select v-model="selectedTour">
-                    <option value="">{{
-                      $t("reviews.selectTourNotChosenTitle")
-                    }}</option>
-                    <option
-                      v-for="tour in filteredTours"
-                      :key="tour.sys.id"
-                      :value="tour.fields.slug"
-                      >{{ tour.fields.title }}</option
-                    >
-                  </select>
-                </div>
+                <MultipleSelect
+                  :list="selectToursList"
+                  :selected="selectedTours"
+                  :className="'reviews-selects-tours'"
+                  :placeholder="$t('reviews.selectTourNotChosenTitle')"
+                  @change="onTourSelectValueClick"
+                />
               </div>
             </div>
 
             <div class="reviews-controls reviews-controls--mob">
               <div class="reviews-control">
-                <div class="select-text">
-                  <select v-model="typeOfTours">
-                    <option
-                      v-for="key in Object.keys($t('reviewsTourTypes'))"
-                      :key="key"
-                      :value="key"
-                      >{{ $t("reviewsTourTypes")[key] }}</option
-                    >
-                  </select>
-                </div>
+                <MultipleSelect
+                  :list="selectList"
+                  :selected="selectedFilters"
+                  :className="'reviews-selects'"
+                  :placeholder="$t('reviews.selectTypeTitle')"
+                  @change="onSelectValueClick"
+                />
               </div>
 
               <button
@@ -116,6 +98,7 @@ import ToursSlider from "~/components/ToursSlider";
 import ReviewCard from "~/components/ReviewCard";
 import ReviewRates from "~/components/ReviewRates";
 import ReviewRatesModal from "~/components/ReviewRatesModal";
+import MultipleSelect from "~/ui/MultipleSelect";
 
 import page from "~/mixins/page";
 import render from "~/mixins/render";
@@ -129,7 +112,8 @@ export default {
     ToursSlider,
     ReviewCard,
     ReviewRates,
-    ReviewRatesModal
+    ReviewRatesModal,
+    MultipleSelect
   },
   head() {
     const { seo, contactsImage } = this.general;
@@ -183,8 +167,8 @@ export default {
   },
   data: () => ({
     isReviewRatesModalVisible: false,
-    typeOfTours: "all",
-    selectedTour: ""
+    selectedFilters: [],
+    selectedTours: []
   }),
   computed: {
     ...mapGetters({
@@ -193,26 +177,41 @@ export default {
       general: "general/data",
       locale: "lang/locale"
     }),
+    selectList() {
+      return Object.keys(this.$t("tourTypes")).map(k => ({
+        label: this.$t("tourTypes")[k],
+        value: k
+      }));
+    },
+    selectToursList() {
+      return this.filteredTours.map(tour => ({
+        label: tour.fields.title,
+        value: tour.sys.id
+      }));
+    },
     filteredReviews() {
-      if (this.selectedTour) {
-        const tour = this.filteredTours.find(
-          tour => tour.fields.slug === this.selectedTour
+      const isTourSelected =
+        this.selectedTours && this.selectedTours.length > 0;
+      if (isTourSelected) {
+        const tour = this.allTours.find(tour =>
+          this.selectedTours.includes(tour.sys.id)
         );
-
-        return "reviews" in tour.fields ? tour.fields.reviews : [];
+        if (tour && "reviews" in tour.fields && tour.fields.reviews) {
+          return tour.fields.reviews;
+        }
+        return [];
       }
 
-      return this.reviews.filter(({ fields }) => {
-        switch (this.typeOfTours) {
-          case "all":
-            return true;
-          case "group":
-            return !fields.makeIndividual;
-          case "individual":
-            return fields.makeIndividual;
-          default:
-            break;
+      let reviews = this.reviews;
+      if (!this.selectedFilters || this.selectedFilters.length <= 0)
+        return reviews;
+
+      return reviews.filter(({ fields }) => {
+        if (fields.filters && fields.filters.length > 0) {
+          return fields.filters.some(f => this.selectedFilters.includes(f));
         }
+
+        return false;
       });
     },
     pagenReviews() {
@@ -222,17 +221,15 @@ export default {
       );
     },
     filteredTours() {
+      if (!this.selectedFilters || this.selectedFilters.length <= 0)
+        return this.allTours;
+
       return this.allTours.filter(({ fields }) => {
-        switch (this.typeOfTours) {
-          case "all":
-            return true;
-          case "group":
-            return !fields.makeIndividual;
-          case "individual":
-            return fields.makeIndividual;
-          default:
-            break;
+        if (fields.filters && fields.filters.length > 0) {
+          return fields.filters.some(f => this.selectedFilters.includes(f));
         }
+
+        return false;
       });
     },
     otherTours() {
@@ -268,30 +265,8 @@ export default {
     }
   },
   watch: {
-    typeOfTours(typeOfTours) {
+    selectedTours() {
       this.pagen.index = 0;
-
-      if (typeOfTours === "all") return false;
-
-      if (this.selectedTour) {
-        const tour = this.allTours.find(
-          tour => tour.fields.slug === this.selectedTour
-        );
-        const tourType = tour.fields.makeIndividual ? "individual" : "group";
-        if (typeOfTours !== tourType) {
-          this.selectedTour = "";
-        }
-      }
-    },
-    selectedTour(selectedTour) {
-      this.pagen.index = 0;
-
-      if (selectedTour) {
-        const tour = this.filteredTours.find(
-          tour => tour.fields.slug === selectedTour
-        );
-        this.typeOfTours = tour.fields.makeIndividual ? "individual" : "group";
-      }
     }
   },
   methods: {
@@ -300,6 +275,17 @@ export default {
     },
     hideReviewRatesModal() {
       this.isReviewRatesModalVisible = false;
+    },
+    onSelectValueClick(v) {
+      const result = this.selectedFilters.includes(v)
+        ? this.selectedFilters.filter(f => f !== v)
+        : [...this.selectedFilters, v];
+
+      this.selectedFilters = result;
+    },
+    onTourSelectValueClick(v) {
+      const result = this.selectedTours.includes(v) ? [] : [v];
+      this.selectedTours = result;
     }
   }
 };
@@ -393,6 +379,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
     justify-content: space-between
 
 .reviews-controls--desktop
+  padding-right: 24px
   @media (max-width: $tab)
     display: none
 
@@ -404,6 +391,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
   font-size: 12px
   +mont(sb)
   +link($acc)
+  text-align: right
 
   display: flex
   align-items: center

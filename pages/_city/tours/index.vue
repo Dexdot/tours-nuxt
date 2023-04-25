@@ -140,8 +140,7 @@ export default {
     }
 
     return {
-      selectedFilters,
-      isFiltersOpen: false
+      selectedFilters
     };
   },
   computed: {
@@ -232,9 +231,6 @@ export default {
       } else {
         this.$router.replace(this.$cityLocalePath(`/tours`));
       }
-    },
-    toggleFiltersOpen() {
-      this.isFiltersOpen = !this.isFiltersOpen;
     }
   }
 };
