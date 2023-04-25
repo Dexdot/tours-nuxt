@@ -5,39 +5,14 @@
         <div class="catalog-head">
           <h1 class="t-h3 catalog-title">{{ $t("tours.title") }}</h1>
           <p class="catalog-subtitle">{{ $t("tours.choose") }}</p>
-          <div class="catalog-selects">
-            <div
-              :class="[
-                'select-text-multiple',
-                { 'select-text-multiple-open': isFiltersOpen }
-              ]"
-            >
-              <button type="button" @click="toggleFiltersOpen">
-                {{
-                  selectedFilters.length
-                    ? selectedFilters
-                        .map(key => $t("tourTypes")[key])
-                        .join(", ")
-                    : $t("reviews.selectTypeTitle")
-                }}
-                <svg-icon name="chevron" />
-              </button>
-              <ul>
-                <li
-                  v-for="key in Object.keys($t('tourTypes'))"
-                  :key="key"
-                  :value="key"
-                >
-                  <button
-                    :class="{ active: selectedFilters.includes(key) }"
-                    type="button"
-                    @click="onSelectValueClick(key)"
-                  >
-                    {{ $t("tourTypes")[key] }}
-                  </button>
-                </li>
-              </ul>
-            </div>
+          <div>
+            <MultipleSelect
+              :list="selectList"
+              :selected="selectedFilters"
+              :className="'catalog-selects'"
+              :placeholder="$t('reviews.selectTypeTitle')"
+              @change="onSelectValueClick"
+            />
           </div>
           <ul class="catalog-tabs">
             <li>
@@ -92,6 +67,7 @@ import { mapGetters } from "vuex";
 import ReviewsSlider from "~/components/ReviewsSlider";
 import TourCard from "~/components/TourCard";
 import Instagram from "~/components/Instagram";
+import MultipleSelect from "~/ui/MultipleSelect";
 
 import render from "~/mixins/render";
 import page from "~/mixins/page";
@@ -102,7 +78,8 @@ export default {
   components: {
     ReviewsSlider,
     TourCard,
-    Instagram
+    Instagram,
+    MultipleSelect
   },
   head() {
     const { seo, contactsImage } = this.general;
@@ -167,18 +144,18 @@ export default {
       isFiltersOpen: false
     };
   },
-  mounted() {
-    document.addEventListener("click", this.onDocumentClick.bind(this));
-  },
-  beforeDestroy() {
-    document.removeEventListener("click", this.onDocumentClick);
-  },
   computed: {
     ...mapGetters({
       allTours: "tours/allTours",
       general: "general/data",
       locale: "lang/locale"
     }),
+    selectList() {
+      return Object.keys(this.$t("tourTypes")).map(k => ({
+        label: this.$t("tourTypes")[k],
+        value: k
+      }));
+    },
     reviews() {
       const toursWithReviews = this.filteredTours.filter(
         tour => "reviews" in tour.fields
@@ -236,12 +213,6 @@ export default {
     }
   },
   methods: {
-    onDocumentClick(e) {
-      const tabsParent = e.target.closest(".catalog-selects");
-      if (!tabsParent) {
-        this.isFiltersOpen = false;
-      }
-    },
     onSelectAllClick() {
       this.selectedFilters = [];
       this.$router.replace(this.$cityLocalePath(`/tours`));
@@ -367,10 +338,6 @@ export default {
 
 
 .catalog-selects
-  display: flex
-  align-items: center
-  justify-content: space-between
-
   @media (min-width: $tab + 1)
     display: none
 </style>

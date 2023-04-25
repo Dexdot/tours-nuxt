@@ -130,10 +130,10 @@ export default {
   },
   computed: {
     isExternalLink() {
-      return this.to.startsWith('http') || !this.to.startsWith('/')
+      return this.to.startsWith("http") || !this.to.startsWith("/");
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -244,7 +244,7 @@ a.btn
   --btn-h: 40px
   border-radius: 40px
   overflow: hidden
-  -webkit-mask-image: -webkit-radial-gradient(white, black) 
+  -webkit-mask-image: -webkit-radial-gradient(white, black)
 
   padding-left: 16px
   padding-right: 12px
@@ -255,7 +255,7 @@ a.btn
   .btn__text,
   .btn__plus
     transition: $trs-4
-  
+
   .btn__bg
     left: unset
     right: 0
