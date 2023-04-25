@@ -3,7 +3,7 @@
     <div class="container">
       <div class="footer__inner">
         <nuxt-link class="footer__logo u-center" :to="$cityLocalePath('index')">
-          <svg-icon name="logo" />
+          <img src="~assets/img/logo-w.svg" alt="Logo" />
         </nuxt-link>
 
         <nav class="footer__nav">
@@ -21,7 +21,7 @@
             classDark
             classPulse
             @click="$store.dispatch('dom/showBukza')"
-            >{{ $t('orderTicket') }}</BaseButton
+            >{{ $t("orderTicket") }}</BaseButton
           >
 
           <div class="footer__contact">
@@ -29,7 +29,7 @@
               {{ general.phoneText }}
             </a>
             <button @click="$store.dispatch('dom/toggleCallback')">
-              {{ $t('orderCall') }}
+              {{ $t("orderCall") }}
             </button>
             <a :href="`mailto:${general.email}`">
               {{ general.email }}
@@ -71,12 +71,12 @@
       <div class="footer__bottom">
         <div class="footer__copyright">
           <p>
-            ©{{ new Date().getFullYear() }} {{ $t('footer.companyName') }}.
-            <span>{{ $t('footer.reservedRights') }}</span>
+            ©{{ new Date().getFullYear() }} {{ $t("footer.companyName") }}.
+            <span>{{ $t("footer.reservedRights") }}</span>
           </p>
 
           <nuxt-link :to="$cityLocalePath('/info/policy')">{{
-            $t('footer.policy')
+            $t("footer.policy")
           }}</nuxt-link>
           <button @click="$store.dispatch('dom/toggleCredits')">Credits</button>
         </div>
@@ -90,8 +90,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SocialList from '~/components/SocialList'
+import { mapGetters } from "vuex";
+import SocialList from "~/components/SocialList";
 
 export default {
   components: {
@@ -99,10 +99,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      general: 'general/data'
+      general: "general/data"
     })
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -157,11 +157,13 @@ export default {
   @media (max-width: $tab)
     margin-bottom: 48px
 
-.footer__logo .i-logo
-  color: #fff
+.footer__logo img
+  display: block
+  width: 123px
+  height: auto
+
   @media (min-width: $tab + 1)
     width: 137px
-    height: 80px
 
 
 // Nav
@@ -259,7 +261,7 @@ export default {
     margin-left: 24px
     @media (max-width: $tab)
       margin-left: 16px
-    
+
     @media (max-width: 360px)
       margin-left: 8px
 
@@ -277,14 +279,14 @@ export default {
 .footer__social
   @media (max-width: $tab)
     margin-bottom: 32px
-    
+
   @media (min-width: $tab + 1)
     margin-left: auto
 
   .social
     @media (min-width: $tab + 1)
       margin-left: -24px
-  
+
   .social li
     @media (min-width: $tab + 1)
       margin-left: 24px

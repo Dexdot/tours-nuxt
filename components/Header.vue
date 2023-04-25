@@ -20,7 +20,7 @@
             class="header__logo u-center"
             :to="$cityLocalePath('index')"
           >
-            <svg-icon name="logo" />
+            <img src="~assets/img/logo.svg" alt="Logo" />
           </nuxt-link>
 
           <!-- CITYSWITCH -->
@@ -205,9 +205,9 @@ export default {
 
 <style lang="sass">
 \:root
-  --header-h: 126px
+  --header-h: 138px
   @media (max-width: $tab)
-    --header-h: 104px
+    --header-h: 131px
 </style>
 
 <style lang="sass" scoped>
@@ -303,9 +303,10 @@ export default {
   @media (max-width: 1110px)
     margin-right: 16px
 
-.header__logo
-  height: 72px
-
+.header__logo img
+  display: block
+  width: 123px
+  height: auto
 
 // Select
 .header:not(.header--fixed)
