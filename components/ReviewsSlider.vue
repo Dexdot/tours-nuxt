@@ -45,7 +45,7 @@
 
       <div class="reviews-slider__bottom">
         <BaseButton isLink :to="$cityLocalePath('/reviews')">{{
-          $t('reviews.sectionButton')
+          $t("reviews.sectionButton")
         }}</BaseButton>
 
         <div class="reviews-slider__btns" v-if="reviews.length > 1">
@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import BaseButton from '~/ui/BaseButton'
-import ButtonArrow from '~/ui/ButtonArrow'
-import render from '~/mixins/render'
+import BaseButton from "~/ui/BaseButton";
+import ButtonArrow from "~/ui/ButtonArrow";
+import render from "~/mixins/render";
 
 export default {
   mixins: [render],
@@ -84,39 +84,39 @@ export default {
     index: 0
   }),
   mounted() {
-    this.setHeight()
-    ;['resize', 'load'].forEach(ev => {
-      window.addEventListener(ev, this.setHeight.bind(this))
-    })
+    this.setHeight();
+    ["resize", "load"].forEach(ev => {
+      window.addEventListener(ev, this.setHeight.bind(this));
+    });
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.setHeight)
+    window.removeEventListener("resize", this.setHeight);
   },
   methods: {
     setHeight() {
-      const { slides, slider } = this.$refs
-      if (!slides || !slider) return false
+      const { slides, slider } = this.$refs;
+      if (!slides || !slider) return false;
 
-      let height = 0
+      let height = 0;
 
       slides.forEach(slide => {
-        const slideHeight = slide.scrollHeight
+        const slideHeight = slide.scrollHeight;
 
         if (slideHeight > height) {
-          height = slideHeight
+          height = slideHeight;
         }
-      })
+      });
 
-      slider.style.height = `${height}px`
+      slider.style.height = `${height}px`;
     },
     prev() {
-      this.index = this.index <= 0 ? this.reviews.length - 1 : this.index - 1
+      this.index = this.index <= 0 ? this.reviews.length - 1 : this.index - 1;
     },
     next() {
-      this.index = this.index === this.reviews.length - 1 ? 0 : this.index + 1
+      this.index = this.index === this.reviews.length - 1 ? 0 : this.index + 1;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -198,7 +198,7 @@ export default {
   +yo('font-size', (375px: 18px, 1920px: 24px, 2550px: 26px))
   line-height: 1.4
 
-.reviews-slide__text /deep/ 
+.reviews-slide__text /deep/
   p
     margin-bottom: 24px
     display: -webkit-box
@@ -217,7 +217,7 @@ export default {
 
   @media (max-width: $tab)
     align-self: flex-start
-  
+
   @media (min-width: 1940px)
     font-size: 18px
 
@@ -240,7 +240,7 @@ export default {
   @media (max-width: $tab)
     display: flex
     margin-left: -4px
-  
+
 .reviews-slider__btn
   @media (min-width: $tab + 1)
     position: absolute
