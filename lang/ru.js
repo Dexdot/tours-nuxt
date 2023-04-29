@@ -75,7 +75,10 @@ const lang = {
     selectTourNotChosen: "Не выбрано",
     selectTypeTitle: "Тип экскурсии",
     watchReviews: "Смотреть отзывы",
-    goTo: "Перейти к отзыву"
+    goTo: "Перейти к отзыву",
+    add: "Написать отзыв",
+    chooseTour: "На какую экскурсию вы хотели бы оставить отзыв?",
+    scoreTour: "Ваша оценка экскурсии (от 1 до 5)"
   },
   main: {
     toursButton: "Смотреть все",

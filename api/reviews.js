@@ -21,8 +21,8 @@ export const fetchReviews = options =>
       .catch(err => {});
   });
 
-export const createReviewEntry = () => {
-  new Promise(resolve => {
+export function createReviewEntry(form) {
+  return new Promise((resolve, reject) => {
     cmaClient
       .getSpace(spaceId)
       .then(space => space.getEnvironment("master"))
@@ -30,25 +30,22 @@ export const createReviewEntry = () => {
         environment.createEntryWithId("review", nanoid(), {
           fields: {
             locale: {
-              "ru-RU": "ru"
+              "ru-RU": form.locale
             },
             city: {
-              "ru-RU": "spb"
+              "ru-RU": form.city
             },
             date: {
-              "ru-RU": "03.08.1999"
-            },
-            clientName: {
-              "ru-RU": "createEntryTestName"
-            },
-            name: {
-              "ru-RU": "createEntryTest"
-            },
-            makeIndividual: {
-              "ru-RU": false
+              "ru-RU": form.date
             },
             numberOfStars: {
-              "ru-RU": 3
+              "ru-RU": form.score
+            },
+            clientEmail: {
+              "ru-RU": form.clientEmail
+            },
+            tours: {
+              "ru-RU": form.tours
             },
             reviewText: {
               "ru-RU": {
@@ -61,7 +58,7 @@ export const createReviewEntry = () => {
                     content: [
                       {
                         nodeType: "text",
-                        value: "some cool text",
+                        value: form.text,
                         data: {},
                         marks: []
                       }
@@ -73,7 +70,9 @@ export const createReviewEntry = () => {
           }
         })
       )
-      .then(entry => console.log(entry))
+      .then(entry => {
+        resolve(entry);
+      })
       .catch(console.error);
   });
-};
+}

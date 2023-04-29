@@ -48,6 +48,14 @@
                 <svg-icon name="chevron" />
               </button>
             </div>
+
+            <div class="reviews-add">
+              <BaseButton
+                classPulse
+                @click="$store.dispatch('dom/toggleAddReview')"
+                >{{ $t("reviews.add") }}</BaseButton
+              >
+            </div>
           </div>
 
           <div class="reviews-content">
@@ -336,6 +344,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
     top: calc(var(--header-h) + 16px)
 
   @media (max-width: $tab)
+    position: relative
     width: 100%
     margin-bottom: 48px
 
@@ -367,6 +376,18 @@ $reviews-pt: calc(var(--header-h) + 13vh)
   margin-bottom: 1em
   @media (max-width: $tab)
     margin-bottom: 24px
+    min-height: 56px
+
+.reviews-add
+  display: block
+
+  @media (min-width: $tab + 1)
+    margin-top: 32px
+
+  @media (max-width: $tab)
+    position: absolute
+    top: 0
+    right: 0
 
 .reviews-control .t-ttu
   +mont(m)

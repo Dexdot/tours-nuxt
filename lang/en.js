@@ -75,7 +75,10 @@ const lang = {
     selectTourNotChosen: "Not chosen",
     selectTypeTitle: "Type of tour",
     watchReviews: "Watch reviews",
-    goTo: "Go to review"
+    goTo: "Go to review",
+    add: "Write a review",
+    chooseTour: "Which tour would you like to review?",
+    scoreTour: "Your rating of the tour (from 1 to 5)"
   },
   main: {
     toursButton: "See all",
