@@ -178,10 +178,15 @@ export default {
       locale: "lang/locale"
     }),
     selectList() {
-      return Object.keys(this.$t("tourTypes")).map(k => ({
+      const list = Object.keys(this.$t("tourTypes")).map(k => ({
         label: this.$t("tourTypes")[k],
         value: k
       }));
+
+      return [
+        { label: this.$t("reviewsTourTypes.all"), value: "all" },
+        ...list
+      ];
     },
     selectToursList() {
       return this.filteredTours.map(tour => ({
@@ -190,29 +195,31 @@ export default {
       }));
     },
     filteredReviews() {
-      const isTourSelected =
-        this.selectedTours && this.selectedTours.length > 0;
-      if (isTourSelected) {
-        const tour = this.allTours.find(tour =>
-          this.selectedTours.includes(tour.sys.id)
-        );
-        if (tour && "reviews" in tour.fields && tour.fields.reviews) {
-          return tour.fields.reviews;
-        }
-        return [];
+      if (this.selectedTours && this.selectedTours.length > 0) {
+        return this.reviews.filter(({ fields }) => {
+          const reviewTours = fields.tours;
+          if (!reviewTours || reviewTours.length <= 0) return false;
+          const reviewToursIds = reviewTours.map(tour => tour.sys.id);
+          return reviewToursIds.some(tourId =>
+            this.selectedTours.includes(tourId)
+          );
+        });
       }
 
-      let reviews = this.reviews;
-      if (!this.selectedFilters || this.selectedFilters.length <= 0)
-        return reviews;
+      if (this.selectedFilters.length > 0 && this.filteredTours.length > 0) {
+        const filteredToursIds = this.filteredTours.map(tour => tour.sys.id);
 
-      return reviews.filter(({ fields }) => {
-        if (fields.filters && fields.filters.length > 0) {
-          return fields.filters.some(f => this.selectedFilters.includes(f));
-        }
+        return this.reviews.filter(({ fields }) => {
+          const reviewTours = fields.tours;
+          if (!reviewTours || reviewTours.length <= 0) return false;
+          const reviewToursIds = reviewTours.map(tour => tour.sys.id);
+          return reviewToursIds.some(tourId =>
+            filteredToursIds.includes(tourId)
+          );
+        });
+      }
 
-        return false;
-      });
+      return this.reviews;
     },
     pagenReviews() {
       return this.filteredReviews.slice(
@@ -277,6 +284,11 @@ export default {
       this.isReviewRatesModalVisible = false;
     },
     onSelectValueClick(v) {
+      if (v === "all") {
+        this.selectedFilters = [];
+        return;
+      }
+
       const result = this.selectedFilters.includes(v)
         ? this.selectedFilters.filter(f => f !== v)
         : [...this.selectedFilters, v];
@@ -284,7 +296,10 @@ export default {
       this.selectedFilters = result;
     },
     onTourSelectValueClick(v) {
-      const result = this.selectedTours.includes(v) ? [] : [v];
+      const result = this.selectedTours.includes(v)
+        ? this.selectedTours.filter(f => f !== v)
+        : [...this.selectedTours, v];
+
       this.selectedTours = result;
     }
   }

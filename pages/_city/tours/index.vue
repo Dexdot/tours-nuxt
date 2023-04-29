@@ -129,6 +129,7 @@ export default {
   },
   async asyncData({ store, query }) {
     await store.dispatch("tours/loadTours");
+    await store.dispatch("reviews/loadReviews");
 
     let selectedFilters = [];
     if (
@@ -146,6 +147,7 @@ export default {
   computed: {
     ...mapGetters({
       allTours: "tours/allTours",
+      allReviews: "reviews/allReviews",
       general: "general/data",
       locale: "lang/locale"
     }),
@@ -156,16 +158,17 @@ export default {
       }));
     },
     reviews() {
-      const toursWithReviews = this.filteredTours.filter(
-        tour => "reviews" in tour.fields
-      );
+      const filteredToursIds = this.filteredTours.map(tour => tour.sys.id);
 
-      const reviews = toursWithReviews.reduce((reviews, tour) => {
-        return [...reviews, ...tour.fields.reviews];
-      }, []);
+      const result = this.allReviews.filter(({ fields }) => {
+        const reviewTours = fields.tours;
+        if (!reviewTours || reviewTours.length <= 0) return false;
+        const reviewToursIds = reviewTours.map(tour => tour.sys.id);
+        return reviewToursIds.some(tourId => filteredToursIds.includes(tourId));
+      });
 
-      const ids = reviews.map(r => r.sys.id);
-      return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
+      const ids = result.map(r => r.sys.id);
+      return result.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
     },
     filteredTours() {
       if (!this.selectedFilters || this.selectedFilters.length <= 0)

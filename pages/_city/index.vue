@@ -258,25 +258,28 @@ export default {
   async fetch({ store, route }) {
     await store.dispatch("main/load", route.params.city);
     await store.dispatch("tours/loadTours");
+    await store.dispatch("reviews/loadReviews");
   },
   computed: {
     ...mapGetters({
       tours: "tours/popularTours",
+      allReviews: "reviews/allReviews",
       main: "main/data",
       general: "general/data",
       locale: "lang/locale"
     }),
     reviews() {
-      const toursWithReviews = this.tours.filter(
-        tour => "reviews" in tour.fields
-      );
+      const toursIds = this.tours.map(tour => tour.sys.id);
 
-      const reviews = toursWithReviews.reduce((reviews, tour) => {
-        return [...reviews, ...tour.fields.reviews];
-      }, []);
+      const result = this.allReviews.filter(({ fields }) => {
+        const reviewTours = fields.tours;
+        if (!reviewTours || reviewTours.length <= 0) return false;
+        const reviewToursIds = reviewTours.map(tour => tour.sys.id);
+        return reviewToursIds.some(tourId => toursIds.includes(tourId));
+      });
 
-      const ids = reviews.map(r => r.sys.id);
-      return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
+      const ids = result.map(r => r.sys.id);
+      return result.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
     },
     instagramData() {
       const { general } = this;

@@ -1,5 +1,7 @@
 import client from "~/api/client";
 
+const cloneDeep = require("lodash.clonedeep");
+
 export const isImage = ({ fields }) =>
   fields.file.contentType.split("/")[0] === "image";
 
@@ -85,4 +87,4 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
   return `${url}?${encodeParams(params)}`;
 };
 
-export const copyObject = obj => JSON.parse(JSON.stringify(obj));
+export const copyObject = obj => cloneDeep(obj);
