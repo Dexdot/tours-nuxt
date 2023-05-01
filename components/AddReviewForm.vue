@@ -326,20 +326,6 @@ export default {
 .addreview-select
   width: 100%
 
-.addreview-select /deep/ > button
-  +mont(m)
-  font-size: 16px
-  letter-spacing: -0.02em
-  text-align: left
-  text-transform: unset
-
-  width: 100%
-  padding-bottom: 16px
-  border-bottom: 1px solid rgba($black, 0.1)
-
-  svg
-    margin-left: auto
-
 // Button
 .addreview-form .btn
   min-width: 200px
