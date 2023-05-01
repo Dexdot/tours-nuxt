@@ -186,10 +186,17 @@ export default {
       locale: "lang/locale"
     }),
     selectList() {
-      const list = Object.keys(this.$t("tourTypes")).map(k => ({
-        label: this.$t("tourTypes")[k],
-        value: k
-      }));
+      const list = Object.keys(this.$t("tourTypes"))
+        .filter(key => {
+          return this.allTours.some(tour => {
+            const filters = tour.fields.filters || [];
+            return filters.includes(key);
+          });
+        })
+        .map(k => ({
+          label: this.$t("tourTypes")[k],
+          value: k
+        }));
 
       return [
         { label: this.$t("reviewsTourTypes.all"), value: "all" },
@@ -197,10 +204,15 @@ export default {
       ];
     },
     selectToursList() {
-      return this.filteredTours.map(tour => ({
+      const list = this.filteredTours.map(tour => ({
         label: tour.fields.title,
         value: tour.sys.id
       }));
+
+      return [
+        { label: this.$t("reviewsTourTypes.all"), value: "all" },
+        ...list
+      ];
     },
     filteredReviews() {
       if (this.selectedTours && this.selectedTours.length > 0) {
@@ -304,6 +316,11 @@ export default {
       this.selectedFilters = result;
     },
     onTourSelectValueClick(v) {
+      if (v === "all") {
+        this.selectedTours = [];
+        return;
+      }
+
       const result = this.selectedTours.includes(v)
         ? this.selectedTours.filter(f => f !== v)
         : [...this.selectedTours, v];

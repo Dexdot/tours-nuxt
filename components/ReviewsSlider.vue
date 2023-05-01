@@ -18,6 +18,10 @@
             />
           </div>
 
+          <div v-else class="reviews-slide__icon u-center">
+            <img src="~assets/img/umbrella-stroke.svg" alt="Logo" />
+          </div>
+
           <ul class="reviews-slide__stars u-center">
             <li
               class="reviews-slide__star"

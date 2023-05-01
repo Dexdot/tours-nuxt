@@ -9,6 +9,26 @@
       @submit.prevent="onSubmit"
       @keyup="onForm"
     >
+      <BaseInput
+        required
+        name="name"
+        v-model="form.name"
+        ref="name"
+        :placeholder="$t('form.name')"
+        :error-text="$t('form.nameError')"
+      />
+
+      <BaseInput
+        required
+        type="text"
+        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+        name="email"
+        v-model="form.email"
+        ref="email"
+        :placeholder="$t('form.email')"
+        :error-text="$t('form.emailError')"
+      />
+
       <div class="select">
         <MultipleSelect
           :list="selectToursList"
@@ -18,6 +38,7 @@
           @change="onTourSelectValueClick"
         />
       </div>
+
       <div class="stars-wrap">
         <p class="stars-label">{{ $t("reviews.scoreTour") }}</p>
         <ul class="stars">
@@ -32,23 +53,14 @@
           </li>
         </ul>
       </div>
-      <BaseInput
-        required
-        type="text"
-        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-        name="email"
-        v-model="form.email"
-        ref="email"
-        :placeholder="$t('form.email')"
-        :error-text="$t('form.emailError')"
-      />
+
       <BaseInput
         required
         isTextarea
         name="text"
         v-model="form.text"
         ref="text"
-        :placeholder="$t('form.message')"
+        :placeholder="$t('reviews.textPlaceholder')"
       />
 
       <BaseButton
@@ -67,21 +79,25 @@
     </form>
     <p class="message" v-if="!submitted">
       Команда “ПЕШЕХОД ТУР” была счастлива видеть вас на наших экскурсиях и
-      получить ваш отзыв! Дарим скидку 100₽/чел на все последующие экскурсии!
+      получить ваш отзыв!<br /><b
+        >Дарим скидку 100₽/чел на все последующие экскурсии!</b
+      >
       <br />
       <br />
-      Вы можете забронировать экскурсии на нашем сайте
-      <a target="_blank" href="https://peshehodtour.ru/">www.peshehodtour.ru</a
-      >.<br />Пожалуйста, укажите дату/название экскурсии/имя гида в поле
-      "Откуда вы о нас узнали". Мы пересчитаем вам скидку вручную.<br />Ждем вас
-      в любое время! Акция не имеет ограничений по срокам.
+      Вы можете забронировать
+      <a target="_blank" href="https://peshehodtour.ru/spb/tours"
+        >экскурсии на нашем сайте</a
+      >. Пожалуйста, укажите дату/название экскурсии/имя гида в поле "Откуда вы
+      о нас узнали". Мы пересчитаем вам скидку вручную.<br /><br />Ждем вас в
+      любое время! Акция не имеет ограничений по срокам.
     </p>
 
     <div v-if="submitted">
       <img class="logo" src="~assets/img/umbrella.svg" alt="Logo" />
+      <h2 class="t-h4 message-title">Благодарим за отзыв!</h2>
       <p class="message">
-        Благодарим за отзыв! И хотим поделиться нашим тайным списком идей, что
-        делать в Петербурге в любое время года. Подписывайтесь
+        И хотим поделиться нашим тайным списком идей, что делать в Петербурге в
+        любое время года.<br />Подписывайтесь
         <a target="_blank" href="https://vk.com/peshehodtour"
           >на нашу рассылку в ВК</a
         >
@@ -104,6 +120,7 @@ export default {
     submitStatus: "",
     form: {
       score: 4,
+      name: "",
       email: "",
       text: ""
     }
@@ -142,17 +159,19 @@ export default {
       this.submitStatus = "";
       this.form.email = "";
       this.form.text = "";
+      this.form.name = "";
       this.form.score = 4;
     },
     isFormValid() {
       if (this.$refs && Object.keys(this.$refs).length > 0) {
-        const { email, text } = this.$refs;
+        const { email, text, name } = this.$refs;
 
         return (
           this.form.score > 0 &&
           this.form.score <= 5 &&
           this.selectedTours.length > 0 &&
           email.getValidState() &&
+          name.getValidState() &&
           text.getValidState()
         );
       }
@@ -174,15 +193,19 @@ export default {
     },
     submit() {
       const toursIds = this.selectedTours;
-      const { score, email } = this.form;
+      const { score, email, name } = this.form;
       const textarea = Array.from(this.$refs.form.elements).find(
         el => el.name === "text"
       );
       const text = textarea ? textarea.value : "";
 
       const date = new Date();
-      const dateStr = `${date.getDate()}.${date.getMonth() +
-        1}.${date.getFullYear()}`;
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const dateStr = `${day.length > 1 ? day : `0${day}`}.${
+        month.length > 1 ? month : `0${month}`
+      }.${year}`;
 
       createReviewEntry({
         locale: "ru",
@@ -190,6 +213,7 @@ export default {
         date: dateStr,
         score,
         text,
+        clientName: name,
         clientEmail: email,
         tours: toursIds.map(id => ({
           sys: { id, type: "Link", linkType: "Entry" }
@@ -245,6 +269,9 @@ export default {
   align-items: center
   justify-content: center
 
+  &:not(.active) .i-star
+    color: rgba($black, 0.3)
+
   &.active
     &,
     .i-star
@@ -269,15 +296,13 @@ export default {
 .stars > li:hover ~ li
   .star,
   .i-star
-    color: $black
+    color: rgba($black, 0.3)
 
 .stars-label
-  font-size: 12px
-  letter-spacing: 0.04em
-  text-transform: uppercase
+  +mont(m)
+  font-size: 16px
+  letter-spacing: -0.02em
   text-align: left
-  +mont(b)
-  line-height: 1.2
   margin-bottom: 8px
 
 .stars-wrap,
@@ -297,6 +322,22 @@ export default {
       text-overflow: ellipsis
       overflow: hidden
 
+.addreview-select
+  width: 100%
+
+.addreview-select /deep/ > button
+  +mont(m)
+  font-size: 16px
+  letter-spacing: -0.02em
+  text-align: left
+  text-transform: unset
+
+  width: 100%
+  padding-bottom: 16px
+  border-bottom: 1px solid rgba($black, 0.1)
+
+  svg
+    margin-left: auto
 
 // Button
 .addreview-form .btn
@@ -309,7 +350,15 @@ export default {
 .addreview-form + .message
   margin-top: 40px
 
+.message-title
+  text-align: center
+  margin-bottom: 0.5em
+
 .message
+  font-weight: 400
+  b
+    font-weight: 500
+
   a
     color: $acc
     display: inline

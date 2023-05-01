@@ -29,18 +29,18 @@
                 {{ $t("blog.categoryAll") }}
               </button>
             </li>
-            <li v-for="key in Object.keys($t('tourTypes'))" :key="key">
+            <li v-for="v in selectList" :key="v.value">
               <button
                 :class="[
                   'catalog-tab t-ttu',
                   {
-                    active: selectedFilters.includes(key) && !isAllSelected
+                    active: selectedFilters.includes(v.value) && !isAllSelected
                   }
                 ]"
                 type="button"
-                @click="onSelectValueClick(key)"
+                @click="onSelectValueClick(v.value)"
               >
-                {{ $t("tourTypes")[key] }}
+                {{ v.label }}
               </button>
             </li>
           </ul>
@@ -152,10 +152,17 @@ export default {
       locale: "lang/locale"
     }),
     selectList() {
-      return Object.keys(this.$t("tourTypes")).map(k => ({
-        label: this.$t("tourTypes")[k],
-        value: k
-      }));
+      return Object.keys(this.$t("tourTypes"))
+        .filter(key => {
+          return this.allTours.some(tour => {
+            const filters = tour.fields.filters || [];
+            return filters.includes(key);
+          });
+        })
+        .map(k => ({
+          label: this.$t("tourTypes")[k],
+          value: k
+        }));
     },
     reviews() {
       const filteredToursIds = this.filteredTours.map(tour => tour.sys.id);

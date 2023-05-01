@@ -41,6 +41,9 @@ export function createReviewEntry(form) {
             numberOfStars: {
               "ru-RU": form.score
             },
+            clientName: {
+              "ru-RU": form.clientName
+            },
             clientEmail: {
               "ru-RU": form.clientEmail
             },
