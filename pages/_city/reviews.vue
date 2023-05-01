@@ -65,11 +65,11 @@
               </li>
             </ul>
 
-            <div class="reviews-pagen" v-show="pagenList.length > 1">
-              <Pagen
-                :list="pagenList"
-                :index="pagen.index"
-                @click="onPagenClick"
+            <div class="reviews-pagen" v-show="filteredReviews.length > 6">
+              <PagenSmart
+                :list="filteredReviews"
+                :currentPage="pagenPage"
+                @change="onPagenChange"
               />
             </div>
           </div>
@@ -107,21 +107,22 @@ import ReviewCard from "~/components/ReviewCard";
 import ReviewRates from "~/components/ReviewRates";
 import ReviewRatesModal from "~/components/ReviewRatesModal";
 import MultipleSelect from "~/ui/MultipleSelect";
+import PagenSmart from "~/ui/PagenSmart";
 
 import page from "~/mixins/page";
 import render from "~/mixins/render";
-import pagen from "~/mixins/pagen";
 
 import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
-  mixins: [page, render, pagen],
+  mixins: [page, render],
   components: {
     ToursSlider,
     ReviewCard,
     ReviewRates,
     ReviewRatesModal,
-    MultipleSelect
+    MultipleSelect,
+    PagenSmart
   },
   head() {
     const { seo, contactsImage } = this.general;
@@ -176,7 +177,8 @@ export default {
   data: () => ({
     isReviewRatesModalVisible: false,
     selectedFilters: [],
-    selectedTours: []
+    selectedTours: [],
+    pagenPage: 1
   }),
   computed: {
     ...mapGetters({
@@ -242,10 +244,9 @@ export default {
       return this.reviews;
     },
     pagenReviews() {
-      return this.filteredReviews.slice(
-        this.pagenSkip,
-        this.pagenSkip + this.pagen.limit
-      );
+      const index = this.pagenPage - 1;
+      const skip = index * 6;
+      return this.filteredReviews.slice(skip, skip + 6);
     },
     filteredTours() {
       if (!this.selectedFilters || this.selectedFilters.length <= 0)
@@ -275,28 +276,18 @@ export default {
     },
     hasAggregators() {
       return this.aggregators && this.aggregators.length > 0;
-    },
-    pagenList() {
-      let pagenLen = this.filteredReviews.length / Math.floor(this.pagen.limit);
-
-      if (!Number.isInteger(pagenLen)) {
-        pagenLen = Math.floor(pagenLen) + 1;
-      }
-
-      const arr = [];
-      for (let i = 0; i < pagenLen; i++) {
-        arr.push({ text: i + 1 });
-      }
-
-      return arr;
     }
   },
   watch: {
     selectedTours() {
-      this.pagen.index = 0;
+      this.pagenPage = 1;
     }
   },
   methods: {
+    onPagenChange(i) {
+      this.pagenPage = i;
+      window.scrollTo(0, 0);
+    },
     showReviewRatesModal() {
       this.isReviewRatesModalVisible = true;
     },
