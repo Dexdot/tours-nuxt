@@ -211,6 +211,7 @@ export default {
         locale: "ru",
         city: "spb",
         date: dateStr,
+        sortDate: dateStr,
         score,
         text,
         clientName: name,

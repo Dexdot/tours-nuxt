@@ -38,6 +38,9 @@ export function createReviewEntry(form) {
             date: {
               "ru-RU": form.date
             },
+            sortDate: {
+              "ru-RU": form.sortDate
+            },
             numberOfStars: {
               "ru-RU": form.score
             },

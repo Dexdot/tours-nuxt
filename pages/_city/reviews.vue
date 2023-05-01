@@ -112,7 +112,7 @@ import PagenSmart from "~/ui/PagenSmart";
 import page from "~/mixins/page";
 import render from "~/mixins/render";
 
-import { getRandomEntries } from "~/assets/scripts/helpers";
+import { getRandomEntries, convertToDate } from "~/assets/scripts/helpers";
 
 export default {
   mixins: [page, render],
@@ -246,7 +246,23 @@ export default {
     pagenReviews() {
       const index = this.pagenPage - 1;
       const skip = index * 6;
-      return this.filteredReviews.slice(skip, skip + 6);
+      return this.sortedReviews.slice(skip, skip + 6);
+    },
+    sortedReviews() {
+      const defaultDate = convertToDate("01.01.2017");
+      return [...this.filteredReviews].sort((a, b) => {
+        const dateA = a.fields.sortDate
+          ? convertToDate(a.fields.sortDate)
+          : defaultDate;
+
+        const dateB = b.fields.sortDate
+          ? convertToDate(b.fields.sortDate)
+          : defaultDate;
+
+        const timeA = dateA.getTime();
+        const timeB = dateB.getTime();
+        return timeB - timeA;
+      });
     },
     filteredTours() {
       if (!this.selectedFilters || this.selectedFilters.length <= 0)

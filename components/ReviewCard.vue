@@ -23,7 +23,11 @@
       </div>
 
       <div class="review-li__avatar review-li__avatar--icon u-center" v-else>
-        <img src="~assets/img/umbrella-stroke.svg" alt="Logo" />
+        <img
+          style="width: 40px; height: 40px;"
+          src="~assets/img/umbrella2.svg"
+          alt="Logo"
+        />
       </div>
 
       <div class="review-li__user">
