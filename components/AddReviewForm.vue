@@ -35,12 +35,15 @@
           :selected="selectedTours"
           :className="'addreview-select'"
           :placeholder="$t('reviews.chooseTour')"
+          :error="submitTriggered && selectedTours.length <= false"
           @change="onTourSelectValueClick"
         />
       </div>
 
       <div class="stars-wrap">
-        <p class="stars-label">{{ $t("reviews.scoreTour") }}</p>
+        <p class="stars-label">
+          {{ $t("reviews.scoreTour") }}
+        </p>
         <ul class="stars">
           <li v-for="i in 5" :key="i">
             <button
@@ -115,6 +118,7 @@ import { createReviewEntry } from "~/api/reviews";
 export default {
   components: { MultipleSelect },
   data: () => ({
+    submitTriggered: false,
     submitted: false,
     selectedTours: [],
     submitStatus: "",
@@ -154,6 +158,7 @@ export default {
       this.selectedTours = result;
     },
     resetForm() {
+      this.submitTriggered = false;
       this.$refs.form?.reset();
       this.selectedTours = [];
       this.submitStatus = "";
@@ -179,6 +184,7 @@ export default {
       return false;
     },
     onSubmit() {
+      this.submitTriggered = true;
       if (this.isFormValid()) {
         this.submit();
       } else {

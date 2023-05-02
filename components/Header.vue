@@ -205,7 +205,7 @@ export default {
 
 <style lang="sass">
 \:root
-  --header-h: 138px
+  --header-h: 139px
   @media (max-width: $tab)
     --header-h: 131px
 </style>

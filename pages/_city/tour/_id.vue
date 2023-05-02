@@ -292,8 +292,8 @@ export default {
       return this.allReviews.filter(review => {
         const reviewTours = review.fields.tours;
         if (!reviewTours || reviewTours.length <= 0) return false;
-        const slugs = reviewTours.map(tour => tour.fields.slug);
-        return slugs.some(slug => slug === this.tourData.slug);
+        const slugs = reviewTours.map(tour => tour.fields?.slug);
+        return slugs.some(slug => slug === this.tourData?.slug);
       });
     }
   },

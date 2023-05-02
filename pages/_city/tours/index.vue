@@ -4,7 +4,6 @@
       <div class="container">
         <div class="catalog-head">
           <h1 class="t-h3 catalog-title">{{ $t("tours.title") }}</h1>
-          <p class="catalog-subtitle">{{ $t("tours.choose") }}</p>
           <div>
             <MultipleSelect
               :list="selectList"
@@ -303,10 +302,6 @@ export default {
     margin-bottom: 24px
 
 .catalog-title
-  display: block
-  margin-bottom: 4px
-
-.catalog-subtitle
   display: block
   margin-bottom: 24px
 

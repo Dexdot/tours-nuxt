@@ -3,6 +3,7 @@
     :class="[
       className,
       'select-text-multiple',
+      { 'select-text-multiple-error': error },
       { 'select-text-multiple-open': isOpen }
     ]"
   >
@@ -22,7 +23,7 @@
         <button
           type="button"
           :class="{ active: selected.includes(v.value) }"
-          @click="$emit('change', v.value)"
+          @click="onValueClick(v.value)"
         >
           {{ v.label }}
         </button>
@@ -49,9 +50,14 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    error: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
-  data: () => ({ isOpen: false }),
+  data: () => ({ isOpen: false, touched: false }),
   mounted() {
     document.addEventListener("click", this.onDocumentClick.bind(this));
   },
@@ -67,7 +73,12 @@ export default {
       }
     },
     toggleOpen() {
+      this.touched = true;
       this.isOpen = !this.isOpen;
+    },
+    onValueClick(v) {
+      this.touched = true;
+      this.$emit("change", v);
     }
   }
 };

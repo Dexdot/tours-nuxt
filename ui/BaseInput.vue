@@ -9,8 +9,8 @@
         ref="textarea"
         v-bind="$attrs"
         @input="
-          resizeTextarea()
-          onChange()
+          resizeTextarea();
+          onChange();
         "
         @blur="onChange"
       ></textarea>
@@ -23,8 +23,8 @@
         v-bind="$attrs"
         :placeholder="fileName || $attrs.placeholder"
         @change="
-          onFileUpload()
-          onChange()
+          onFileUpload();
+          onChange();
         "
       />
     </template>
@@ -37,8 +37,8 @@
         ref="input"
         v-bind="$attrs"
         @input="
-          updateValue($event.target.value)
-          onChange()
+          updateValue($event.target.value);
+          onChange();
         "
         @blur="onChange"
       />
@@ -49,8 +49,8 @@
         ref="input"
         v-bind="$attrs"
         @input="
-          updateValue($event.target.value)
-          onChange()
+          updateValue($event.target.value);
+          onChange();
         "
         @blur="onChange"
       />
@@ -66,7 +66,7 @@ export default {
     },
     errorText: {
       type: String,
-      default: ''
+      default: ""
     },
     isFile: {
       type: Boolean,
@@ -83,56 +83,56 @@ export default {
   },
   data: () => ({
     isValid: true,
-    fileName: ''
+    fileName: ""
   }),
   mounted() {
     this.$nextTick(() => {
-      this.handleTextarea()
-    })
+      this.handleTextarea();
+    });
   },
   methods: {
     updateValue(value) {
-      this.$emit('input', value)
+      this.$emit("input", value);
     },
     onFileUpload(e) {
-      this.fileName = e.target.files[0].name
+      this.fileName = e.target.files[0].name;
     },
     onChange() {
-      if (this.getValidState() && !this.isValid) this.setValidState()
+      if (this.getValidState() && !this.isValid) this.setValidState();
     },
     getValidState() {
-      const input = this.isTextarea ? this.$refs.textarea : this.$refs.input
+      const input = this.isTextarea ? this.$refs.textarea : this.$refs.input;
 
       return this.usePhoneMask
-        ? input.value.replace(/[^0-9]/g, '').length >= 11
-        : input.validity.valid
+        ? input.value.replace(/[^0-9]/g, "").length >= 11
+        : input.validity.valid;
     },
     setValidState() {
       this.$nextTick(() => {
-        this.isValid = this.getValidState()
-      })
+        this.isValid = this.getValidState();
+      });
     },
     handleTextarea() {
       if (this.isTextarea) {
         this.$nextTick(() => {
-          const { scrollHeight } = this.$refs.textarea
-          const h = scrollHeight === 0 ? 'auto' : `${scrollHeight}px`
+          const { scrollHeight } = this.$refs.textarea;
+          const h = scrollHeight === 0 ? "auto" : `${scrollHeight}px`;
 
           this.$refs.textarea.setAttribute(
-            'style',
+            "style",
             `height: ${h}; overflow-y: hidden;`
-          )
-        })
+          );
+        });
       }
     },
     resizeTextarea() {
-      const { textarea } = this.$refs
+      const { textarea } = this.$refs;
 
-      textarea.style.height = 'auto'
-      textarea.style.height = textarea.scrollHeight + 'px'
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -151,7 +151,7 @@ export default {
   top: 0
   right: 0
 
-  color: $acc
+  color: $red
   font-size: 14px
   transition: opacity $trs
   opacity: 0
@@ -160,7 +160,7 @@ export default {
   width: 100%
   padding-bottom: 16px
   border-bottom: 1px solid rgba($black, 0.1)
-  
+
   &, &::placeholder
     color: $black
     transition: color $trs
@@ -172,7 +172,7 @@ textarea.input__field
 
 .input--invalid
   .input__field
-    border-bottom: 1px solid rgba($red, 0.1)
+    border-bottom: 1px solid rgba($red, 0.3)
 
   &::after
     opacity: 1
