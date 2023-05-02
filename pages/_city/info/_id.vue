@@ -23,6 +23,7 @@
 
       <section class="policy__content">
         <div v-for="(item, i) in content" :key="i + item.nodeType">
+          <h5 v-if="isH2(item)" v-html="render(item)"></h5>
           <p v-if="isText(item)" v-html="render(item)"></p>
           <ol v-if="isOL(item)" v-html="render(item)"></ol>
           <ul v-if="isUL(item)" v-html="render(item)"></ul>
@@ -33,100 +34,100 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import render from '~/mixins/render'
-import page from '~/mixins/page'
+import render from "~/mixins/render";
+import page from "~/mixins/page";
 
 export default {
   mixins: [page, render],
   head() {
-    const { contactsImage } = this.general
-    const { seoTitle, seoDescription } = this.pageData
-    const title = seoTitle || this.pageData.name
-    const description = seoDescription || this.pageData.name
+    const { contactsImage } = this.general;
+    const { seoTitle, seoDescription } = this.pageData;
+    const title = seoTitle || this.pageData.name;
+    const description = seoDescription || this.pageData.name;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   async asyncData({ app, store, params, error }) {
     // Current city
-    const { city } = params
+    const { city } = params;
 
     // Page ID
-    const slug = params.id
+    const slug = params.id;
 
-    const pagesMap = await store.dispatch('info/loadPages')
-    const page = pagesMap[slug]
+    const pagesMap = await store.dispatch("info/loadPages");
+    const page = pagesMap[slug];
 
     // 404
     if (!page || (page && page.fields.city !== city)) {
-      error({ statusCode: 404 })
+      error({ statusCode: 404 });
     }
 
-    return { page }
+    return { page };
   },
   computed: {
     ...mapGetters({
-      general: 'general/data',
-      allPages: 'info/allPages'
+      general: "general/data",
+      allPages: "info/allPages"
     }),
     pageData() {
-      return this.page.fields
+      return this.page.fields;
     },
     hasContent() {
-      return this.content && this.content.length > 0
+      return this.content && this.content.length > 0;
     },
     content() {
-      return this.pageData.content.content
+      return this.pageData.content.content;
     },
     slugs() {
       return this.allPages.map(page => ({
         name: page.fields.name,
         slug: page.fields.slug
-      }))
+      }));
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

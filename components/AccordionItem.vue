@@ -18,8 +18,8 @@
 ></template>
 
 <script>
-import render from '~/mixins/render'
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
+import render from "~/mixins/render";
+import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
 
 export default {
   mixins: [render],
@@ -35,8 +35,8 @@ export default {
   },
   computed: {
     title() {
-      const titleItem = this.content.find(item => this.isH6(item))
-      return titleItem ? documentToPlainTextString(titleItem) : ''
+      const titleItem = this.content.find(item => this.isH6(item));
+      return titleItem ? documentToPlainTextString(titleItem) : "";
     }
   },
   data: () => ({
@@ -44,15 +44,15 @@ export default {
   }),
   methods: {
     onClick() {
-      this.$emit('accordion-click')
+      this.$emit("accordion-click");
     }
   },
   watch: {
     active(active) {
-      this.maxHeight = this.$refs.content.scrollHeight
+      this.maxHeight = this.$refs.content.scrollHeight;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
