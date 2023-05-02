@@ -20,10 +20,11 @@
             class="header__logo u-center"
             :to="$cityLocalePath('index')"
           >
-            <svg-icon name="logo" />
+            <img src="~assets/img/logo.svg" alt="Logo" />
           </nuxt-link>
 
-          <button
+          <!-- CITYSWITCH -->
+          <!-- <button
             @click="isCitiesSelectActive = !isCitiesSelectActive"
             :class="['header__select t-ttu', { active: isCitiesSelectActive }]"
             v-if="
@@ -34,7 +35,7 @@
           >
             {{ $t("cities")[city] }}
             <svg-icon name="chevron" />
-          </button>
+          </button> -->
         </div>
 
         <nav class="header__nav">
@@ -92,13 +93,14 @@
       </div>
     </div>
 
-    <ul :class="['header__cities', { active: isCitiesSelectActive }]">
+    <!-- CITYSWITCH -->
+    <!-- <ul :class="['header__cities', { active: isCitiesSelectActive }]">
       <li v-for="key in Object.keys($t('cities'))" :key="key">
         <Chipbox small @click="onChipboxClick(key)">{{
           $t("cities")[key]
         }}</Chipbox>
       </li>
-    </ul>
+    </ul> -->
   </header>
 </template>
 
@@ -203,9 +205,9 @@ export default {
 
 <style lang="sass">
 \:root
-  --header-h: 126px
+  --header-h: 138px
   @media (max-width: $tab)
-    --header-h: 104px
+    --header-h: 131px
 </style>
 
 <style lang="sass" scoped>
@@ -301,9 +303,10 @@ export default {
   @media (max-width: 1110px)
     margin-right: 16px
 
-.header__logo
-  height: 72px
-
+.header__logo img
+  display: block
+  width: 123px
+  height: auto
 
 // Select
 .header:not(.header--fixed)

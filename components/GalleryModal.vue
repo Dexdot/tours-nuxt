@@ -9,7 +9,7 @@
         class="gallery-modal__logo u-center"
         :to="$cityLocalePath('index')"
       >
-        <svg-icon name="logo" />
+        <img src="~assets/img/logo.svg" alt="Logo" />
       </nuxt-link>
 
       <div class="gallery-modal__container">
@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import Modal from '~/ui/Modal'
-import SliderNav from '~/ui/SliderNav'
+import Modal from "~/ui/Modal";
+import SliderNav from "~/ui/SliderNav";
 
 export default {
   components: {
@@ -85,35 +85,35 @@ export default {
   }),
   computed: {
     activeImg() {
-      return this.images[this.index]
+      return this.images[this.index];
     }
   },
   mounted() {
-    window.addEventListener('keyup', this.onKeyup.bind(this))
+    window.addEventListener("keyup", this.onKeyup.bind(this));
   },
   beforeDestroy() {
-    window.removeEventListener('keyup', this.onKeyup)
+    window.removeEventListener("keyup", this.onKeyup);
   },
   methods: {
     onKeyup({ keyCode }) {
-      if (!this.active) return false
+      if (!this.active) return false;
 
-      if ([37, 38].includes(keyCode)) this.prev()
-      if ([39, 40].includes(keyCode)) this.next()
+      if ([37, 38].includes(keyCode)) this.prev();
+      if ([39, 40].includes(keyCode)) this.next();
     },
     prev() {
-      this.setIndex(this.index <= 0 ? this.images.length - 1 : this.index - 1)
+      this.setIndex(this.index <= 0 ? this.images.length - 1 : this.index - 1);
     },
     next() {
-      this.setIndex(this.index === this.images.length - 1 ? 0 : this.index + 1)
+      this.setIndex(this.index === this.images.length - 1 ? 0 : this.index + 1);
     },
     setIndex(i) {
       if (Number.isInteger(i)) {
-        this.index = i
+        this.index = i;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -168,7 +168,7 @@ export default {
 
   width: 100%
   height: 100%
-  
+
 .gallery-modal__logo
   position: absolute
   left: $unit
@@ -176,7 +176,12 @@ export default {
 
   @media (max-width: $tab-sm)
     top: 16px
-  
+
+  img
+    display: block
+    width: 123px
+    height: auto
+
 
 .gallery-modal__container
   @media (min-width: $tab-sm + 1)

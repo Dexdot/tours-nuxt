@@ -11,7 +11,7 @@
           >
             <li>
               <nuxt-link class="btn-outline" :to="$cityLocalePath('/blog')">{{
-                $t('blog.categoryAll')
+                $t("blog.categoryAll")
               }}</nuxt-link>
             </li>
 
@@ -117,7 +117,7 @@
       v-if="otherArticles && otherArticles.length > 0"
     >
       <div class="container">
-        <h2 class="article-more__title t-h3">{{ $t('blog.otherTitle') }}</h2>
+        <h2 class="article-more__title t-h3">{{ $t("blog.otherTitle") }}</h2>
         <div class="article-more__container">
           <ul class="blog-list">
             <li v-for="article in otherArticles" :key="article.sys.id">
@@ -131,13 +131,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import ArticleCard from '~/components/ArticleCard'
-import SocialList from '~/components/SocialList'
-import render from '~/mixins/render'
-import page from '~/mixins/page'
-import { getRandomEntries } from '~/assets/scripts/helpers'
+import ArticleCard from "~/components/ArticleCard";
+import SocialList from "~/components/SocialList";
+import render from "~/mixins/render";
+import page from "~/mixins/page";
+import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
   components: {
@@ -146,87 +146,87 @@ export default {
   },
   mixins: [page, render],
   head() {
-    const { seoTitle, seoDescription, previewImage } = this.articleData
-    const title = seoTitle || this.articleData.title
-    const description = seoDescription || ''
+    const { seoTitle, seoDescription, previewImage } = this.articleData;
+    const title = seoTitle || this.articleData.title;
+    const description = seoDescription || "";
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
+          hid: "twitter:image",
+          name: "twitter:image",
           content: previewImage.fields.file.url
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
+          hid: "og:image",
+          property: "og:image",
           content: previewImage.fields.file.url
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   async asyncData({ store, params, error }) {
     // Current city
-    const { city } = params
+    const { city } = params;
 
     // Article ID
-    const { slug } = params
+    const { slug } = params;
 
-    const articlesMap = await store.dispatch('blog/loadArticles')
-    const article = articlesMap[slug]
+    const articlesMap = await store.dispatch("blog/loadArticles");
+    const article = articlesMap[slug];
 
     // 404
     if (!article || (article && article.fields.city !== city)) {
-      error({ statusCode: 404 })
+      error({ statusCode: 404 });
     }
 
-    return { article }
+    return { article };
   },
   data: () => ({
     socialLinks: []
   }),
   computed: {
     ...mapGetters({
-      allArticles: 'blog/allArticles',
-      general: 'general/data',
-      locale: 'lang/locale'
+      allArticles: "blog/allArticles",
+      general: "general/data",
+      locale: "lang/locale"
     }),
     articleData() {
-      return this.article.fields
+      return this.article.fields;
     },
     otherArticles() {
       const filtered = this.allArticles.filter(
         ({ fields }) => fields.slug !== this.articleData.slug
-      )
+      );
 
-      return filtered.length > 0 ? getRandomEntries(filtered, 8) : []
+      return filtered.length > 0 ? getRandomEntries(filtered, 8) : [];
     }
   },
   mounted() {
@@ -237,9 +237,9 @@ export default {
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         window.location.href
       )}`
-    ]
+    ];
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -310,7 +310,7 @@ export default {
     width: 100%
     height: auto
     margin-bottom: 8px
-  
+
 .article-img
   margin-top: 40px
   margin-bottom: 16px
@@ -379,7 +379,7 @@ export default {
   .social-li--telegram,
   .social-li--inst
     display: none
-  
+
   .social a
     width: 40px
     height: 40px
@@ -513,5 +513,3 @@ export default {
 .article-more__container .blog-list
   margin-bottom: 0
 </style>
-
-

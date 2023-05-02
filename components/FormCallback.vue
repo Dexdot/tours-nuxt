@@ -50,115 +50,136 @@
         type="submit"
       >
         <slot v-if="submitStatus === 'success'">{{
-          $t('form.buttonSuccess')
+          $t("form.buttonSuccess")
         }}</slot>
         <slot v-else-if="submitStatus === 'error'">{{
-          $t('form.buttonError')
+          $t("form.buttonError")
         }}</slot>
-        <slot v-else>{{ $t('form.button') }}</slot>
+        <slot v-else>{{ $t("form.button") }}</slot>
       </BaseButton>
     </form>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
-    submitStatus: '',
+    submitStatus: "",
     form: {
-      name: '',
-      email: '',
-      text: ''
+      name: "",
+      email: "",
+      text: ""
     }
   }),
+  computed: {
+    ...mapGetters({
+      isCallbackActive: "dom/isCallbackActive"
+    })
+  },
+  watch: {
+    isCallbackActive(isActive) {
+      if (!isActive) {
+        this.resetForm();
+      }
+    }
+  },
   methods: {
+    resetForm() {
+      this.$refs.form.reset();
+      this.submitStatus = "";
+      this.form.name = "";
+      this.form.email = "";
+      this.form.text = "";
+    },
     isFormValid() {
       if (this.$refs && Object.keys(this.$refs).length > 0) {
-        const { name, email, text } = this.$refs
+        const { name, email, text } = this.$refs;
 
         return (
           name.getValidState() && email.getValidState() && text.getValidState()
-        )
+        );
       }
 
-      return false
+      return false;
     },
     onSubmit() {
       if (this.isFormValid()) {
-        this.submit()
+        this.submit();
       } else {
-        this.setFieldsValidState()
+        this.setFieldsValidState();
       }
     },
     setFieldsValidState() {
       for (let key in this.$refs) {
-        const ref = this.$refs[key]
-        if (ref && ref.setValidState) ref.setValidState()
+        const ref = this.$refs[key];
+        if (ref && ref.setValidState) ref.setValidState();
       }
     },
     submit() {
-      this.post(this.getFormData())
+      this.post(this.getFormData());
     },
     getFormData() {
-      const data = new FormData()
+      const data = new FormData();
 
       // Text, file inputs
       Array.from(this.$refs.form.elements).forEach(field => {
-        const hasName = field.name
-        const notDisabled = !field.disabled
-        const ignoredTypes = ['radio', 'checkbox', 'reset', 'submit', 'button']
-        const isFile = field.type === 'file'
+        const hasName = field.name;
+        const notDisabled = !field.disabled;
+        const ignoredTypes = ["radio", "checkbox", "reset", "submit", "button"];
+        const isFile = field.type === "file";
 
         if (hasName && notDisabled && !ignoredTypes.includes(field.type)) {
           if (isFile) {
-            data.append(field.name, field.files[0])
+            data.append(field.name, field.files[0]);
           } else {
-            data.set(field.name, field.value)
+            data.set(field.name, field.value);
           }
         }
-      })
+      });
 
       // Checkboxes
       // this.form.checked.forEach(v => {
       //   data.append('cb_service[]', v)
       // })
 
-      const objectData = {}
+      const objectData = {};
       data.forEach((value, key) => {
-        objectData[key] = value
-      })
-      objectData['cb_city'] = this.$route.params.city
+        objectData[key] = value;
+      });
+      objectData["cb_city"] = this.$route.params.city;
 
-      return objectData
+      return objectData;
     },
     post(data) {
       this.$axios
         .post(this.$refs.form.action, data)
         .then(({ data }) => {
           if (data.success == true) {
-            this.onSuccess()
+            this.onSuccess();
           } else {
-            this.onError()
+            this.onError();
           }
         })
         .catch(() => {
-          this.onError()
-        })
+          this.onError();
+        });
     },
     onSuccess() {
-      this.$refs.form.reset()
-      this.submitStatus = 'success'
+      this.$refs.form.reset();
+      this.submitStatus = "success";
     },
     onError() {
-      this.submitStatus = 'error'
+      this.submitStatus = "error";
     },
     onForm() {
-      if (this.submitStatus !== '') {
-        this.submitStatus = ''
+      if (this.submitStatus !== "") {
+        this.submitStatus = "";
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

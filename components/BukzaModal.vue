@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Modal from '~/ui/Modal'
+import { mapGetters } from "vuex";
+import Modal from "~/ui/Modal";
 
 export default {
   components: {
@@ -31,42 +31,44 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      if (this.id) this.init()
-    })
+      if (this.id) {
+        this.init();
+      }
+    });
   },
   computed: {
     ...mapGetters({
-      id: 'dom/bukzaID'
+      id: "dom/bukzaID"
     })
   },
   methods: {
     init() {
-      const d = document
-      const w = window
+      const d = document;
+      const w = window;
 
       const l = () => {
-        const s = d.createElement('script')
-        s.type = 'text/javascript'
-        s.async = true
+        const s = d.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
         s.src = `https://public.bukza.com/api/script/generate/11417/${
           this.id
-        }/BukzaContainer${this.id}?t=${new Date().getTime()}`
-        const { ss } = this.$refs
-        ss.parentNode.insertBefore(s, ss)
-      }
+        }/BukzaContainer${this.id}?t=${new Date().getTime()}`;
+        const { ss } = this.$refs;
+        ss.parentNode.insertBefore(s, ss);
+      };
 
-      if (d.readyState == 'complete') {
-        l()
+      if (d.readyState == "complete") {
+        l();
       } else {
         if (w.attachEvent) {
-          w.attachEvent('onload', l)
+          w.attachEvent("onload", l);
         } else {
-          w.addEventListener('load', l, false)
+          w.addEventListener("load", l, false);
         }
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -82,7 +84,4 @@ export default {
 
   .modal__content > .modal__close .i-chevron
     transform: rotate(-180deg)
-
-.modal--bukza-modal /deep/ .modal__content
-  background-color: #151515
 </style>

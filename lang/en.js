@@ -33,7 +33,8 @@ const lang = {
     }
   ],
   tours: {
-    title: "Excursions"
+    title: "Excursions",
+    choose: "Choose your excursion"
   },
   tour: {
     routeTitle: "What will we see",
@@ -43,6 +44,13 @@ const lang = {
     otherToursTitle: "Other tours you will like"
   },
   tourTypes: {
+    group: "Group",
+    individual: "Individual",
+    children: "Children's",
+    newbie: "For newbies",
+    unusual: "Unusual routes"
+  },
+  reviewsTourTypes: {
     all: "All",
     group: "Group",
     individual: "Individual"
@@ -67,7 +75,10 @@ const lang = {
     selectTourNotChosen: "Not chosen",
     selectTypeTitle: "Type of tour",
     watchReviews: "Watch reviews",
-    goTo: "Go to review"
+    goTo: "Go to review",
+    add: "Write a review",
+    chooseTour: "Which tour would you like to review?",
+    scoreTour: "Your rating of the tour (from 1 to 5)"
   },
   main: {
     toursButton: "See all",

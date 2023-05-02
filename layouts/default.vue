@@ -18,6 +18,7 @@
     <CreditsModal :active="isCreditsActive" />
     <BukzaModal :key="$store.getters['dom/bukzaID']" :active="isBukzaActive" />
     <CallbackModal :active="isCallbackActive" />
+    <AddReviewModal :active="isAddReviewActive" />
 
     <no-ssr>
       <!-- Yandex.Metrika counter -->
@@ -93,6 +94,7 @@ import Intro from "~/components/Intro";
 import CreditsModal from "~/components/CreditsModal";
 import BukzaModal from "~/components/BukzaModal";
 import CallbackModal from "~/components/CallbackModal";
+import AddReviewModal from "~/components/AddReviewModal";
 
 import initCSSProps from "~/assets/scripts/css-props";
 import { detectDevices } from "~/assets/scripts/detect";
@@ -105,7 +107,8 @@ export default {
     Intro,
     CreditsModal,
     BukzaModal,
-    CallbackModal
+    CallbackModal,
+    AddReviewModal
   },
   data: () => ({
     detect: {},
@@ -120,6 +123,7 @@ export default {
       isCreditsActive: "dom/isCreditsActive",
       isBukzaActive: "dom/isBukzaActive",
       isCallbackActive: "dom/isCallbackActive",
+      isAddReviewActive: "dom/isAddReviewActive",
       isHeaderTransparent: "dom/isHeaderTransparent"
     }),
     page() {

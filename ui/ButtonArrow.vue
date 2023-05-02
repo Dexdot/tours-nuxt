@@ -4,6 +4,18 @@
   </button>
 </template>
 
+<script>
+export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
+};
+</script>
+
 <style lang="sass" scoped>
 .arrow-btn
   border-radius: 50%

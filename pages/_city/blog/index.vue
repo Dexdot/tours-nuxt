@@ -4,13 +4,13 @@
       <div class="container">
         <div class="blog-container">
           <div class="blog-head t-tac">
-            <h1 class="blog-title">{{ $t('blog.title') }}</h1>
+            <h1 class="blog-title">{{ $t("blog.title") }}</h1>
             <ul class="blog-categories u-fxw u-center">
               <li
                 v-if="$route.params.filter && $route.params.filter.length > 0"
               >
                 <nuxt-link class="btn-outline" :to="$cityLocalePath('/blog')">{{
-                  $t('blog.categoryAll')
+                  $t("blog.categoryAll")
                 }}</nuxt-link>
               </li>
 
@@ -53,130 +53,130 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import ArticleCard from '~/components/ArticleCard'
+import { mapGetters } from "vuex";
+import ArticleCard from "~/components/ArticleCard";
 
-import page from '~/mixins/page'
-import pagen from '~/mixins/pagen'
+import page from "~/mixins/page";
+import pagen from "~/mixins/pagen";
 
 export default {
   mixins: [page, pagen],
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.blog
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.blog;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   components: {
     ArticleCard
   },
   async fetch({ store }) {
-    await store.dispatch('blog/loadArticles')
+    await store.dispatch("blog/loadArticles");
   },
   computed: {
     ...mapGetters({
-      allArticles: 'blog/allArticles',
-      general: 'general/data',
-      locale: 'lang/locale'
+      allArticles: "blog/allArticles",
+      general: "general/data",
+      locale: "lang/locale"
     }),
     categories() {
-      const filter = this.$route.params.filter || ''
+      const filter = this.$route.params.filter || "";
 
       return this.allArticles.reduce((currentTags, { fields }) => {
-        const currentSlugs = currentTags.map(({ fields }) => fields.slug)
-        const articleCategories = fields.categories || []
+        const currentSlugs = currentTags.map(({ fields }) => fields.slug);
+        const articleCategories = fields.categories || [];
 
         return [
           ...currentTags,
           ...articleCategories.filter(
             ({ fields }) => !currentSlugs.includes(fields.slug)
           )
-        ]
-      }, [])
+        ];
+      }, []);
     },
     sortedArticles() {
-      const articles = [...this.allArticles]
+      const articles = [...this.allArticles];
 
       // Sort
       articles.sort((a, b) => {
-        const aTime = new Date(a.fields.date).getTime()
-        const bTime = new Date(b.fields.date).getTime()
-        return bTime - aTime
-      })
+        const aTime = new Date(a.fields.date).getTime();
+        const bTime = new Date(b.fields.date).getTime();
+        return bTime - aTime;
+      });
 
       // Filter
-      const { filter } = this.$route.params
+      const { filter } = this.$route.params;
 
       return articles.filter(article => {
         const articleCategories = article.fields.categories.map(
           ({ fields }) => fields.slug
-        )
+        );
 
-        return filter ? articleCategories.includes(filter) : true
-      })
+        return filter ? articleCategories.includes(filter) : true;
+      });
     },
     pagenArticles() {
       return this.sortedArticles.slice(
         this.pagenSkip,
         this.pagenSkip + this.pagen.limit
-      )
+      );
     },
     pagenList() {
-      let pagenLen = this.sortedArticles.length / Math.floor(this.pagen.limit)
+      let pagenLen = this.sortedArticles.length / Math.floor(this.pagen.limit);
 
       if (!Number.isInteger(pagenLen)) {
-        pagenLen = Math.floor(pagenLen) + 1
+        pagenLen = Math.floor(pagenLen) + 1;
       }
 
-      const arr = []
+      const arr = [];
       for (let i = 0; i < pagenLen; i++) {
-        arr.push({ text: i + 1 })
+        arr.push({ text: i + 1 });
       }
 
-      return arr
+      return arr;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -204,7 +204,7 @@ export default {
 .blog-container
   position: relative
   z-index: 1
-  
+
   margin: 0 auto
   width: column-spans(8)
 

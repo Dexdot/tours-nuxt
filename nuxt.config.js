@@ -43,6 +43,7 @@ const i18n = [
   }
 ];
 
+// CITYSWITCH
 const getRedirects = (from, to) => [
   {
     from: `^${from}`,
@@ -51,11 +52,11 @@ const getRedirects = (from, to) => [
   {
     from: `^/spb${from}`,
     to: `/spb${to}`
-  },
-  {
-    from: `^/tallinn${from}`,
-    to: `/tallinn${to}`
   }
+  // {
+  //   from: `^/tallinn${from}`,
+  //   to: `/tallinn${to}`
+  // }
   // LANGSWITCH
   // {
   //   from: `^/en/tallinn${from}`,

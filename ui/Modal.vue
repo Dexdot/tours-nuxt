@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
   props: {
@@ -41,11 +41,11 @@ export default {
     },
     type: {
       type: String,
-      default: ''
+      default: ""
     },
     side: {
       type: String,
-      default: 'left'
+      default: "left"
     },
     active: {
       type: Boolean,
@@ -54,61 +54,61 @@ export default {
   },
   computed: {
     className() {
-      const { name, side, type, active } = this
+      const { name, side, type, active } = this;
 
       const classObj = {
         modal: true,
-        'modal--active': active
-      }
+        "modal--active": active
+      };
 
       if (type) {
-        classObj[`modal--${type}`] = true
+        classObj[`modal--${type}`] = true;
       }
 
-      if (type === 'aside') {
-        classObj[`modal--${side}`] = true
+      if (type === "aside") {
+        classObj[`modal--${side}`] = true;
       }
 
       if (name) {
-        classObj[`modal--${name}`] = true
+        classObj[`modal--${name}`] = true;
       }
 
-      return classObj
+      return classObj;
     }
   },
   mounted() {
-    this.calcTop()
-    window.addEventListener('resize', this.calcTop.bind(this))
+    this.calcTop();
+    window.addEventListener("resize", this.calcTop.bind(this));
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.calcTop)
+    window.removeEventListener("resize", this.calcTop);
   },
   methods: {
     ...mapActions({
-      disableScroll: 'dom/disableScroll',
-      enableScroll: 'dom/enableScroll'
+      disableScroll: "dom/disableScroll",
+      enableScroll: "dom/enableScroll"
     }),
     calcTop() {
-      const content = this.$refs.content
-      const button = this.$refs.containerClose
+      const content = this.$refs.content;
+      const button = this.$refs.containerClose;
 
       if (content && button)
         button.style.setProperty(
-          '--modal-content-top',
+          "--modal-content-top",
           `${content.offsetTop}px`
-        )
+        );
     }
   },
   watch: {
     active(isActive) {
       if (isActive) {
-        this.disableScroll()
+        this.disableScroll();
       } else {
-        this.enableScroll()
+        this.enableScroll();
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -302,7 +302,7 @@ export default {
     top: 12px
     left: 50%
     transform: translateX(-50%)
-       
+
   .modal__content > .modal__close
     display: none
 

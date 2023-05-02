@@ -12,10 +12,21 @@
         />
       </div>
 
-      <div class="review-li__avatar review-li__avatar--icon u-center" v-else>
+      <div
+        class="review-li__avatar review-li__avatar--icon u-center"
+        v-else-if="review.fields.aggregatorIcon"
+      >
         <img
           :src="review.fields.aggregatorIcon.fields.file.url"
           :alt="review.fields.aggregatorIcon.fields.title"
+        />
+      </div>
+
+      <div class="review-li__avatar review-li__avatar--icon u-center" v-else>
+        <img
+          style="width: 40px; height: 40px;"
+          src="~assets/img/umbrella2.svg"
+          alt="Logo"
         />
       </div>
 
@@ -52,14 +63,14 @@
         target="_blank"
         v-if="review.fields.aggregatorLink"
         :href="review.fields.aggregatorLink"
-        >{{ $t('reviews.goTo') }}</a
+        >{{ $t("reviews.goTo") }}</a
       >
     </div>
   </div>
 </template>
 
 <script>
-import render from '~/mixins/render'
+import render from "~/mixins/render";
 
 export default {
   mixins: [render],
@@ -69,7 +80,7 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -106,7 +117,7 @@ export default {
 
   &:not(.review-li__avatar--icon) img
     border-radius: 50%
-  
+
 .review-li__avatar--icon img
   width: 26px
   height: 26px
@@ -154,7 +165,7 @@ export default {
 
     border-radius: 50%
     background: $black
-  
+
 .review-li__link
   +mont(sb)
   font-size: 16px

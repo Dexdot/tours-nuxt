@@ -3,68 +3,47 @@
     <section class="catalog-section">
       <div class="container">
         <div class="catalog-head">
-          <div class="catalog-head__title">
-            <h1 class="t-h3 catalog-title">{{ $t('tours.title') }}</h1>
-            <ul class="catalog-tabs">
-              <li v-for="key in Object.keys($t('tourTypes'))" :key="key">
-                <nuxt-link
-                  :class="[
-                    'catalog-tab t-ttu',
-                    {
-                      active:
-                        key === 'all'
-                          ? !$route.params.filter || $route.params.filter === ''
-                          : key === $route.params.filter
-                    }
-                  ]"
-                  :to="$cityLocalePath(`/tours/${key === 'all' ? '' : key}`)"
-                >
-                  {{ $t('tourTypes')[key] }}
-                </nuxt-link>
-              </li>
-            </ul>
+          <h1 class="t-h3 catalog-title">{{ $t("tours.title") }}</h1>
+          <p class="catalog-subtitle">{{ $t("tours.choose") }}</p>
+          <div>
+            <MultipleSelect
+              :list="selectList"
+              :selected="selectedFilters"
+              :className="'catalog-selects'"
+              :placeholder="$t('reviews.selectTypeTitle')"
+              @change="onSelectValueClick"
+            />
           </div>
-
-          <div class="catalog-head__chipbox-list">
-            <Chipbox
-              :active="key === city"
-              v-for="key in Object.keys($t('cities'))"
-              :key="key"
-              @click="onChipboxClick(key)"
-              >{{ $t('cities')[key] }}</Chipbox
-            >
-          </div>
-        </div>
-
-        <div class="catalog-selects">
-          <div class="select-text">
-            <svg-icon name="chevron" />
-
-            <select
-              v-model="selectedFilter"
-              @change="onSelectChange($event.target.value)"
-            >
-              <option
-                v-for="key in Object.keys($t('tourTypes'))"
-                :key="key"
-                :value="key"
-                >{{ $t('tourTypes')[key] }}</option
+          <ul class="catalog-tabs">
+            <li>
+              <button
+                :class="[
+                  'catalog-tab t-ttu',
+                  {
+                    active: isAllSelected
+                  }
+                ]"
+                type="button"
+                @click="onSelectAllClick"
               >
-            </select>
-          </div>
-
-          <div class="select-text">
-            <svg-icon name="chevron" />
-
-            <select v-model="city">
-              <option
-                v-for="key in Object.keys($t('cities'))"
-                :key="key"
-                :value="key"
-                >{{ $t('cities')[key] }}</option
+                {{ $t("blog.categoryAll") }}
+              </button>
+            </li>
+            <li v-for="v in selectList" :key="v.value">
+              <button
+                :class="[
+                  'catalog-tab t-ttu',
+                  {
+                    active: selectedFilters.includes(v.value) && !isAllSelected
+                  }
+                ]"
+                type="button"
+                @click="onSelectValueClick(v.value)"
               >
-            </select>
-          </div>
+                {{ v.label }}
+              </button>
+            </li>
+          </ul>
         </div>
 
         <div class="catalog-list-container">
@@ -83,16 +62,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import ReviewsSlider from '~/components/ReviewsSlider'
-import TourCard from '~/components/TourCard'
-import Instagram from '~/components/Instagram'
-import Chipbox from '~/ui/Chipbox'
+import ReviewsSlider from "~/components/ReviewsSlider";
+import TourCard from "~/components/TourCard";
+import Instagram from "~/components/Instagram";
+import MultipleSelect from "~/ui/MultipleSelect";
 
-import render from '~/mixins/render'
-import page from '~/mixins/page'
-import city from '~/mixins/city'
+import render from "~/mixins/render";
+import page from "~/mixins/page";
+import city from "~/mixins/city";
 
 export default {
   mixins: [page, render, city],
@@ -100,113 +79,136 @@ export default {
     ReviewsSlider,
     TourCard,
     Instagram,
-    Chipbox
+    MultipleSelect
   },
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.tours
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.tours;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
-  async asyncData({ store, route, error }) {
-    const { filter } = route.params
-    if (filter && !['group', 'individual'].includes(filter)) {
-      error({ statusCode: 404 })
-    }
+  async asyncData({ store, query }) {
+    await store.dispatch("tours/loadTours");
+    await store.dispatch("reviews/loadReviews");
 
-    await store.dispatch('tours/loadTours')
+    let selectedFilters = [];
+    if (
+      "filters" in query &&
+      query.filters &&
+      typeof query.filters === "string"
+    ) {
+      selectedFilters = query.filters.split(",");
+    }
 
     return {
-      selectedFilter: filter || 'all'
-    }
+      selectedFilters
+    };
   },
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
-      general: 'general/data',
-      locale: 'lang/locale'
+      allTours: "tours/allTours",
+      allReviews: "reviews/allReviews",
+      general: "general/data",
+      locale: "lang/locale"
     }),
+    selectList() {
+      return Object.keys(this.$t("tourTypes"))
+        .filter(key => {
+          return this.allTours.some(tour => {
+            const filters = tour.fields.filters || [];
+            return filters.includes(key);
+          });
+        })
+        .map(k => ({
+          label: this.$t("tourTypes")[k],
+          value: k
+        }));
+    },
     reviews() {
-      const toursWithReviews = this.filteredTours.filter(
-        tour => 'reviews' in tour.fields
-      )
+      const filteredToursIds = this.filteredTours.map(tour => tour.sys.id);
 
-      const reviews = toursWithReviews.reduce((reviews, tour) => {
-        return [...reviews, ...tour.fields.reviews]
-      }, [])
+      const result = this.allReviews.filter(({ fields }) => {
+        const reviewTours = fields.tours;
+        if (!reviewTours || reviewTours.length <= 0) return false;
+        const reviewToursIds = reviewTours.map(tour => tour.sys.id);
+        return reviewToursIds.some(tourId => filteredToursIds.includes(tourId));
+      });
 
-      const ids = reviews.map(r => r.sys.id)
-      return reviews.filter(({ sys }, i) => ids.indexOf(sys.id) === i)
+      const ids = result.map(r => r.sys.id);
+      return result.filter(({ sys }, i) => ids.indexOf(sys.id) === i);
     },
     filteredTours() {
-      return this.allTours.filter(({ fields }) => {
-        const { filter } = this.$route.params
-        if (!filter) return true
+      if (!this.selectedFilters || this.selectedFilters.length <= 0)
+        return this.allTours;
 
-        switch (filter) {
-          case 'group':
-            return !fields.makeIndividual
-            break
-          case 'individual':
-            return fields.makeIndividual
-            break
-          default:
-            break
+      return this.allTours.filter(({ fields }) => {
+        if (fields.filters && fields.filters.length > 0) {
+          return fields.filters.some(f => this.selectedFilters.includes(f));
         }
-      })
+
+        return false;
+      });
+    },
+    isAllSelected() {
+      return (
+        this.selectedFilters.length <= 0 ||
+        Object.keys(this.$t("tourTypes")).every(key =>
+          this.selectedFilters.includes(key)
+        )
+      );
     },
     instagramData() {
-      const { general } = this
+      const { general } = this;
 
-      const instagramImages = [...general.instagramImages].reverse()
-      const images = []
+      const instagramImages = [...general.instagramImages].reverse();
+      const images = [];
 
-      images.push(instagramImages[0])
-      images.push({ sys: { id: new Date().getTime() } })
+      images.push(instagramImages[0]);
+      images.push({ sys: { id: new Date().getTime() } });
 
       instagramImages.slice(1).forEach(img => {
-        images.push(img)
-      })
+        images.push(img);
+      });
 
       const data = {
         images: images.slice(0, 7),
@@ -214,21 +216,34 @@ export default {
         text: general.instagramText,
         buttonUrl: general.instagramButtonUrl,
         buttonText: general.instagramButtonText
-      }
+      };
 
-      return data
+      return data;
     }
   },
   methods: {
-    onChipboxClick(city) {
-      this.city = city
+    onSelectAllClick() {
+      this.selectedFilters = [];
+      this.$router.replace(this.$cityLocalePath(`/tours`));
     },
-    onSelectChange(v) {
-      const filter = v === 'all' ? '' : v
-      this.$router.push(this.$cityLocalePath(`/tours/${filter}`))
+    onSelectValueClick(v) {
+      const result = this.selectedFilters.includes(v)
+        ? this.selectedFilters.filter(f => f !== v)
+        : [...this.selectedFilters, v];
+      this.selectedFilters = result;
+
+      if (result.length > 0) {
+        this.$router.replace(
+          this.$cityLocalePath(
+            `/tours?${new URLSearchParams({ filters: result }).toString()}`
+          )
+        );
+      } else {
+        this.$router.replace(this.$cityLocalePath(`/tours`));
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -236,10 +251,12 @@ export default {
   overflow: hidden
   padding-top: calc(var(--header-h) + 80px)
   padding-bottom: 18.5vh
+  min-height: 540px
 
   @media (max-width: $tab)
     padding-top: calc(var(--header-h) + 48px)
     padding-bottom: 120px
+    min-height: 420px
 
 .catalog-list
   display: flex
@@ -261,7 +278,7 @@ export default {
 
   @media (min-width: 1241px + 1)
     min-width: calc(16.6666% - #{gutters(1)})
-    width: calc(16.6666% - #{gutters(1)})  
+    width: calc(16.6666% - #{gutters(1)})
 
   @media (max-width: 1240px)
     margin-top: 48px
@@ -280,28 +297,23 @@ export default {
     margin-left: 12px
 
 .catalog-head
-  display: flex
-  align-items: flex-start
   margin-bottom: 64px
-
-  @media (min-width: $tab + 1)
-    justify-content: space-between
 
   @media (max-width: $tab)
     margin-bottom: 24px
 
-.catalog-head__title
-
 .catalog-title
   display: block
-  @media (min-width: $tab + 1)
-    margin-bottom: 24px
+  margin-bottom: 4px
+
+.catalog-subtitle
+  display: block
+  margin-bottom: 24px
 
 .catalog-tabs
   display: flex
   align-items: center
   margin-left: -16px
-
   @media (max-width: $tab)
     display: none
 
@@ -315,14 +327,13 @@ export default {
     position: absolute
     bottom: -4px
     left: 0
-
     width: 100%
     height: 1px
     background: $black
     transition: $trs
     transform-origin: 0% 50%
     transform: scaleX(0)
-  
+
   &:hover,
   &.active
     &::before
@@ -331,33 +342,8 @@ export default {
 .catalog-tab.active
   +mont(b)
 
-.catalog-tabs:hover .catalog-tab.active::before
-  transform: scaleX(0)
-
-.catalog-head__chipbox-list
-  display: flex
-  align-items: center
-
-  @media (max-width: $tab)
-    display: none
-
-  .chipbox
-    margin-left: 4px
 
 .catalog-selects
-  display: flex
-  align-items: center
-  justify-content: space-between
-  margin-bottom: 32px
-
   @media (min-width: $tab + 1)
     display: none
-
-.catalog-selects .select-text select
-  @media (max-width: $mob)
-    font-size: 10px
-
-.catalog-selects .select-text:last-child select
-  text-align: right
-  text-align-last: right
 </style>

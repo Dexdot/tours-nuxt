@@ -33,7 +33,8 @@ const lang = {
     }
   ],
   tours: {
-    title: "Экскурсии"
+    title: "Экскурсии",
+    choose: "Выбери свою экскурсию"
   },
   tour: {
     routeTitle: "Что увидим",
@@ -43,6 +44,13 @@ const lang = {
     otherToursTitle: "Другие экскурсии, которые вам понравятся"
   },
   tourTypes: {
+    group: "Групповые",
+    individual: "Индивидуальные",
+    children: "Детские",
+    newbie: "Для новичков",
+    unusual: "Необычные маршруты"
+  },
+  reviewsTourTypes: {
     all: "Все",
     group: "Групповые",
     individual: "Индивидуальные"
@@ -63,11 +71,15 @@ const lang = {
     title: "Отзывы",
     otherToursTitle: "Время выбирать свое приключение",
     sectionButton: "Все отзывы",
-    selectTourNotChosenTitle: "Экскурсия",
+    selectTourNotChosenTitle: "Название экскурсии",
     selectTourNotChosen: "Не выбрано",
     selectTypeTitle: "Тип экскурсии",
     watchReviews: "Смотреть отзывы",
-    goTo: "Перейти к отзыву"
+    goTo: "Перейти к отзыву",
+    add: "Написать отзыв",
+    chooseTour: "На какую экскурсию вы хотите оставить отзыв?",
+    scoreTour: "Оцените экскурсию (от 1 до 5)",
+    textPlaceholder: "Напишите свой отзыв"
   },
   main: {
     toursButton: "Смотреть все",

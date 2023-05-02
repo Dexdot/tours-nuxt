@@ -72,21 +72,21 @@
             </div>
 
             <template v-if="tourData.routeGallery">
-              <h2 class="t-h5">{{ $t('tour.routeTitle') }}</h2>
+              <h2 class="t-h5">{{ $t("tour.routeTitle") }}</h2>
 
               <div class="tour-page__roadmap">
                 <div class="roadmap">
                   <div class="roadmap__title roadmap__title--desktop">
                     <TipButton />
                     <b>
-                      {{ $t('tour.roadmapTip') }}
+                      {{ $t("tour.roadmapTip") }}
                     </b>
                   </div>
 
                   <div class="roadmap__title roadmap__title--mob">
                     <TipButton />
                     <b>
-                      {{ $t('tour.roadmapTip') }}
+                      {{ $t("tour.roadmapTip") }}
                     </b>
                   </div>
 
@@ -115,7 +115,7 @@
             </template>
 
             <template v-if="tourData.venue">
-              <h2 class="t-h5">{{ $t('tour.venueTitle') }}</h2>
+              <h2 class="t-h5">{{ $t("tour.venueTitle") }}</h2>
               <ul class="tour-page__info-list">
                 <li>
                   <svg-icon class="tour-page__info-icon" name="pin"></svg-icon>
@@ -155,7 +155,10 @@
       </div>
     </main>
 
-    <ReviewsSlider v-if="tourData.reviews" :reviews="tourData.reviews" />
+    <ReviewsSlider
+      v-if="tourReviews && tourReviews.length > 0"
+      :reviews="tourReviews"
+    />
     <ToursSlider
       :title="$t('tour.otherToursTitle')"
       v-if="otherTours.length > 0"
@@ -165,21 +168,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import GallerySection from '~/components/GallerySection'
-import GalleryModal from '~/components/GalleryModal'
-import SightsModal from '~/components/SightsModal'
-import ReviewsSlider from '~/components/ReviewsSlider'
-import ToursSlider from '~/components/ToursSlider'
+import GallerySection from "~/components/GallerySection";
+import GalleryModal from "~/components/GalleryModal";
+import SightsModal from "~/components/SightsModal";
+import ReviewsSlider from "~/components/ReviewsSlider";
+import ToursSlider from "~/components/ToursSlider";
 
-import Tip from '~/ui/Tip'
-import TipButton from '~/ui/TipButton'
-import FormOrder from '~/components/FormOrder'
+import Tip from "~/ui/Tip";
+import TipButton from "~/ui/TipButton";
+import FormOrder from "~/components/FormOrder";
 
-import render from '~/mixins/render'
-import page from '~/mixins/page'
-import { getRandomEntries } from '~/assets/scripts/helpers'
+import render from "~/mixins/render";
+import page from "~/mixins/page";
+import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
   mixins: [page, render],
@@ -194,51 +197,51 @@ export default {
     FormOrder
   },
   head() {
-    const { seoTitle, seoDescription, previewImage } = this.tourData
-    const title = seoTitle || this.tourData.title
-    const description = seoDescription || ''
+    const { seoTitle, seoDescription, previewImage } = this.tourData;
+    const title = seoTitle || this.tourData.title;
+    const description = seoDescription || "";
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
+          hid: "twitter:image",
+          name: "twitter:image",
           content: previewImage.fields.file.url
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
+          hid: "og:image",
+          property: "og:image",
           content: previewImage.fields.file.url
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   data: () => ({
     isGalleryModalVisible: false,
@@ -246,42 +249,52 @@ export default {
     sightsIndex: 0
   }),
   middleware({ app, params, redirect }) {
-    if (!params.id) return redirect(app.$cityLocalePath('/tours'))
+    if (!params.id) return redirect(app.$cityLocalePath("/tours"));
   },
-  async asyncData({ app, store, params, error }) {
+  async asyncData({ store, params, error }) {
     // Current city
-    const { city } = params
+    const { city } = params;
 
     // Tour ID
-    const slug = params.id
+    const slug = params.id;
 
-    const toursMap = await store.dispatch('tours/loadTours')
-    const tour = toursMap[slug]
+    await store.dispatch("reviews/loadReviews");
+    const toursMap = await store.dispatch("tours/loadTours");
+    const tour = toursMap[slug];
 
     // 404
     if (!tour || (tour && tour.fields.city !== city)) {
-      error({ statusCode: 404 })
+      error({ statusCode: 404 });
     }
 
-    return { tour }
+    return { tour };
   },
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
-      locale: 'lang/locale'
+      allTours: "tours/allTours",
+      allReviews: "reviews/allReviews",
+      locale: "lang/locale"
     }),
     coords() {
-      return [this.tourData.location.lat, this.tourData.location.lon]
+      return [this.tourData.location.lat, this.tourData.location.lon];
     },
     tourData() {
-      return this.tour.fields
+      return this.tour.fields;
     },
     otherTours() {
       const filtered = this.allTours.filter(
         ({ fields }) => fields.slug !== this.tourData.slug
-      )
+      );
 
-      return filtered.length > 0 ? getRandomEntries(filtered, 8) : []
+      return filtered.length > 0 ? getRandomEntries(filtered, 8) : [];
+    },
+    tourReviews() {
+      return this.allReviews.filter(review => {
+        const reviewTours = review.fields.tours;
+        if (!reviewTours || reviewTours.length <= 0) return false;
+        const slugs = reviewTours.map(tour => tour.fields.slug);
+        return slugs.some(slug => slug === this.tourData.slug);
+      });
     }
   },
   methods: {
@@ -290,44 +303,44 @@ export default {
         this.sightsIndex <= 0
           ? this.tourData.routeGallery.length - 1
           : this.sightsIndex - 1
-      )
+      );
     },
     sightsNext() {
       this.setSightsIndex(
         this.sightsIndex === this.tourData.routeGallery.length - 1
           ? 0
           : this.sightsIndex + 1
-      )
+      );
     },
     setSightsIndex(i) {
       if (Number.isInteger(i)) {
-        this.sightsIndex = i
+        this.sightsIndex = i;
       }
     },
     onCellClick(i) {
-      this.$refs.galleryModal.setIndex(i)
-      this.showGalleryModal()
+      this.$refs.galleryModal.setIndex(i);
+      this.showGalleryModal();
     },
     showGalleryModal() {
-      this.isGalleryModalVisible = true
+      this.isGalleryModalVisible = true;
     },
     hideGalleryModal() {
-      this.isGalleryModalVisible = false
+      this.isGalleryModalVisible = false;
     },
     onRouteButtonClick(i) {
-      if (window.innerWidth > 1040) return false
+      if (window.innerWidth > 1040) return false;
 
-      this.setSightsIndex(i)
-      this.showSightsModal()
+      this.setSightsIndex(i);
+      this.showSightsModal();
     },
     showSightsModal() {
-      this.isSightsModalVisible = true
+      this.isSightsModalVisible = true;
     },
     hideSightsModal() {
-      this.isSightsModalVisible = false
+      this.isSightsModalVisible = false;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -459,7 +472,7 @@ export default {
   @media (max-width: $tab)
     width: 100vw
     margin-left: minus($unit)
-    
+
 
 // Dates
 .tour-page__roadmap,

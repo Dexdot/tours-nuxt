@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import page from '~/mixins/page'
-import SocialList from '~/components/SocialList'
-import Instagram from '~/components/Instagram'
-import FormCallback from '~/components/FormCallback'
+import { mapGetters } from "vuex";
+import page from "~/mixins/page";
+import SocialList from "~/components/SocialList";
+import Instagram from "~/components/Instagram";
+import FormCallback from "~/components/FormCallback";
 
 export default {
   mixins: [page],
@@ -46,68 +46,68 @@ export default {
     FormCallback
   },
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.contacts
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.contacts;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapGetters({
-      general: 'general/data',
-      locale: 'lang/locale'
+      general: "general/data",
+      locale: "lang/locale"
     }),
     instagramData() {
-      const { general } = this
+      const { general } = this;
 
-      const instagramImages = [...general.instagramImages].reverse()
-      const images = []
+      const instagramImages = [...general.instagramImages].reverse();
+      const images = [];
 
-      images.push(instagramImages[0])
-      images.push({ sys: { id: new Date().getTime() } })
+      images.push(instagramImages[0]);
+      images.push({ sys: { id: new Date().getTime() } });
 
       instagramImages.slice(1).forEach(img => {
-        images.push(img)
-      })
+        images.push(img);
+      });
 
       const data = {
         images: images.slice(0, 7),
@@ -115,42 +115,45 @@ export default {
         text: general.instagramText,
         buttonUrl: general.instagramButtonUrl,
         buttonText: general.instagramButtonText
-      }
+      };
 
-      return data
+      return data;
     },
     isFormSubmitted() {
-      return false
+      return false;
     },
     isFormValid() {
-      return true
+      return true;
     }
   },
   created() {
-    this.$store.dispatch('dom/setHeaderTransparent', true)
+    this.$store.dispatch("dom/setHeaderTransparent", true);
   },
   mounted() {
-    this.onResize()
-    window.addEventListener('resize', this.onResize(this))
+    this.onResize();
+    window.addEventListener("resize", this.onResize(this));
   },
   beforeDestroy() {
-    this.$store.dispatch('dom/setHeaderTransparent', false)
-    window.removeEventListener('resize', this.onResize)
+    this.$store.dispatch("dom/setHeaderTransparent", false);
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     onResize() {
-      const wh = window.innerHeight
+      const wh = window.innerHeight;
 
-      const header = document.querySelector('.header')
-      const headerH = header.offsetHeight + 40
+      const header = document.querySelector(".header");
+      const headerH = header.offsetHeight + 40;
 
-      const { container } = this.$refs
-      const mt = wh - container.offsetHeight
+      const { container } = this.$refs;
+      const mt = wh - container.offsetHeight;
 
-      container.style.setProperty('--contacts-mt', `${Math.max(headerH, mt)}px`)
+      container.style.setProperty(
+        "--contacts-mt",
+        `${Math.max(headerH, mt)}px`
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -171,7 +174,7 @@ export default {
 
   @media (max-width: $tab)
     padding-bottom: 280px
-    
+
   @media (max-width: $mob)
     padding-bottom: 73.6%
 
@@ -245,7 +248,7 @@ export default {
 // Email, phone
 .contacts__info-links
   line-height: 1
-  
+
   @media (min-width: $tab + 1)
     margin-bottom: 47.407vh
 

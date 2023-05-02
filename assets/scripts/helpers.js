@@ -88,3 +88,9 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
 };
 
 export const copyObject = obj => cloneDeep(obj);
+
+export function convertToDate(dateString) {
+  let d = dateString.replace(/\./g, "/").split("/");
+  let dat = new Date(d[2] + "/" + d[1] + "/" + d[0]);
+  return dat;
+}

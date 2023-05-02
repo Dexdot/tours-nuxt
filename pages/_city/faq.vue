@@ -2,15 +2,15 @@
   <main>
     <section class="faq-page">
       <div class="container">
-        <h2 class="t-h3 faq-page__title">{{ $t('faq.title') }}</h2>
+        <h2 class="t-h3 faq-page__title">{{ $t("faq.title") }}</h2>
         <div class="faq-page__content">
           <FaqList v-if="general.faq" :content="general.faq.content" />
 
           <p class="faq-page__text">
-            <b>{{ $t('faq.subtitle') }}</b>
-            {{ $t('faq.call') }}
+            <b>{{ $t("faq.subtitle") }}</b>
+            {{ $t("faq.call") }}
             <a :href="general.phoneNumber">{{ general.phoneText }}</a>
-            {{ $t('faq.text') }}
+            {{ $t("faq.text") }}
             <a :href="`mailto:${general.email}`">{{ general.email }}</a>
           </p>
         </div>
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import FaqList from '~/components/FaqList'
-import ReviewsSlider from '~/components/ReviewsSlider'
-import ToursSlider from '~/components/ToursSlider'
-import page from '~/mixins/page'
-import { getRandomEntries } from '~/assets/scripts/helpers'
+import { mapGetters } from "vuex";
+import FaqList from "~/components/FaqList";
+import ReviewsSlider from "~/components/ReviewsSlider";
+import ToursSlider from "~/components/ToursSlider";
+import page from "~/mixins/page";
+import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
   mixins: [page],
@@ -43,70 +43,70 @@ export default {
     ToursSlider
   },
   head() {
-    const { seo, contactsImage } = this.general
-    const { title, description } = seo.faq
+    const { seo, contactsImage } = this.general;
+    const { title, description } = seo.faq;
 
     return {
       title,
       titleTemplate: null,
       meta: [
         {
-          hid: 'twitter:title',
-          name: 'twitter:title',
+          hid: "twitter:title",
+          name: "twitter:title",
           content: title
         },
         {
-          hid: 'twitter:description',
-          name: 'twitter:description',
+          hid: "twitter:description",
+          name: "twitter:description",
           content: description
         },
         {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "twitter:image",
+          name: "twitter:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'og:title',
-          property: 'og:title',
+          hid: "og:title",
+          property: "og:title",
           content: title
         },
         {
-          hid: 'og:description',
-          property: 'og:description',
+          hid: "og:description",
+          property: "og:description",
           content: description
         },
         {
-          hid: 'og:image',
-          property: 'og:image',
-          content: contactsImage.fields.file.url || ''
+          hid: "og:image",
+          property: "og:image",
+          content: contactsImage.fields.file.url || ""
         },
         {
-          hid: 'description',
-          name: 'description',
+          hid: "description",
+          name: "description",
           content: description
         }
       ]
-    }
+    };
   },
   async fetch({ store }) {
-    await store.dispatch('tours/loadTours')
-    await store.dispatch('reviews/loadReviews')
+    await store.dispatch("tours/loadTours");
+    await store.dispatch("reviews/loadReviews");
   },
   computed: {
     ...mapGetters({
-      allTours: 'tours/allTours',
-      reviews: 'reviews/allReviews',
-      general: 'general/data',
-      locale: 'lang/locale'
+      allTours: "tours/allTours",
+      reviews: "reviews/allReviews",
+      general: "general/data",
+      locale: "lang/locale"
     }),
     hasReviews() {
-      return this.reviews && this.reviews.length > 0
+      return this.reviews && this.reviews.length > 0;
     },
     otherTours() {
-      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : []
+      return this.allTours.length > 0 ? getRandomEntries(this.allTours, 8) : [];
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

@@ -6,6 +6,7 @@ export const state = () => ({
   isBukzaActive: false,
   isCallbackActive: false,
   isCreditsActive: false,
+  isAddReviewActive: false,
   isHeaderTransparent: false
 });
 
@@ -21,6 +22,9 @@ export const getters = {
   },
   isCallbackActive({ isCallbackActive }) {
     return isCallbackActive;
+  },
+  isAddReviewActive({ isAddReviewActive }) {
+    return isAddReviewActive;
   },
   isCreditsActive({ isCreditsActive }) {
     return isCreditsActive;
@@ -64,6 +68,9 @@ export const mutations = {
   toggleCallback(state) {
     state.isCallbackActive = !state.isCallbackActive;
   },
+  toggleAddReview(state) {
+    state.isAddReviewActive = !state.isAddReviewActive;
+  },
   setBukzaID(state, bukzaID) {
     state.bukzaID = bukzaID;
   },
@@ -100,8 +107,19 @@ export const actions = {
     }
 
     commit("toggleCallback");
-
     if (state.isCallbackActive) {
+      commit("disableScroll");
+    } else {
+      commit("enableScroll");
+    }
+  },
+  toggleAddReview({ commit, state }) {
+    if (state.isMenuActive) {
+      commit("toggleMenu");
+    }
+
+    commit("toggleAddReview");
+    if (state.isAddReviewActive) {
       commit("disableScroll");
     } else {
       commit("enableScroll");

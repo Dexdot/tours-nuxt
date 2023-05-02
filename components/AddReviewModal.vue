@@ -1,23 +1,23 @@
 <template>
   <Modal
-    name="callback-modal"
+    name="addreview-modal"
     type="aside"
     side="right"
     :active="active"
-    @close-click="$store.dispatch('dom/toggleCallback')"
+    @close-click="$store.dispatch('dom/toggleAddReview')"
   >
-    <FormCallback />
+    <AddReviewForm />
   </Modal>
 </template>
 
 <script>
-import Modal from '~/ui/Modal'
-import FormCallback from '~/components/FormCallback'
+import Modal from "~/ui/Modal";
+import AddReviewForm from "~/components/AddReviewForm";
 
 export default {
   components: {
     Modal,
-    FormCallback
+    AddReviewForm
   },
   props: {
     active: {
@@ -25,15 +25,15 @@ export default {
       default: false
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
-.modal--callback-modal
+.modal--addreview-modal
   z-index: 6
   display: flex
 
-.modal--callback-modal /deep/
+.modal--addreview-modal /deep/
   .modal__container > .modal__close
     width: 64px
     height: 64px
@@ -46,7 +46,7 @@ export default {
     color: #fff
 
   .modal__container,
-  .contacts-callback
+  .addreview
     @media (min-width: 1881px)
       width: unit-plus(column-spans(4))
 

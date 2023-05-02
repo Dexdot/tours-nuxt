@@ -1,0 +1,73 @@
+.select-text-multiple
+  position: relative
+
+  button
+    line-height: 1
+    font-size: 12px
+    letter-spacing: 0.04em
+    text-transform: uppercase
+    text-align: left
+    
+    display: flex
+    align-items: center
+
+  > button
+    +mont(m)
+    font-size: 16px
+    letter-spacing: -0.02em
+    text-align: left
+    text-transform: unset
+
+    gap: 8px
+    width: 100%
+    padding-bottom: 16px
+    border-bottom: 1px solid rgba($black, 0.1)
+
+    .i-chevron
+      transform: rotate(90deg)
+      margin-left: auto
+      min-width: 10px
+      width: 10px
+      height: 10px
+      pointer-events: none
+      transition: 0.2s ease
+
+  ul
+    z-index: 2
+    position: absolute
+    top: calc(100% + 8px)
+    left: 0
+    
+    padding: 8px 0
+
+    box-shadow: 0 4px 28px rgba(0,0,0,.08)
+    background: #fff
+    border-radius: 8px
+    opacity: 0
+    pointer-events: none
+    transition: 0.2s ease
+
+    max-height: 410px
+    -webkit-overflow-scrolling: touch
+    overflow-y: auto
+    &::-webkit-scrollbar
+      display: none
+
+    button
+      +mont(sb)
+      white-space: nowrap
+
+      padding: 10px 16px
+      width: 100%
+      transition: 0.2s ease
+
+      &.active
+        color: $acc
+
+.select-text-multiple-open
+  > button .i-chevron
+    transform: rotate(-90deg)
+
+  ul
+    opacity: 1
+    pointer-events: auto
