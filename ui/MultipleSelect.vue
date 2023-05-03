@@ -77,6 +77,7 @@ export default {
       this.isOpen = !this.isOpen;
     },
     onValueClick(v) {
+      this.isOpen = false;
       this.touched = true;
       this.$emit("change", v);
     }

@@ -1,5 +1,6 @@
 export const state = () => ({
-  bukzaID: "",
+  // bukzaID: "",
+  bukzaID: "1683135805530",
   scrollTop: 0,
   scrollDisabled: false,
   isMenuActive: false,
