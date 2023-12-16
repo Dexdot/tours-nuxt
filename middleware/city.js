@@ -1,8 +1,7 @@
 const defaultCity = "spb";
 
 // CITYSWITCH
-// const cities = ["tallinn", "spb"];
-const cities = ["spb"];
+const cities = ["invinoveritas", "spb"];
 
 export default ({ app, isHMR, store, params, error, route, redirect }) => {
   // HMR

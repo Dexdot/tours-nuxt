@@ -8,7 +8,7 @@ export const state = () => ({
       ru: null,
       en: null
     },
-    tallinn: {
+    invinoveritas: {
       ru: null,
       en: null
     }

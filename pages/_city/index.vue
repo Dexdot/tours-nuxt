@@ -26,16 +26,16 @@
 
       <div class="hero__text">
         <div class="container">
-          <!-- <div class="hero__chipbox-list" data-animate="fade">
+          <div class="hero__chipbox-list" data-animate="fade">
             <Chipbox
               white
               :active="key === city"
               v-for="key in Object.keys($t('cities'))"
               :key="key"
               @click="onChipboxClick(key)"
-              >{{ $t('cities')[key] }}
+              >{{ $t("cities")[key] }}
             </Chipbox>
-          </div> -->
+          </div>
           <h1 v-if="main.heroTitle" class="t-h1" data-animate="fadeup">
             {{ main.heroTitle }}
           </h1>
@@ -114,7 +114,13 @@
                 ></p>
               </div>
             </template>
-            <BaseButton isLink :to="$cityLocalePath('/tours')">{{
+
+            <BaseButton
+              v-if="city === 'invinoveritas'"
+              @click="$store.dispatch('dom/showBukza')"
+              >{{ $t("choose") }}</BaseButton
+            >
+            <BaseButton v-else isLink :to="$cityLocalePath('/tours')">{{
               $t("chooseTour")
             }}</BaseButton>
           </div>

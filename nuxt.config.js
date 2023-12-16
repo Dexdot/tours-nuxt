@@ -52,15 +52,15 @@ const getRedirects = (from, to) => [
   {
     from: `^/spb${from}`,
     to: `/spb${to}`
+  },
+  {
+    from: `^/invinoveritas${from}`,
+    to: `/invinoveritas${to}`
   }
-  // {
-  //   from: `^/tallinn${from}`,
-  //   to: `/tallinn${to}`
-  // }
   // LANGSWITCH
   // {
-  //   from: `^/en/tallinn${from}`,
-  //   to: `/en/tallinn${to}`
+  //   from: `^/en/invinoveritas${from}`,
+  //   to: `/en/invinoveritas${to}`
   // }
 ];
 

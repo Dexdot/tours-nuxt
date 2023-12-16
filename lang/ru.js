@@ -1,10 +1,11 @@
 const lang = {
+  choose: "Выбрать",
   chooseTour: "Выбрать тур",
   orderCall: "Заказать звонок",
   orderTicket: "Купить билет",
   cities: {
     spb: "Санкт-Петербург",
-    tallinn: "Таллин"
+    invinoveritas: "Винные хроники"
   },
   navLinks: [
     {

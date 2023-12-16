@@ -35,8 +35,7 @@ export default {
     }),
     city() {
       // CITYSWITCH
-      // const cities = ["tallinn", "spb"];
-      const cities = ["spb"];
+      const cities = ["invinoveritas", "spb"];
       const { fullPath, params } = this.$route;
       let { city } = params;
 
