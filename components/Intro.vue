@@ -7,22 +7,25 @@
 <script>
 export default {
   mounted() {
-    if (document.readyState === 'complete') {
-      this.complete()
+    if (
+      document.readyState === "interactive" ||
+      document.readyState === "complete"
+    ) {
+      this.complete();
     } else {
-      window.addEventListener('load', this.complete.bind(this))
+      document.addEventListener("DOMContentLoaded", this.complete.bind(this));
     }
   },
   methods: {
     complete() {
-      this.$el.style.opacity = 0
-      this.$el.style.pointerEvents = 'none'
+      this.$el.style.opacity = 0;
+      this.$el.style.pointerEvents = "none";
       setTimeout(() => {
-        this.$emit('complete')
-      }, 200)
+        this.$emit("complete");
+      }, 200);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>

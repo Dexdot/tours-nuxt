@@ -8,7 +8,12 @@
 
         <nav class="footer__nav">
           <ul>
-            <li v-for="link in $t('navLinks')" :key="link.to">
+            <li
+              v-for="link in $t(
+                city !== 'invinoveritas' ? 'navLinks' : 'invinoveritasNavLinks'
+              )"
+              :key="link.to"
+            >
               <nuxt-link class="t-ttu" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
@@ -92,8 +97,10 @@
 <script>
 import { mapGetters } from "vuex";
 import SocialList from "~/components/SocialList";
+import city from "~/mixins/city";
 
 export default {
+  mixins: [city],
   components: {
     SocialList
   },

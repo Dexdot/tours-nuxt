@@ -40,7 +40,12 @@
 
         <nav class="header__nav">
           <ul>
-            <li v-for="link in $t('navLinks')" :key="link.to">
+            <li
+              v-for="link in $t(
+                city !== 'invinoveritas' ? 'navLinks' : 'invinoveritasNavLinks'
+              )"
+              :key="link.to"
+            >
               <nuxt-link class="t-ttu" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
@@ -158,10 +163,13 @@ export default {
     this.handleScroll();
     this.handleResize();
 
-    if (document.readyState === "complete") {
+    if (
+      document.readyState === "interactive" ||
+      document.readyState === "complete"
+    ) {
       this.animate();
     } else {
-      window.addEventListener("load", () => {
+      document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           this.animate();
         }, 200);

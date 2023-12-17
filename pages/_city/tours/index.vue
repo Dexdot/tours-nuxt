@@ -3,8 +3,10 @@
     <section class="catalog-section">
       <div class="container">
         <div class="catalog-head">
-          <h1 class="t-h3 catalog-title">{{ $t("tours.title") }}</h1>
-          <div>
+          <h1 class="t-h3 catalog-title">
+            {{ $t(city !== "invinoveritas" ? "tours.title" : "lectures") }}
+          </h1>
+          <div v-if="city !== 'invinoveritas'">
             <MultipleSelect
               :list="selectList"
               :selected="selectedFilters"
@@ -13,7 +15,7 @@
               @change="onSelectValueClick"
             />
           </div>
-          <ul class="catalog-tabs">
+          <ul class="catalog-tabs" v-if="city !== 'invinoveritas'">
             <li>
               <button
                 :class="[

@@ -4,7 +4,13 @@
       <div class="menu__container container">
         <nav class="menu__nav">
           <ul>
-            <li class="menu__li" v-for="link in $t('navLinks')" :key="link.to">
+            <li
+              class="menu__li"
+              v-for="link in $t(
+                city !== 'invinoveritas' ? 'navLinks' : 'invinoveritasNavLinks'
+              )"
+              :key="link.to"
+            >
               <nuxt-link class="t-h2" :to="$cityLocalePath(link.to)">{{
                 link.text
               }}</nuxt-link>
@@ -41,12 +47,12 @@
               {{ general.phoneText }}
             </a>
             <button @click="$store.dispatch('dom/toggleCallback')">
-              {{ $t('orderCall') }}
+              {{ $t("orderCall") }}
             </button>
           </div>
 
           <BaseButton @click="$store.dispatch('dom/showBukza')">{{
-            $t('chooseTour')
+            $t("chooseTour")
           }}</BaseButton>
         </div>
       </div>
@@ -55,9 +61,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import SocialList from '~/components/SocialList'
-import city from '~/mixins/city'
+import { mapGetters, mapActions } from "vuex";
+import SocialList from "~/components/SocialList";
+import city from "~/mixins/city";
 
 export default {
   mixins: [city],
@@ -72,25 +78,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      general: 'general/data'
+      general: "general/data"
     })
   },
   methods: {
     ...mapActions({
-      disableScroll: 'dom/disableScroll',
-      enableScroll: 'dom/enableScroll'
+      disableScroll: "dom/disableScroll",
+      enableScroll: "dom/enableScroll"
     })
   },
   watch: {
     active(isActive) {
       if (isActive) {
-        this.disableScroll()
+        this.disableScroll();
       } else {
-        this.enableScroll()
+        this.enableScroll();
       }
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -148,7 +154,7 @@ export default {
   display: inline-flex
   align-items: center
   justify-content: center
-  
+
   padding: 0 12px
   height: 32px
 

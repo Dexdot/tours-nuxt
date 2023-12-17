@@ -72,7 +72,12 @@
             </div>
 
             <template v-if="tourData.routeGallery">
-              <h2 class="t-h5">{{ $t("tour.routeTitle") }}</h2>
+              <h2 v-if="city === 'invinoveritas'" class="t-h5">
+                {{ $t("tour.includes") }}
+              </h2>
+              <h2 v-else class="t-h5">
+                {{ $t("tour.routeTitle") }}
+              </h2>
 
               <div class="tour-page__roadmap">
                 <div class="roadmap">
@@ -182,10 +187,11 @@ import FormOrder from "~/components/FormOrder";
 
 import render from "~/mixins/render";
 import page from "~/mixins/page";
+import city from "~/mixins/city";
 import { getRandomEntries } from "~/assets/scripts/helpers";
 
 export default {
-  mixins: [page, render],
+  mixins: [page, city, render],
   components: {
     GallerySection,
     GalleryModal,

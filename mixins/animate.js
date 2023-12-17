@@ -1,9 +1,12 @@
 export default {
   mounted() {
-    if (document.readyState === "complete") {
+    if (
+      document.readyState === "interactive" ||
+      document.readyState === "complete"
+    ) {
       this.observeAnimate();
     } else {
-      window.addEventListener("load", () => {
+      document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           this.observeAnimate();
         }, 200);

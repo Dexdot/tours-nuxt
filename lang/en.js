@@ -33,11 +33,31 @@ const lang = {
       text: "Certificates"
     }
   ],
+  invinoveritasNavLinks: [
+    {
+      to: "/tours",
+      text: "Lectures"
+    },
+    {
+      to: "/reviews",
+      text: "Reviews"
+    },
+    {
+      to: "/faq",
+      text: "FAQ"
+    },
+    {
+      to: "/contacts",
+      text: "Contacts"
+    }
+  ],
+  lectures: "Lectures",
   tours: {
     title: "Excursions",
     choose: "Choose your excursion"
   },
   tour: {
+    includes: "What's included",
     routeTitle: "What will we see",
     roadmapTip: "Hover over the title to see the photo.",
     venueTitle: "Venue",
