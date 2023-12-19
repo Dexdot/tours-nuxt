@@ -129,8 +129,9 @@ export default {
     };
   },
   async asyncData({ store, query }) {
-    await store.dispatch("tours/loadTours");
-    await store.dispatch("reviews/loadReviews");
+    const toursPromise = store.dispatch("tours/loadTours");
+    const reviewsPromise = store.dispatch("reviews/loadReviews");
+    await Promise.all([toursPromise, reviewsPromise]);
 
     let selectedFilters = [];
     if (

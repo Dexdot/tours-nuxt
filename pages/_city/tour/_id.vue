@@ -264,8 +264,9 @@ export default {
     // Tour ID
     const slug = params.id;
 
-    await store.dispatch("reviews/loadReviews");
-    const toursMap = await store.dispatch("tours/loadTours");
+    const toursPromise = store.dispatch("tours/loadTours");
+    const reviewsPromise = store.dispatch("reviews/loadReviews");
+    const [toursMap] = await Promise.all([toursPromise, reviewsPromise]);
     const tour = toursMap[slug];
 
     // 404

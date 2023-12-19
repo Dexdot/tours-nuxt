@@ -78,9 +78,15 @@ export const getImageUrl = (img, useOriginalSizeOnMob = false) => {
       }
     : {};
 
+  const desktopSize = "2000";
+
   const params = {
     ...fmfl,
-    w: supports.isMob ? (useOriginalSizeOnMob ? "" : "1125") : "",
+    w: supports.isMob
+      ? useOriginalSizeOnMob
+        ? desktopSize
+        : "1125"
+      : desktopSize,
     fit: supports.isMob ? "fill" : ""
   };
 

@@ -262,9 +262,10 @@ export default {
     };
   },
   async fetch({ store, route }) {
-    await store.dispatch("main/load", route.params.city);
-    await store.dispatch("tours/loadTours");
-    await store.dispatch("reviews/loadReviews");
+    const mainPromise = store.dispatch("main/load", route.params.city);
+    const toursPromise = store.dispatch("tours/loadTours");
+    const reviewsPromise = store.dispatch("reviews/loadReviews");
+    await Promise.all([mainPromise, toursPromise, reviewsPromise]);
   },
   computed: {
     ...mapGetters({
