@@ -3,7 +3,7 @@ export default {
     scrollBooster: {
       instance: {},
       payload: {
-        dragOffsetPosition: {
+        dragOffset: {
           x: 0,
           y: 0
         }
@@ -30,7 +30,7 @@ export default {
         child.ondragstart = "return false";
       });
 
-      this.scrollBooster.instance = new this.scrollbooster({
+      const sb = new this.scrollbooster({
         viewport,
         content,
         mode: "x",
@@ -39,6 +39,8 @@ export default {
           content.style.transform = `translateX(${-payload.position.x}px)`;
         }
       });
+
+      this.scrollBooster.instance = sb;
     },
     destroyScrollBooster() {
       this.scrollBooster.instance.destroy();
@@ -46,7 +48,7 @@ export default {
     onScrollBoosterClick(e) {
       const link = e.target.closest("a");
 
-      const { x, y } = this.scrollBooster.payload.dragOffsetPosition;
+      const { x, y } = this.scrollBooster.payload.dragOffset;
       const clickOnly = x === 0 && y === 0;
 
       // Если мы не драгаем, а просто кликаем, т.е. x,y === 0, то "переходим" по ссылке

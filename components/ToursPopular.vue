@@ -5,7 +5,7 @@
         <h2 v-if="title" class="t-h3" data-animate="fade">{{ title }}</h2>
         <p v-if="text" data-animate="fade">{{ text }}</p>
         <BaseButton classScale isLink :to="$cityLocalePath('/tours')">{{
-          $t('main.toursButton')
+          $t("main.toursButton")
         }}</BaseButton>
       </div>
 
@@ -17,11 +17,26 @@
             </li>
           </ul>
         </div>
+
+        <button
+          class="popular-tours__arrow popular-tours__arrow--prev"
+          type="button"
+          @click="onPrevClick"
+        >
+          <svg-icon class="btn__icon" name="arrow"></svg-icon>
+        </button>
+        <button
+          class="popular-tours__arrow popular-tours__arrow--next"
+          type="button"
+          @click="onNextClick"
+        >
+          <svg-icon class="btn__icon" name="arrow"></svg-icon>
+        </button>
       </div>
 
       <div class="popular-tours__btn-mob">
         <BaseButton classScale isLink :to="$cityLocalePath('/tours')">{{
-          $t('main.toursButton')
+          $t("main.toursButton")
         }}</BaseButton>
       </div>
     </div>
@@ -29,9 +44,9 @@
 </template>
 
 <script>
-import TourCard from '~/components/TourCard'
-import scrollbooster from '~/mixins/scrollbooster'
-import animate from '~/mixins/animate'
+import TourCard from "~/components/TourCard";
+import scrollbooster from "~/mixins/scrollbooster";
+import animate from "~/mixins/animate";
 
 export default {
   mixins: [scrollbooster, animate],
@@ -44,11 +59,28 @@ export default {
     tours: { type: Array, required: true }
   },
   mounted() {
-    this.initScrollBooster()
-  }
-}
-</script>
+    this.initScrollBooster();
+  },
+  methods: {
+    onPrevClick() {
+      const sb = this.scrollBooster.instance;
+      const pos = this.scrollBooster.payload.position;
+      if (!sb || !pos) return;
+      sb.scrollTo({ x: Math.max(pos.x - 280, 0), y: 0 });
+    },
+    onNextClick() {
+      const sb = this.scrollBooster.instance;
+      const pos = this.scrollBooster.payload.position;
+      const edgeX = sb.edgeX.from;
+      const max = edgeX < 0 ? -1 * edgeX : edgeX;
+      const x = Math.min(pos.x + 280, max);
 
+      if (!sb || !pos) return;
+      sb.scrollTo({ x, y: 0 });
+    }
+  }
+};
+</script>
 
 <style lang="sass" scoped>
 .popular-tours
@@ -78,7 +110,44 @@ export default {
     width: mix(3)
     padding-right: mix(1)
 
+.popular-tours__arrow
+  position: absolute
+  top: 50%
+  transform: translate(0, calc(-50% - 96px))
+
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 40px
+  height: 40px
+
+  border-radius: 50%
+  background: $acc
+  opacity: 0
+  transition: 0.2s ease
+
+  svg
+    width: 16px
+    height: 16px
+    color: #fff
+
+  &--prev
+    left: 4px
+
+    &:hover
+      transform: translate(-4px, calc(-50% - 96px))
+
+    svg
+      transform: scale(-1)
+
+  &--next
+    right: 4px
+
+    &:hover
+      transform: translate(4px, calc(-50% - 96px))
+
 .popular-tours__slider
+  position: relative
   overflow: hidden
   padding-right: $unit
 
@@ -89,6 +158,8 @@ export default {
     max-width: 100%
     padding-left: $unit
     margin-bottom: 40px
+  &:hover .popular-tours__arrow
+    opacity: 1
 
 .popular-tours__info h2
   margin-bottom: 24px

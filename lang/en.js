@@ -62,7 +62,8 @@ const lang = {
     roadmapTip: "Hover over the title to see the photo.",
     venueTitle: "Venue",
     priceFrom: "from",
-    otherToursTitle: "Other tours you will like"
+    otherToursTitle: "Other tours you will like",
+    otherLectures: "Other lectures you will like"
   },
   tourTypes: {
     group: "Group",

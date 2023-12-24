@@ -62,7 +62,8 @@ const lang = {
     roadmapTip: "Наведите курсор на заголовок, чтобы увидеть фото",
     venueTitle: "Место встречи",
     priceFrom: "от",
-    otherToursTitle: "Другие экскурсии, которые вам понравятся"
+    otherToursTitle: "Другие экскурсии, которые вам понравятся",
+    otherLectures: "Другие лекции, которые вам понравятся"
   },
   tourTypes: {
     group: "Групповые",

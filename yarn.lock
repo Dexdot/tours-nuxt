@@ -7308,10 +7308,10 @@ schema-utils@^2.0.0, schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
 
-scrollbooster@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/scrollbooster/-/scrollbooster-1.1.0.tgz#7da2febe93cb9035c0d36b8bee96a4a0cc890291"
-  integrity sha512-6JHNzOYbPIJUtVcLYMtN1PVaO3FSBmTObbskM5boY78DX2hlBLOa/iqMyfChIB9m/F9NCD1xQ/jNSmeJDkry0A==
+scrollbooster@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/scrollbooster/-/scrollbooster-3.0.2.tgz#c1f0da4322321a165c70751b51e13f62177f26be"
+  integrity sha512-WZjvtSxCgCEbfc+9DmxfhuK6ACOqQr3jymniIp4I9Hh0mIEK1CKS4t+d7iPdeuILP5Q/we13h4YUHD0o+gPiRg==
 
 scss-tokenizer@^0.2.3:
   version "0.2.3"

@@ -165,7 +165,13 @@
       :reviews="tourReviews"
     />
     <ToursSlider
-      :title="$t('tour.otherToursTitle')"
+      :title="
+        $t(
+          city === 'invinoveritas'
+            ? 'tour.otherLectures'
+            : 'tour.otherToursTitle'
+        )
+      "
       v-if="otherTours.length > 0"
       :tours="otherTours"
     />
