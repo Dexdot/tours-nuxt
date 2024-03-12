@@ -12,13 +12,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/", (req, res) => {
   const {
-    cb_city: city,
-    cb_name: name,
-    cb_email: email,
-    cb_text: text
+    date,
+    sortDate,
+    score,
+    text,
+    clientName,
+    clientEmail,
+    tours
   } = req.body;
 
-  sendMail({ toEmail: TO_EMAIL[city], name, email, text })
+  sendMail({
+    toEmail: TO_EMAIL.spb,
+    date,
+    sortDate,
+    score,
+    text,
+    clientName,
+    clientEmail,
+    tours
+  })
     .then(() => {
       res.status(200).json({ message: "Message has been sent", success: true });
     })
@@ -32,7 +44,16 @@ module.exports = {
   handler: app
 };
 
-function sendMail({ toEmail, name, email, text }) {
+function sendMail({
+  toEmail,
+  date,
+  sortDate,
+  score,
+  text,
+  clientName,
+  clientEmail,
+  tours
+}) {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
       host: "smtp.yandex.ru",
@@ -45,15 +66,19 @@ function sendMail({ toEmail, name, email, text }) {
     });
 
     const html = `
-      Имя: ${name}<br />
-      Почта: ${email}<br />
-      Сообщение: ${text}
+      Имя: ${clientName}<br />
+      Почта: ${clientEmail}<br />
+      Дата: ${date}<br />
+      Дата для сортировки: ${sortDate}<br />
+      Оценка (звезд): ${score}<br />
+      Выбранные туры: ${tours}<br />
+      Текст отзыва: ${text}
     `;
 
     const msg = {
       from: FROM_EMAIL,
       to: toEmail,
-      subject: `Пешеход Тур - заявка с сайта`,
+      subject: `Пешеход Тур - новый отзыв`,
       html
     };
 

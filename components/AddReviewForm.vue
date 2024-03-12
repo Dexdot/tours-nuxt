@@ -113,7 +113,6 @@
 <script>
 import { mapGetters } from "vuex";
 import MultipleSelect from "~/ui/MultipleSelect";
-import { createReviewEntry } from "~/api/reviews";
 
 export default {
   components: { MultipleSelect },
@@ -143,8 +142,6 @@ export default {
   },
   watch: {
     isAddReviewActive(isActive) {
-      console.log("tours", this.selectedTours);
-
       if (!isActive) {
         this.resetForm();
         this.submitted = false;
@@ -208,50 +205,29 @@ export default {
       const text = textarea ? textarea.value : "";
 
       const date = new Date();
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      const dateStr = `${day.length > 1 ? day : `0${day}`}.${
-        month.length > 1 ? month : `0${month}`
-      }.${year}`;
+      const dateStr = date.toLocaleDateString("ru");
+
+      const postData = {
+        date: dateStr,
+        sortDate: dateStr,
+        score,
+        text,
+        clientName: name,
+        clientEmail: email,
+        tours: this.allTours
+          .filter(tour => toursIds.includes(tour.sys.id))
+          .map(tour => tour.fields.title)
+          .join(", ")
+      };
 
       this.$axios
-        .post("/api/newreview", {
-          date: dateStr,
-          sortDate: dateStr,
-          score,
-          text,
-          clientName: name,
-          clientEmail: email,
-          tours: toursIds.map(id => ({
-            sys: { id, type: "Link", linkType: "Entry" }
-          }))
-        })
+        .post("/api/newreview", postData)
         .then(() => {
           this.onSuccess();
         })
         .catch(() => {
           this.onError();
         });
-      // createReviewEntry({
-      //   locale: "ru",
-      //   city: "spb",
-      //   date: dateStr,
-      //   sortDate: dateStr,
-      //   score,
-      //   text,
-      //   clientName: name,
-      //   clientEmail: email,
-      //   tours: toursIds.map(id => ({
-      //     sys: { id, type: "Link", linkType: "Entry" }
-      //   }))
-      // })
-      //   .then(() => {
-      //     this.onSuccess();
-      //   })
-      //   .catch(() => {
-      //     this.onError();
-      //   });
     },
     onSuccess() {
       this.$refs.form.reset();

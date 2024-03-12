@@ -18,7 +18,12 @@ app.post("/", (req, res) => {
     cb_text: text
   } = req.body;
 
-  sendMail({ toEmail: TO_EMAIL[city], name, email, text })
+  sendMail({
+    toEmail: TO_EMAIL.spb,
+    name,
+    email,
+    text
+  })
     .then(() => {
       res.status(200).json({ message: "Message has been sent", success: true });
     })
