@@ -24,6 +24,7 @@
     "body-parser": "^1.19.0",
     "contentful": "^7.10.0",
     "contentful-management": "6.3.2",
+    "cors": "^2.8.5",
     "dex-nuxt-svg-sprite": "^0.5.5",
     "express": "^4.17.1",
     "gsap": "3.0.2",

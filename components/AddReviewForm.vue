@@ -113,7 +113,6 @@
 <script>
 import { mapGetters } from "vuex";
 import MultipleSelect from "~/ui/MultipleSelect";
-import { createReviewEntry } from "~/api/reviews";
 
 export default {
   components: { MultipleSelect },
@@ -206,26 +205,23 @@ export default {
       const text = textarea ? textarea.value : "";
 
       const date = new Date();
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      const dateStr = `${day.length > 1 ? day : `0${day}`}.${
-        month.length > 1 ? month : `0${month}`
-      }.${year}`;
+      const dateStr = date.toLocaleDateString("ru");
 
-      createReviewEntry({
-        locale: "ru",
-        city: "spb",
+      const postData = {
         date: dateStr,
         sortDate: dateStr,
         score,
         text,
         clientName: name,
         clientEmail: email,
-        tours: toursIds.map(id => ({
-          sys: { id, type: "Link", linkType: "Entry" }
-        }))
-      })
+        tours: this.allTours
+          .filter(tour => toursIds.includes(tour.sys.id))
+          .map(tour => tour.fields.title)
+          .join(", ")
+      };
+
+      this.$axios
+        .post("/api/newreview", postData)
         .then(() => {
           this.onSuccess();
         })

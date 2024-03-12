@@ -258,7 +258,7 @@ module.exports = {
   router: {
     middleware: "city"
   },
-  serverMiddleware: ["~/api/nodemailer"],
+  serverMiddleware: ["~/api/callback", "~/api/newreview"],
   // Plugins
   plugins: [
     "~/plugins/city-locale-path",

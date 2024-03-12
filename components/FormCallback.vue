@@ -7,7 +7,7 @@
 
     <form
       class="contacts-form"
-      action="/api/nodemailer"
+      action="/api/callback"
       method="POST"
       ref="form"
       novalidate
