@@ -28,7 +28,7 @@ app.post("/", (req, res) => {
 });
 
 module.exports = {
-  path: "/api/nodemailer",
+  path: "/api/callback",
   handler: app
 };
 

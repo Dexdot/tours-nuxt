@@ -143,6 +143,8 @@ export default {
   },
   watch: {
     isAddReviewActive(isActive) {
+      console.log("tours", this.selectedTours);
+
       if (!isActive) {
         this.resetForm();
         this.submitted = false;
@@ -213,25 +215,43 @@ export default {
         month.length > 1 ? month : `0${month}`
       }.${year}`;
 
-      createReviewEntry({
-        locale: "ru",
-        city: "spb",
-        date: dateStr,
-        sortDate: dateStr,
-        score,
-        text,
-        clientName: name,
-        clientEmail: email,
-        tours: toursIds.map(id => ({
-          sys: { id, type: "Link", linkType: "Entry" }
-        }))
-      })
+      this.$axios
+        .post("/api/newreview", {
+          date: dateStr,
+          sortDate: dateStr,
+          score,
+          text,
+          clientName: name,
+          clientEmail: email,
+          tours: toursIds.map(id => ({
+            sys: { id, type: "Link", linkType: "Entry" }
+          }))
+        })
         .then(() => {
           this.onSuccess();
         })
         .catch(() => {
           this.onError();
         });
+      // createReviewEntry({
+      //   locale: "ru",
+      //   city: "spb",
+      //   date: dateStr,
+      //   sortDate: dateStr,
+      //   score,
+      //   text,
+      //   clientName: name,
+      //   clientEmail: email,
+      //   tours: toursIds.map(id => ({
+      //     sys: { id, type: "Link", linkType: "Entry" }
+      //   }))
+      // })
+      //   .then(() => {
+      //     this.onSuccess();
+      //   })
+      //   .catch(() => {
+      //     this.onError();
+      //   });
     },
     onSuccess() {
       this.$refs.form.reset();
