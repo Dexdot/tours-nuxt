@@ -220,8 +220,10 @@ export default {
           .join(", ")
       };
 
+      const URL = "https://peshehodtour.ru/api/newreview";
+
       this.$axios
-        .post("/api/newreview", postData)
+        .post(URL, postData)
         .then(() => {
           this.onSuccess();
         })
