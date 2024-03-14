@@ -18,6 +18,11 @@ app.post("/", (req, res) => {
     cb_text: text
   } = req.body;
 
+  if (!name && !email) {
+    res.status(200).json({ message, success: false });
+    return;
+  }
+
   sendMail({
     toEmail: TO_EMAIL.spb,
     name,
