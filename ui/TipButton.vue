@@ -11,7 +11,7 @@
   height: 16px
 
   border-radius: 50%
-  background: $acc
+  background: var(--acc-c)
 
   .i-help
     color: #fff

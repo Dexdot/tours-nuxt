@@ -168,7 +168,7 @@ a.btn
   height: 100%
 
   border-radius: $btn-h
-  background: $acc
+  background: var(--acc-c)
 
 .btn__text,
 .btn__plus

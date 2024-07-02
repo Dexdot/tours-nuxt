@@ -405,7 +405,7 @@ export default {
 
 
 .tour-page__content-inner /deep/ a
-  +link($acc)
+  +link(var(--acc-c))
 
 
 // Title

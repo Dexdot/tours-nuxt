@@ -280,7 +280,7 @@ export default {
   &.active
     &,
     .i-star
-      color: $acc
+      color: var(--acc-c)
 
   &,
   .i-star
@@ -296,7 +296,7 @@ export default {
 .stars:hover
   .star,
   .i-star
-    color: $acc
+    color: var(--acc-c)
 
 .stars > li:hover ~ li
   .star,
@@ -351,7 +351,7 @@ export default {
     font-weight: 500
 
   a
-    color: $acc
+    color: var(--acc-c)
     display: inline
 
 .logo

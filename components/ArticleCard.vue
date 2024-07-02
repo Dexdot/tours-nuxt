@@ -15,13 +15,13 @@
     <div class="blog-li__content">
       <p class="blog-li__date t-ttu">{{ article.fields.dateText }}</p>
       <h3 class="blog-li__title t-h5">{{ article.fields.title }}</h3>
-      <p class="blog-li__read">{{ $t('blog.readArticle') }}</p>
+      <p class="blog-li__read">{{ $t("blog.readArticle") }}</p>
     </div>
   </nuxt-link>
 </template>
 
 <script>
-import parallax from '~/mixins/parallax'
+import parallax from "~/mixins/parallax";
 
 export default {
   mixins: [parallax],
@@ -35,7 +35,7 @@ export default {
       default: false
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -114,7 +114,7 @@ export default {
     width: 100%
     height: 2px
 
-    background: $acc
+    background: var(--acc-c)
 
   &::before
     left: 0
@@ -126,7 +126,7 @@ export default {
     transform-origin: 100% 50%
     transform: scaleX(0)
     transition: $trs
-  
+
 .blog-li:hover
   .blog-li__img::before
     opacity: 0.6

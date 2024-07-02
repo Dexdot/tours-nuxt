@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TipButton from '~/ui/TipButton'
+import TipButton from "~/ui/TipButton";
 
 export default {
   components: {
@@ -16,27 +16,27 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.onMouseenter()
+      this.onMouseenter();
       this.$refs.button.$el.addEventListener(
-        'mouseenter',
+        "mouseenter",
         this.onMouseenter.bind(this)
-      )
-    })
+      );
+    });
   },
   beforeDestroy() {
-    this.$refs.button.$el.removeEventListener('mouseenter', this.onMouseenter)
+    this.$refs.button.$el.removeEventListener("mouseenter", this.onMouseenter);
   },
   methods: {
     onMouseenter() {
-      const el = this.$refs.button.$el
-      const top = el.offsetTop + el.offsetHeight / 2
-      const right = el.offsetLeft + el.offsetWidth
+      const el = this.$refs.button.$el;
+      const top = el.offsetTop + el.offsetHeight / 2;
+      const right = el.offsetLeft + el.offsetWidth;
 
-      this.$el.style.setProperty('--tip-btn-offset-top', `${top}px`)
-      this.$el.style.setProperty('--tip-btn-offset-left', `${right}px`)
+      this.$el.style.setProperty("--tip-btn-offset-top", `${top}px`);
+      this.$el.style.setProperty("--tip-btn-offset-left", `${right}px`);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -91,7 +91,7 @@ export default {
       margin-bottom: 8px
 
 .tip-content /deep/ a
-  +link($acc)
+  +link(var(--acc-c))
 
 
 // Content triangle

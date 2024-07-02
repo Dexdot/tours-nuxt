@@ -122,7 +122,7 @@ export default {
   height: 40px
 
   border-radius: 50%
-  background: $acc
+  background: var(--acc-c)
   opacity: 0
   transition: 0.2s ease
 

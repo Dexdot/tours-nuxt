@@ -164,5 +164,5 @@ export default {
 
 .faq-page__text a
   white-space: nowrap
-  +link($acc)
+  +link(var(--acc-c))
 </style>

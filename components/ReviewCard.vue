@@ -104,7 +104,7 @@ export default {
       margin-bottom: 16px
 
   a
-    +link($acc)
+    +link(var(--acc-c))
 
 .review-li__avatar
   margin-right: 16px
@@ -144,7 +144,7 @@ export default {
   height: 18px
 
   .i-star
-    color: $acc
+    color: var(--acc-c)
     width: 18px
     height: 18px
 
@@ -170,7 +170,7 @@ export default {
   +mont(sb)
   font-size: 16px
   letter-spacing: -0.02em
-  +link($acc)
+  +link(var(--acc-c))
 
   transition: opacity $trs
   &:hover

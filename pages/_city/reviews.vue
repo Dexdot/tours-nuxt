@@ -451,7 +451,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
 .reviews-link
   font-size: 12px
   +mont(sb)
-  +link($acc)
+  +link(var(--acc-c))
   text-align: right
 
   display: flex
@@ -464,7 +464,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
     margin-left: 4px
     width: 8px
     height: 8px
-    color: $acc
+    color: var(--acc-c)
 
 .reviews-list
   width: 100%

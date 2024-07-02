@@ -52,11 +52,11 @@ export default {
     border-bottom: 1px solid rgba($black, 0.2)
 
     &:hover
-      color: $acc
+      color: var(--acc-c)
 
     &.active
-      +link($acc)
-      border-bottom: 1px solid $acc
+      +link(var(--acc-c))
+      border-bottom: 1px solid var(--acc-c)
 
 
 .pagen--outline

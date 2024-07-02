@@ -412,7 +412,7 @@ export default {
 
 .article-content /deep/
   a
-    +link($acc)
+    +link(var(--acc-c))
 
   p
     margin-bottom: 24px

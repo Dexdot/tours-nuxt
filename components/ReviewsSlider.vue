@@ -211,7 +211,7 @@ export default {
     -webkit-box-orient: vertical
 
   a
-    +link($acc)
+    +link(var(--acc-c))
 
 .reviews-slide__name
   +mont(sb)
