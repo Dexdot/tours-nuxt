@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :data-city="city">
     <Intro @complete="introCompleted = true" />
 
     <Menu :active="isMenuActive" />
@@ -98,8 +98,10 @@ import AddReviewModal from "~/components/AddReviewModal";
 
 import initCSSProps from "~/assets/scripts/css-props";
 import { detectDevices } from "~/assets/scripts/detect";
+import city from "~/mixins/city";
 
 export default {
+  mixins: [city],
   components: {
     Header,
     Footer,
