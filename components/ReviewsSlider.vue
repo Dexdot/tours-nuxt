@@ -22,7 +22,7 @@
             <img
               :src="
                 require(`~/assets/img${
-                  city === 'belgrade' ? '/blue' : ''
+                  city === 'belgrade' ? '/belgrade' : ''
                 }/umbrella-stroke.svg`)
               "
               alt="Umbrella"
@@ -134,7 +134,7 @@ export default {
 <style lang="sass" scoped>
 .reviews-slider-section
   position: relative
-  background: $beige-d
+  background: var(--sec-c)
   padding: 144px 0 112px
 
   @media (max-width: $tab)

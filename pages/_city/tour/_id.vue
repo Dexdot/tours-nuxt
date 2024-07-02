@@ -472,7 +472,7 @@ export default {
 
 // Right
 .tour-page__right
-  background: $beige-d
+  background: var(--sec-c)
 
   @media (min-width: $tab + 1)
     min-width: mix(3)

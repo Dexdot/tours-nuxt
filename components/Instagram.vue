@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import scrollbooster from '~/mixins/scrollbooster'
-import animate from '~/mixins/animate'
+import scrollbooster from "~/mixins/scrollbooster";
+import animate from "~/mixins/animate";
 
 export default {
   mixins: [scrollbooster, animate],
@@ -57,9 +57,9 @@ export default {
     }
   },
   mounted() {
-    this.initScrollBooster()
+    this.initScrollBooster();
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -83,7 +83,7 @@ export default {
     width: 100vw
     height: 240px
 
-    background: $beige-d
+    background: var(--sec-c)
 
     @media (max-width: $tab)
       height: 224px
@@ -104,7 +104,7 @@ export default {
 .inst-list-container.js-sb .inst-list
   @media (max-width: $tab)
     will-change: transform
-    
+
   @media (min-width: $tab + 1)
     transform: translateX(0) !important
     cursor: initial !important
@@ -137,7 +137,7 @@ export default {
 .inst-block
   @media (min-width: $tab + 1)
     width: column-spans(3)
-    
+
   @media (max-width: $tab)
     width: 216px
 

@@ -12,7 +12,7 @@
         <img
           :src="
             require(`~/assets/img${
-              city === 'belgrade' ? '/blue' : ''
+              city === 'belgrade' ? '/belgrade' : ''
             }/logo.svg`)
           "
           alt="Logo"
@@ -268,7 +268,7 @@ export default {
     width: 104px
     padding: 16px
 
-    background: $beige-d
+    background: var(--sec-c)
 
   @media (min-width: $tab + 1)
     width: unit-plus(columns(1))

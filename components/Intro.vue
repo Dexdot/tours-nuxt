@@ -1,11 +1,21 @@
 <template>
   <section class="preloader u-center">
-    <img src="~assets/img/umbrella.svg" alt="Logo" />
+    <img
+      :src="
+        require(`~/assets/img${
+          city === 'belgrade' ? '/belgrade' : ''
+        }/umbrella.svg`)
+      "
+      alt="Logo"
+    />
   </section>
 </template>
 
 <script>
+import city from "~/mixins/city";
+
 export default {
+  mixins: [city],
   mounted() {
     if (
       document.readyState === "interactive" ||

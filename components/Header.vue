@@ -23,7 +23,7 @@
             <img
               :src="
                 require(`~/assets/img${
-                  city === 'belgrade' ? '/blue' : ''
+                  city === 'belgrade' ? '/belgrade' : ''
                 }/logo.svg`)
               "
               alt="Logo"
@@ -362,7 +362,7 @@ export default {
   display: flex
   align-items: center
 
-  background: $beige-d
+  background: var(--sec-c)
   transition: opacity $trs
 
   &:not(.active)

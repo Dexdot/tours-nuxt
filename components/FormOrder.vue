@@ -41,7 +41,9 @@
       <img
         class="form-order__action-icon"
         :src="
-          require(`~/assets/svg${city === 'belgrade' ? '/blue' : ''}/clock.svg`)
+          require(`~/assets/svg${
+            city === 'belgrade' ? '/belgrade' : ''
+          }/clock.svg`)
         "
         alt="Clock"
       />

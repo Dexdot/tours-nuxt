@@ -61,7 +61,7 @@ export default {
       width: 650px
 
   .modal__container
-    background: $beige-d
+    background: var(--sec-c)
 
   .modal__content > .modal__close
     color: $black

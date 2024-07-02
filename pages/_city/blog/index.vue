@@ -198,7 +198,7 @@ export default {
   left: 0
   width: 100%
   height: 100vh
-  background: $beige-d
+  background: var(--sec-c)
 
 
 .blog-container

@@ -96,7 +96,15 @@
     </p>
 
     <div v-if="submitted">
-      <img class="logo" src="~assets/img/umbrella.svg" alt="Logo" />
+      <img
+        class="logo"
+        :src="
+          require(`~/assets/img${
+            city === 'belgrade' ? '/belgrade' : ''
+          }/umbrella.svg`)
+        "
+        alt="Umbrella"
+      />
       <h2 class="t-h4 message-title">Благодарим за отзыв!</h2>
       <p class="message">
         И хотим поделиться нашим тайным списком идей, что делать в Петербурге в
@@ -113,8 +121,10 @@
 <script>
 import { mapGetters } from "vuex";
 import MultipleSelect from "~/ui/MultipleSelect";
+import city from "~/mixins/city";
 
 export default {
+  mixins: [city],
   components: { MultipleSelect },
   data: () => ({
     submitTriggered: false,

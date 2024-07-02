@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Modal from '~/ui/Modal'
+import Modal from "~/ui/Modal";
 
 export default {
   components: {
@@ -22,11 +22,11 @@ export default {
       default: false
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
 .modal--review-rates /deep/ .modal__content
-  background: $beige-d
+  background: var(--sec-c)
   padding: 88px unit-plus(calc(#{$unit} / 2)) 80px
 </style>

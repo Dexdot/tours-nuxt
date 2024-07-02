@@ -484,7 +484,7 @@ export default {
 
 
 .article-more
-  background: $beige-d
+  background: var(--sec-c)
   padding-top: 120px
   padding-bottom: 160px
 

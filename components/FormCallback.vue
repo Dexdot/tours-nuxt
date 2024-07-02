@@ -4,7 +4,9 @@
       <img src="~assets/svg/circle-waves.svg" alt="Icon" />
       <img
         :src="
-          require(`~/assets/svg${city === 'belgrade' ? '/blue' : ''}/stamp.svg`)
+          require(`~/assets/svg${
+            city === 'belgrade' ? '/belgrade' : ''
+          }/stamp.svg`)
         "
         alt="Icon"
       />

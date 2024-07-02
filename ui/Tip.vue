@@ -73,7 +73,7 @@ export default {
   padding: 24px
 
   line-height: 1.4
-  background: $beige-d
+  background: var(--sec-c)
   opacity: 0
   pointer-events: none
   transition: opacity 0.25s
@@ -107,7 +107,7 @@ export default {
 
   border-style: solid
   border-width: 8px 13.9px 8px 0
-  border-color: transparent $beige-d transparent transparent
+  border-color: transparent var(--sec-c) transparent transparent
 
   @media (max-width: $mob)
     top: unset
@@ -116,5 +116,5 @@ export default {
     transform: translate(-100%, 0)
 
     border-width: 0 8px 13.9px 8px
-    border-color: transparent transparent $beige-d transparent
+    border-color: transparent transparent var(--sec-c) transparent
 </style>

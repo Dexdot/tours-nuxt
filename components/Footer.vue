@@ -6,7 +6,7 @@
           <img
             :src="
               require(`~/assets/img${
-                city === 'belgrade' ? '/blue' : ''
+                city === 'belgrade' ? '/belgrade' : ''
               }/logo-w.svg`)
             "
             alt="Logo"

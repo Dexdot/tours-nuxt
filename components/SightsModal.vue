@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Modal from '~/ui/Modal'
-import SliderNav from '~/ui/SliderNav'
+import Modal from "~/ui/Modal";
+import SliderNav from "~/ui/SliderNav";
 
 export default {
   components: {
@@ -51,12 +51,12 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
 .modal--sights-modal /deep/ .modal__content
-  background: $beige-d
+  background: var(--sec-c)
 
 .sights
   line-height: 1.2

@@ -374,7 +374,7 @@ $reviews-pt: calc(var(--header-h) + 13vh)
     margin-bottom: 48px
 
 .reviews-right
-  background: $beige-d
+  background: var(--sec-c)
   transform: translate($unit, minus($reviews-pt))
   top: $reviews-pt
 

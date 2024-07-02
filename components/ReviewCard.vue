@@ -25,8 +25,12 @@
       <div class="review-li__avatar review-li__avatar--icon u-center" v-else>
         <img
           style="width: 40px; height: 40px;"
-          src="~assets/img/umbrella2.svg"
-          alt="Logo"
+          :src="
+            require(`~/assets/img${
+              city === 'belgrade' ? '/belgrade' : ''
+            }/umbrella2.svg`)
+          "
+          alt="Umbrella"
         />
       </div>
 
@@ -71,9 +75,10 @@
 
 <script>
 import render from "~/mixins/render";
+import city from "~/mixins/city";
 
 export default {
-  mixins: [render],
+  mixins: [render, city],
   props: {
     review: {
       type: Object,
@@ -113,7 +118,7 @@ export default {
   height: 64px
 
   border-radius: 50%
-  background: $beige-d
+  background: var(--sec-c)
 
   &:not(.review-li__avatar--icon) img
     border-radius: 50%

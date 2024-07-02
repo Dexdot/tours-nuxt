@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Modal from '~/ui/Modal'
-import FormCallback from '~/components/FormCallback'
+import Modal from "~/ui/Modal";
+import FormCallback from "~/components/FormCallback";
 
 export default {
   components: {
@@ -25,7 +25,7 @@ export default {
       default: false
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -61,7 +61,7 @@ export default {
       width: 650px
 
   .modal__container
-    background: $beige-d
+    background: var(--sec-c)
 
   .modal__content > .modal__close
     color: $black

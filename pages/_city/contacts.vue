@@ -197,7 +197,7 @@ export default {
   z-index: 1
   position: relative
 
-  background: $beige-d
+  background: var(--sec-c)
   display: flex
 
   @media (min-width: $tab + 1)
