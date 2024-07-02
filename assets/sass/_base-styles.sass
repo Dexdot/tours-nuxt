@@ -1,10 +1,18 @@
 #app
+  background: var(--bg-c)
+  --bg-c: var(--beige-light)
+
   --acc-c: var(--green-acc)
   --sec-c: var(--beige-dark)
+  --tert-c: #fff
+
 
 #app[data-city="belgrade"]
+  --bg-c: #ffffff
+
   --acc-c: var(--blue-acc)
   --sec-c: var(--blue-light)
+  --tert-c: var(--blue-light)
   
 body
   +scrollbar
@@ -15,7 +23,7 @@ body
   color: $base-text-color
   text-rendering: optimizeLegibility
 
-  background: $beige-l
+  // background: var(--bg-c)
 
 body.no-scroll
   overflow: hidden

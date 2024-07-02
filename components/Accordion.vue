@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AccordionItem from '~/components/AccordionItem'
+import AccordionItem from "~/components/AccordionItem";
 
 export default {
   components: {
@@ -28,14 +28,13 @@ export default {
   }),
   methods: {
     onClick(i) {
-      this.index = this.index === i ? -1 : i
+      this.index = this.index === i ? -1 : i;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
-// White BG
 .accordion-container--bg /deep/
   .accordion.active
     z-index: 1
@@ -45,11 +44,11 @@ export default {
     content: ''
     position: absolute
     top: -1px
-    
+
     height: calc(100% + 1px)
     width: 100vw
 
-    background: #fff
+    background: var(--tert-c)
     opacity: 0
     transition: opacity 0.2s ease-in-out
 

@@ -234,10 +234,10 @@ export default {
   width: 100%
 
   transition: $trs
-  background: $beige-l
+  background: var(--bg-c)
 
   @media (min-width: $tab + 1)
-    background: $beige-l
+    background: var(--bg-c)
 
 .header
   transition: 1s ease
