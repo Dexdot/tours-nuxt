@@ -19,7 +19,14 @@
           </div>
 
           <div v-else class="reviews-slide__icon u-center">
-            <img src="~assets/img/umbrella-stroke.svg" alt="Logo" />
+            <img
+              :src="
+                require(`~/assets/img${
+                  city === 'belgrade' ? '/blue' : ''
+                }/umbrella-stroke.svg`)
+              "
+              alt="Umbrella"
+            />
           </div>
 
           <ul class="reviews-slide__stars u-center">
@@ -71,9 +78,10 @@
 import BaseButton from "~/ui/BaseButton";
 import ButtonArrow from "~/ui/ButtonArrow";
 import render from "~/mixins/render";
+import city from "~/mixins/city";
 
 export default {
-  mixins: [render],
+  mixins: [render, city],
   components: {
     BaseButton,
     ButtonArrow

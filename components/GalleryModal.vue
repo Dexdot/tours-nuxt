@@ -9,7 +9,14 @@
         class="gallery-modal__logo u-center"
         :to="$cityLocalePath('index')"
       >
-        <img src="~assets/img/logo.svg" alt="Logo" />
+        <img
+          :src="
+            require(`~/assets/img${
+              city === 'belgrade' ? '/blue' : ''
+            }/logo.svg`)
+          "
+          alt="Logo"
+        />
       </nuxt-link>
 
       <div class="gallery-modal__container">
@@ -64,8 +71,10 @@
 <script>
 import Modal from "~/ui/Modal";
 import SliderNav from "~/ui/SliderNav";
+import city from "~/mixins/city";
 
 export default {
+  mixins: [city],
   components: {
     Modal,
     SliderNav

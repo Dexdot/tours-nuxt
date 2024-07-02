@@ -6,7 +6,7 @@
           {{ tourData.price }}
         </b>
         <p>
-          {{ tourData.priceLabel || $t('formOrder.price') }}
+          {{ tourData.priceLabel || $t("formOrder.price") }}
         </p>
       </div>
 
@@ -15,18 +15,18 @@
           {{ tourData.priceChild }}
         </b>
         <p>
-          {{ tourData.priceChildLabel || $t('formOrder.priceChild') }}
+          {{ tourData.priceChildLabel || $t("formOrder.priceChild") }}
         </p>
       </div>
     </div>
 
     <div class="form-order__controls">
-      <p>{{ $t('formOrder.title') }}</p>
+      <p>{{ $t("formOrder.title") }}</p>
       <BaseButton @click="$store.dispatch('dom/showBukza', tourData.bukzaId)">{{
-        $t('formOrder.button')
+        $t("formOrder.button")
       }}</BaseButton>
       <small>
-        {{ tourData.offerFormLabel || $t('formOrder.subtitle') }}
+        {{ tourData.offerFormLabel || $t("formOrder.subtitle") }}
       </small>
     </div>
 
@@ -40,7 +40,9 @@
       </div>
       <img
         class="form-order__action-icon"
-        src="~assets/svg/clock.svg"
+        :src="
+          require(`~/assets/svg${city === 'belgrade' ? '/blue' : ''}/clock.svg`)
+        "
         alt="Clock"
       />
     </div>
@@ -48,14 +50,17 @@
 </template>
 
 <script>
+import city from "~/mixins/city";
+
 export default {
+  mixins: [city],
   props: {
     tourData: {
       type: Object,
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -78,7 +83,7 @@ export default {
 
   @media (min-width: $tab + 1) and (max-width: 1250px)
     margin-bottom: 32px
-  
+
 .form-order__price-item
   position: relative
   font-size: 12px

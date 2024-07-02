@@ -2,7 +2,12 @@
   <div class="contacts-callback">
     <div class="contacts-icons">
       <img src="~assets/svg/circle-waves.svg" alt="Icon" />
-      <img src="~assets/svg/stamp.svg" alt="Icon" />
+      <img
+        :src="
+          require(`~/assets/svg${city === 'belgrade' ? '/blue' : ''}/stamp.svg`)
+        "
+        alt="Icon"
+      />
     </div>
 
     <form
@@ -63,8 +68,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+import city from "~/mixins/city";
 
 export default {
+  mixins: [city],
   data: () => ({
     submitStatus: "",
     form: {

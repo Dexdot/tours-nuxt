@@ -20,7 +20,14 @@
             class="header__logo u-center"
             :to="$cityLocalePath('index')"
           >
-            <img src="~assets/img/logo.svg" alt="Logo" />
+            <img
+              :src="
+                require(`~/assets/img${
+                  city === 'belgrade' ? '/blue' : ''
+                }/logo.svg`)
+              "
+              alt="Logo"
+            />
           </nuxt-link>
 
           <!-- CITYSWITCH -->

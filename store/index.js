@@ -7,7 +7,7 @@ export const actions = {
     const { city } = route.params;
 
     // CITYSWITCH
-    const cities = ["spb", "invinoveritas"];
+    const cities = ["spb", "invinoveritas", "belgrade"];
     const isValidCity = city && cities.includes(city);
 
     return Promise.resolve(

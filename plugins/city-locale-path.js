@@ -1,7 +1,7 @@
 export default ({ app }, inject) => {
   inject("cityLocalePath", (path, city) => {
     // CITYSWITCH
-    const cities = ["invinoveritas", "spb"];
+    const cities = ["invinoveritas", "spb", "belgrade"];
     const route = app.router.currentRoute;
 
     // City

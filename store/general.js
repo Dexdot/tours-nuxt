@@ -11,6 +11,10 @@ export const state = () => ({
     invinoveritas: {
       ru: null,
       en: null
+    },
+    belgrade: {
+      ru: null,
+      en: null
     }
   }
 });

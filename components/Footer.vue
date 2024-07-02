@@ -3,7 +3,14 @@
     <div class="container">
       <div class="footer__inner">
         <nuxt-link class="footer__logo u-center" :to="$cityLocalePath('index')">
-          <img src="~assets/img/logo-w.svg" alt="Logo" />
+          <img
+            :src="
+              require(`~/assets/img${
+                city === 'belgrade' ? '/blue' : ''
+              }/logo-w.svg`)
+            "
+            alt="Logo"
+          />
         </nuxt-link>
 
         <nav class="footer__nav">
