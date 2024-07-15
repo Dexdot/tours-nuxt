@@ -2,9 +2,11 @@
   <section class="gallery-section">
     <div class="container">
       <div class="gallery-section__inner">
+        <!-- :class="['accordion', { active }]" -->
         <button
           class="img gallery-section__cell gallery-section__cell--hero"
           @click="$emit('cell-click', 0)"
+          v-if="!corp"
         >
           <BaseImage
             class="img__i"
@@ -16,8 +18,12 @@
 
         <div class="gallery-section__list">
           <button
-            class="img gallery-section__cell"
-            v-for="(img, i) in imagesWithoutFirst.slice(0, 6)"
+            :class="[
+              'img',
+              'gallery-section__cell',
+              { 'gallery-section__cell--corp': corp }
+            ]"
+            v-for="(img, i) in imagesList.slice(0, 6)"
             @click="$emit('cell-click', i + 1)"
             :key="img.sys.id + i"
           >
@@ -36,14 +42,18 @@ export default {
     images: {
       type: Array,
       required: true
+    },
+    corp: {
+      type: Boolean,
+      required: false
     }
   },
   computed: {
-    imagesWithoutFirst() {
-      return this.images.filter((img, i) => i !== 0)
+    imagesList() {
+      return this.corp ? this.images : this.images.filter((img, i) => i !== 0);
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
@@ -65,7 +75,7 @@ export default {
   @media (max-width: $tab)
     width: 100%
 
-.gallery-section__cell:not(.gallery-section__cell--hero)
+.gallery-section__cell:not(.gallery-section__cell--hero):not(.gallery-section__cell--corp)
   padding-bottom: 50%
   width: 50%
 
@@ -76,6 +86,10 @@ export default {
   &:nth-child(n+5)
     @media (max-width: $tab)
       display: none
+
+.gallery-section__cell--corp
+  padding-bottom: 25%
+  width: 25%
 
 .gallery-section__cell--hero
   @media (min-width: $tab + 1)

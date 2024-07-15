@@ -66,6 +66,16 @@ const lang = {
     otherToursTitle: "Other tours you will like",
     otherLectures: "Other lectures you will like"
   },
+  corpTour: {
+    numberOfPeople: "1-∞ people",
+    duration: "Depending on your wishes",
+    place: "Depending on the tour and your wishes",
+    individualTours: "Tours that we can conduct individually",
+    textUs: "Write to us",
+    call: "Call",
+    downloadPresentation: "Download presentation",
+    companiesTitle: "They choose us"
+  },
   tourTypes: {
     group: "Group",
     individual: "Individual",

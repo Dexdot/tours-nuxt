@@ -11,7 +11,8 @@
         'btn--scale': classScale,
         'btn--pulse': classPulse,
         'btn--light': classLight,
-        'btn--dark': classDark
+        'btn--dark': classDark,
+        'btn--outline': classOutline
       }
     ]"
     @click="$emit('click')"
@@ -43,7 +44,8 @@
         'btn--scale': classScale,
         'btn--pulse': classPulse,
         'btn--light': classLight,
-        'btn--dark': classDark
+        'btn--dark': classDark,
+        'btn--outline': classOutline
       }
     ]"
   >
@@ -72,7 +74,8 @@
         'btn--scale': classScale,
         'btn--pulse': classPulse,
         'btn--light': classLight,
-        'btn--dark': classDark
+        'btn--dark': classDark,
+        'btn--outline': classOutline
       }
     ]"
   >
@@ -124,6 +127,10 @@ export default {
       default: false
     },
     classDark: {
+      type: Boolean,
+      default: false
+    },
+    classOutline: {
       type: Boolean,
       default: false
     }
@@ -183,15 +190,15 @@ a.btn
   text-transform: uppercase
   +link(#fff)
 
+  svg
+    color: inherit
+
 .btn__text--icon
   display: inline-flex
   align-items: center
 
   svg
     margin-right: 8px
-
-.btn svg
-  color: #fff
 
 
 // Pulse
@@ -237,6 +244,16 @@ a.btn
     background: #333
   &::before
     border: 1px solid #333
+
+
+// Outline
+.btn--outline
+  .btn__bg
+    background: 0
+    border: 1px solid #333
+
+  .btn__text
+    +link($black)
 
 
 // Expand
