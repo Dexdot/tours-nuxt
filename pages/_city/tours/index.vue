@@ -6,15 +6,18 @@
           <h1 class="t-h3 catalog-title">
             {{ $t(city !== "invinoveritas" ? "tours.title" : "lectures") }}
           </h1>
+
           <div v-if="city !== 'invinoveritas'">
             <MultipleSelect
               :list="selectList"
+              :links="landingsSelectList"
               :selected="selectedFilters"
               :className="'catalog-selects'"
               :placeholder="$t('reviews.selectTypeTitle')"
               @change="onSelectValueClick"
             />
           </div>
+
           <ul class="catalog-tabs" v-if="city !== 'invinoveritas'">
             <li>
               <button
@@ -43,6 +46,23 @@
               >
                 {{ v.label }}
               </button>
+            </li>
+          </ul>
+
+          <ul
+            class="catalog-tabs"
+            v-if="
+              city !== 'invinoveritas' && allLandings && allLandings.length > 0
+            "
+          >
+            <li v-for="landing in allLandings" :key="landing.sys.id">
+              <a
+                class="catalog-tab t-ttu"
+                :href="$cityLocalePath(`/tour-page/${landing.fields.slug}`)"
+                target="_blank"
+              >
+                {{ landing.fields.title }}
+              </a>
             </li>
           </ul>
         </div>
@@ -131,7 +151,8 @@ export default {
   async asyncData({ store, query }) {
     const toursPromise = store.dispatch("tours/loadTours");
     const reviewsPromise = store.dispatch("reviews/loadReviews");
-    await Promise.all([toursPromise, reviewsPromise]);
+    const landingsPromise = store.dispatch("tour-landings/loadLandings");
+    await Promise.all([toursPromise, reviewsPromise, landingsPromise]);
 
     let selectedFilters = [];
     if (
@@ -150,6 +171,7 @@ export default {
     ...mapGetters({
       allTours: "tours/allTours",
       allReviews: "reviews/allReviews",
+      allLandings: "tour-landings/allLandings",
       general: "general/data",
       locale: "lang/locale"
     }),
@@ -165,6 +187,12 @@ export default {
           label: this.$t("tourTypes")[k],
           value: k
         }));
+    },
+    landingsSelectList() {
+      return this.allLandings.map(l => ({
+        label: l.fields.title,
+        href: this.$cityLocalePath(`/tour-page/${l.fields.slug}`)
+      }));
     },
     reviews() {
       const filteredToursIds = this.filteredTours.map(tour => tour.sys.id);
@@ -312,11 +340,15 @@ export default {
   display: flex
   align-items: center
   margin-left: -16px
+
   @media (max-width: $tab)
     display: none
 
 .catalog-tabs > li
   margin-left: 16px
+
+.catalog-tabs + .catalog-tabs
+  margin-top: 8px
 
 .catalog-tab
   position: relative

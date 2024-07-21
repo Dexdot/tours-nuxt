@@ -28,6 +28,14 @@
           {{ v.label }}
         </button>
       </li>
+
+      <template v-if="links && links.length > 0">
+        <li v-for="link in links" :key="link.href" :value="link.href">
+          <a @click="toggleOpen" :href="link.href" target="_blank">
+            {{ link.label }}
+          </a>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
@@ -38,6 +46,10 @@ export default {
     list: {
       type: Array,
       required: true
+    },
+    links: {
+      type: Array,
+      required: false
     },
     selected: {
       type: Array,

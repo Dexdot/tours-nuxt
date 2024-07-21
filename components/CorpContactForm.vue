@@ -2,13 +2,13 @@
   <div class="form-order">
     <div class="form-order__controls">
       <BaseButton v-if="email" :to="`mailto:${email}`" isLink
-        >{{ $t("corpTour.textUs") }}<svg-icon name="email"
+        >{{ $t("tourLanding.textUs") }}<svg-icon name="email"
       /></BaseButton>
 
       <span v-if="email && phone" class="hr"></span>
 
       <BaseButton v-if="phone" :to="`tel:${phone}`" isLink classOutline
-        >{{ $t("corpTour.call") }}<svg-icon name="phone"
+        >{{ $t("tourLanding.call") }}<svg-icon name="phone"
       /></BaseButton>
 
       <small v-if="label">

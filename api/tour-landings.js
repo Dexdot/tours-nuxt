@@ -1,7 +1,6 @@
 import client from "~/api/client";
 
-// Corp tours
-export const fetchCorpTours = options =>
+export const fetchTourLandings = options =>
   new Promise(resolve => {
     client
       .getEntries({
@@ -9,7 +8,7 @@ export const fetchCorpTours = options =>
         ...options
       })
       .then(async ({ items }) => {
-        const tours = items.filter(tour => "fields" in tour);
-        resolve(tours);
+        const landings = items.filter(tour => "fields" in tour);
+        resolve(landings);
       });
   });

@@ -1,5 +1,5 @@
 import { copyObject } from "~/assets/scripts/helpers";
-import { fetchCorpTours } from "~/api/corptours";
+import { fetchTourLandings } from "~/api/tour-landings";
 
 export const state = () => ({
   data: {},
@@ -20,7 +20,7 @@ export const state = () => ({
 });
 
 export const getters = {
-  allTours({ data }) {
+  allLandings({ data }) {
     return Object.values(data);
   },
   data({ data }) {
@@ -41,7 +41,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async loadTours({ commit, getters, rootGetters }, paramCity) {
+  async loadLandings({ commit, getters, rootGetters }, paramCity) {
     const currentLocale = rootGetters["lang/locale"];
     const locale = rootGetters["lang/localeCode"];
     const city = paramCity || rootGetters["lang/city"];
@@ -52,7 +52,7 @@ export const actions = {
     if (cached[city][currentLocale]) {
       tours = Object.values(cached[city][currentLocale]);
     } else {
-      tours = await fetchCorpTours({
+      tours = await fetchTourLandings({
         "fields.city": city,
         locale
       });

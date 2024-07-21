@@ -15,7 +15,7 @@
         v-if="tourData.gallery"
         :images="tourData.gallery.slice(0, 4)"
         @cell-click="onCellClick"
-        corp
+        tourLanding
       />
 
       <div class="container">
@@ -24,9 +24,9 @@
             <h1 class="tour-page__title t-h3">{{ tourData.title }}</h1>
 
             <ul class="tour-page__info-list">
-              <li>
+              <li v-if="tourData.numberOfPeople">
                 <svg-icon class="tour-page__info-icon" name="people"></svg-icon>
-                <p>{{ $t("corpTour.numberOfPeople") }}</p>
+                <p>{{ tourData.numberOfPeople }}</p>
 
                 <Tip v-if="tourData.popupContent">
                   <div
@@ -38,14 +38,14 @@
                 </Tip>
               </li>
 
-              <li>
+              <li v-if="tourData.duration">
                 <svg-icon class="tour-page__info-icon" name="clock"></svg-icon>
-                <p>{{ $t("corpTour.duration") }}</p>
+                <p>{{ tourData.duration }}</p>
               </li>
 
-              <li>
+              <li v-if="tourData.venue">
                 <svg-icon class="tour-page__info-icon" name="pin"></svg-icon>
-                <p>{{ $t("corpTour.place") }}</p>
+                <p>{{ tourData.venue }}</p>
               </li>
             </ul>
           </div>
@@ -68,7 +68,7 @@
                 target="_blank"
                 download
               >
-                {{ $t("corpTour.downloadPresentation") }}
+                {{ $t("tourLanding.downloadPresentation") }}
               </a>
             </div>
           </div>
@@ -85,14 +85,14 @@
     </main>
 
     <LogosSlider
-      :title="$t('corpTour.companiesTitle')"
+      :title="tourData.logosTitle"
       v-if="logos && logos.length > 0"
       :logos="logos"
       :noPaddingBottom="commonTours.length > 0"
     />
 
     <ToursSlider
-      :title="$t('corpTour.individualTours')"
+      :title="tourData.toursTitle"
       v-if="commonTours.length > 0"
       :tours="commonTours"
     />
@@ -187,10 +187,13 @@ export default {
     // Tour ID
     const slug = params.id;
 
-    const toursPromise = store.dispatch("corptours/loadTours");
+    const landingsPromise = store.dispatch("tour-landings/loadLandings");
     const commonToursPromise = store.dispatch("tours/loadTours");
-    const [toursMap] = await Promise.all([toursPromise, commonToursPromise]);
-    const tour = toursMap[slug];
+    const [landingsMap] = await Promise.all([
+      landingsPromise,
+      commonToursPromise
+    ]);
+    const tour = landingsMap[slug];
 
     // 404
     if (!tour || (tour && tour.fields.city !== city)) {
@@ -216,8 +219,8 @@ export default {
       return filtered.length > 0 ? getRandomEntries(filtered, 8) : [];
     },
     logos() {
-      return this.general.corpLogos && this.general.corpLogos.length > 0
-        ? this.general.corpLogos.map(c => c.fields.file.url)
+      return this.tourData.logos && this.tourData.logos.length > 0
+        ? this.tourData.logos.map(c => c.fields.file.url)
         : [];
     }
   },

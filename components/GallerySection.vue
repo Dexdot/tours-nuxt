@@ -6,7 +6,7 @@
         <button
           class="img gallery-section__cell gallery-section__cell--hero"
           @click="$emit('cell-click', 0)"
-          v-if="!corp"
+          v-if="!tourLanding"
         >
           <BaseImage
             class="img__i"
@@ -21,7 +21,7 @@
             :class="[
               'img',
               'gallery-section__cell',
-              { 'gallery-section__cell--corp': corp }
+              { 'gallery-section__cell--tour-landing': tourLanding }
             ]"
             v-for="(img, i) in imagesList.slice(0, 6)"
             @click="$emit('cell-click', i + 1)"
@@ -43,14 +43,16 @@ export default {
       type: Array,
       required: true
     },
-    corp: {
+    tourLanding: {
       type: Boolean,
       required: false
     }
   },
   computed: {
     imagesList() {
-      return this.corp ? this.images : this.images.filter((img, i) => i !== 0);
+      return this.tourLanding
+        ? this.images
+        : this.images.filter((img, i) => i !== 0);
     }
   }
 };
@@ -75,7 +77,7 @@ export default {
   @media (max-width: $tab)
     width: 100%
 
-.gallery-section__cell:not(.gallery-section__cell--hero):not(.gallery-section__cell--corp)
+.gallery-section__cell:not(.gallery-section__cell--hero):not(.gallery-section__cell--tour-landing)
   padding-bottom: 50%
   width: 50%
 
@@ -87,7 +89,7 @@ export default {
     @media (max-width: $tab)
       display: none
 
-.gallery-section__cell--corp
+.gallery-section__cell--tour-landing
   padding-bottom: 25%
   width: 25%
 

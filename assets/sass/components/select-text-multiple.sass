@@ -1,7 +1,8 @@
 .select-text-multiple
   position: relative
 
-  button
+  button,
+  a
     line-height: 1
     font-size: 12px
     letter-spacing: 0.04em
@@ -11,7 +12,8 @@
     display: flex
     align-items: center
 
-  > button
+  > button,
+  > a
     +mont(m)
     font-size: 16px
     letter-spacing: -0.02em
@@ -53,7 +55,8 @@
     &::-webkit-scrollbar
       display: none
 
-    button
+    button,
+    a
       +mont(sb)
       white-space: nowrap
 
@@ -64,11 +67,13 @@
       &.active
         color: var(--acc-c)
 
-.select-text-multiple-error > button
+.select-text-multiple-error > button,
+.select-text-multiple-error > a
   border-bottom: 1px solid rgba($red, 0.3)
 
 .select-text-multiple-open
-  > button .i-chevron
+  > button .i-chevron,
+  > a .i-chevron
     transform: rotate(-90deg)
 
   ul

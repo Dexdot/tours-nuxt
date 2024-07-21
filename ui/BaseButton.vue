@@ -165,6 +165,9 @@ $btn-h: var(--btn-h)
 a.btn
   display: inline-block
 
+.btn svg
+  color: #fff
+
 .btn__bg
   position: absolute
   top: 50%
