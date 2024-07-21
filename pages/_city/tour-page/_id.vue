@@ -74,7 +74,7 @@
           </div>
 
           <div class="tour-page__right">
-            <CorpContactForm
+            <TourLandingContactForm
               :email="tourData.email"
               :phone="tourData.phone"
               :label="tourData.contactLabel"
@@ -109,7 +109,7 @@ import LogosSlider from "~/components/LogosSlider";
 
 import Tip from "~/ui/Tip";
 import TipButton from "~/ui/TipButton";
-import CorpContactForm from "~/components/CorpContactForm";
+import TourLandingContactForm from "~/components/TourLandingContactForm";
 
 import render from "~/mixins/render";
 import page from "~/mixins/page";
@@ -124,7 +124,7 @@ export default {
     ToursSlider,
     Tip,
     TipButton,
-    CorpContactForm,
+    TourLandingContactForm,
     LogosSlider
   },
   head() {
