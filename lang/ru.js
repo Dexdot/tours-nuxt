@@ -5,8 +5,8 @@ const lang = {
   orderTicket: "Купить билет",
   cities: {
     spb: "Санкт-Петербург",
-    invinoveritas: "Винные хроники"
-    // belgrade: "Белград"
+    invinoveritas: "Винные хроники",
+    belgrade: "Белград"
   },
   navLinks: [
     {
