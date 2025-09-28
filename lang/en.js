@@ -5,7 +5,7 @@ const lang = {
   orderTicket: "Buy a ticket",
   cities: {
     spb: "Saint-Petersburg",
-    invinoveritas: "In Vino Veritas",
+    // invinoveritas: "In Vino Veritas",
     belgrade: "Belgrade"
   },
   navLinks: [
@@ -32,6 +32,11 @@ const lang = {
     {
       to: "/shop/certificates",
       text: "Certificates"
+    },
+    {
+      to:
+        "https://app.bukza.com/#/11417/30755/order?calendar=true&resourceGroupId=35958",
+      text: "Calendar"
     }
   ],
   invinoveritasNavLinks: [
@@ -55,7 +60,8 @@ const lang = {
   lectures: "Lectures",
   tours: {
     title: "Excursions",
-    choose: "Choose your excursion"
+    choose: "Choose your excursion",
+    corp: "Corporate programs"
   },
   tour: {
     includes: "What's included",

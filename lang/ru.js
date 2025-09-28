@@ -5,7 +5,7 @@ const lang = {
   orderTicket: "Купить билет",
   cities: {
     spb: "Санкт-Петербург",
-    invinoveritas: "Винные хроники",
+    // invinoveritas: "Винные хроники",
     belgrade: "Белград"
   },
   navLinks: [
@@ -32,6 +32,11 @@ const lang = {
     {
       to: "/shop/certificates",
       text: "Сертификаты"
+    },
+    {
+      to:
+        "https://app.bukza.com/#/11417/30755/order?calendar=true&resourceGroupId=35958",
+      text: "Календарь"
     }
   ],
   invinoveritasNavLinks: [
@@ -55,7 +60,8 @@ const lang = {
   lectures: "Лекции",
   tours: {
     title: "Экскурсии",
-    choose: "Выбери свою экскурсию"
+    choose: "Выбери свою экскурсию",
+    corp: "Корпоративные программы"
   },
   tour: {
     includes: "Что включено",

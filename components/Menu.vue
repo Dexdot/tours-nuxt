@@ -4,16 +4,16 @@
       <div class="menu__container container">
         <nav class="menu__nav">
           <ul>
-            <li
-              class="menu__li"
-              v-for="link in $t(
-                city !== 'invinoveritas' ? 'navLinks' : 'invinoveritasNavLinks'
-              )"
-              :key="link.to"
-            >
-              <nuxt-link class="t-h2" :to="$cityLocalePath(link.to)">{{
+            <li class="menu__li" v-for="link in footerLinks" :key="link.to">
+              <nuxt-link
+                v-if="link.to.startsWith('/')"
+                class="t-h2"
+                :to="$cityLocalePath(link.to)"
+                >{{ link.text }}</nuxt-link
+              >
+              <a v-else class="t-h2" :href="link.to" target="_blank">{{
                 link.text
-              }}</nuxt-link>
+              }}</a>
             </li>
 
             <!-- LANGSWITCH -->
@@ -79,7 +79,26 @@ export default {
   computed: {
     ...mapGetters({
       general: "general/data"
-    })
+    }),
+    footerLinks() {
+      const nav = this.$t(
+        this.city !== "invinoveritas" ? "navLinks" : "invinoveritasNavLinks"
+      );
+
+      return nav.reduce((acc, cur, i) => {
+        if (i === 0 && this.city === "spb")
+          return [
+            ...acc,
+            cur,
+            {
+              to: `/tour-page/corporate`,
+              text: this.$t("tours.corp")
+            }
+          ];
+
+        return [...acc, cur];
+      }, []);
+    }
   },
   methods: {
     ...mapActions({

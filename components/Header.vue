@@ -53,9 +53,15 @@
               )"
               :key="link.to"
             >
-              <nuxt-link class="t-ttu" :to="$cityLocalePath(link.to)">{{
+              <nuxt-link
+                v-if="link.to.startsWith('/')"
+                class="t-ttu"
+                :to="$cityLocalePath(link.to)"
+                >{{ link.text }}</nuxt-link
+              >
+              <a v-else class="t-ttu" :href="link.to" target="_blank">{{
                 link.text
-              }}</nuxt-link>
+              }}</a>
             </li>
 
             <!-- LANGSWITCH -->
@@ -403,6 +409,10 @@ export default {
   &:hover
     opacity: 0.4
 
+.header__nav li:last-child
+  @media (max-width: 1160px)
+    display: none
+
 
 // Right
 .header__right
@@ -410,10 +420,10 @@ export default {
     width: column-spans(4)
 
   @media (min-width: 1401px) and (max-width: 1880px)
-    width: column-spans(5)
+    width: column-spans(4)
 
   @media (min-width: 1341px) and (max-width: 1400px)
-    width: calc(#{column-spans(5)} + 40px)
+    width: calc(#{column-spans(4)} + 40px)
 
   display: flex
   align-items: center
