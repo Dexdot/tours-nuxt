@@ -1,15 +1,12 @@
 import client from "~/api/client";
+import { cachedFetch } from "~/api/cache";
 
-// Articles
 export const fetchArticles = options =>
-  new Promise(resolve => {
+  cachedFetch(`article:${JSON.stringify(options)}`, () =>
     client
       .getEntries({
         content_type: "article",
         ...options
       })
-      .then(async ({ items }) => {
-        const articles = items.filter(article => "fields" in article);
-        resolve(articles);
-      });
-  });
+      .then(({ items }) => items.filter(article => "fields" in article))
+  );

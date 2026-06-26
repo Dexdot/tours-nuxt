@@ -1,5 +1,5 @@
 export const actions = {
-  nuxtServerInit({ dispatch }, { route, redirect, error }) {
+  async nuxtServerInit({ dispatch }, { route, redirect }) {
     // RU
     if (route.fullPath.startsWith("/ru"))
       return redirect(route.fullPath.replace("/ru", ""));
@@ -8,10 +8,12 @@ export const actions = {
 
     // CITYSWITCH
     const cities = ["spb", "invinoveritas", "belgrade"];
-    const isValidCity = city && cities.includes(city);
+    const validCity = city && cities.includes(city) ? city : "spb";
 
-    return Promise.resolve(
-      dispatch("general/load", isValidCity ? city : "spb")
-    );
+    await Promise.all([
+      dispatch("general/load", validCity),
+      dispatch("tours/loadTours", validCity),
+      dispatch("reviews/loadReviews", validCity)
+    ]);
   }
 };

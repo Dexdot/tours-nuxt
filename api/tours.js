@@ -1,15 +1,12 @@
 import client from "~/api/client";
+import { cachedFetch } from "~/api/cache";
 
-// Tours
 export const fetchTours = options =>
-  new Promise(resolve => {
+  cachedFetch(`tour:${JSON.stringify(options)}`, () =>
     client
       .getEntries({
         content_type: "tour",
         ...options
       })
-      .then(async ({ items }) => {
-        const tours = items.filter(tour => "fields" in tour);
-        resolve(tours);
-      });
-  });
+      .then(({ items }) => items.filter(tour => "fields" in tour))
+  );

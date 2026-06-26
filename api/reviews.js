@@ -2,24 +2,19 @@ import { nanoid } from "nanoid";
 
 import client from "~/api/client";
 import cmaClient from "~/api/cma-client";
+import { cachedFetch } from "~/api/cache";
 
 const spaceId = process.env.NUXT_ENV_SPACE_ID;
 
-// Reviews
 export const fetchReviews = options =>
-  new Promise(resolve => {
+  cachedFetch(`review:${JSON.stringify(options)}`, () =>
     client
       .getEntries({
         content_type: "review",
         ...options
       })
-      .then(async ({ items }) => {
-        const reviews = items.filter(review => "fields" in review);
-        resolve(reviews);
-        skip += limit;
-      })
-      .catch(err => {});
-  });
+      .then(({ items }) => items.filter(review => "fields" in review))
+  );
 
 export function createReviewEntry(form) {
   return new Promise((resolve, reject) => {
@@ -79,6 +74,6 @@ export function createReviewEntry(form) {
       .then(entry => {
         resolve(entry);
       })
-      .catch(console.error);
+      .catch(reject);
   });
 }

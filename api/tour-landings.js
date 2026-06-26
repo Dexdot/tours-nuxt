@@ -1,14 +1,12 @@
 import client from "~/api/client";
+import { cachedFetch } from "~/api/cache";
 
 export const fetchTourLandings = options =>
-  new Promise(resolve => {
+  cachedFetch(`corpTour:${JSON.stringify(options)}`, () =>
     client
       .getEntries({
         content_type: "corpTour",
         ...options
       })
-      .then(async ({ items }) => {
-        const landings = items.filter(tour => "fields" in tour);
-        resolve(landings);
-      });
-  });
+      .then(({ items }) => items.filter(tour => "fields" in tour))
+  );

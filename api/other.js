@@ -1,7 +1,8 @@
 import client from "~/api/client";
+import { cachedFetch } from "~/api/cache";
 
 export const fetchGeneral = ({ locale, city }) =>
-  new Promise((resolve, reject) => {
+  cachedFetch(`general:${city}:${locale}`, () =>
     client
       .getEntries({
         content_type: "general",
@@ -12,15 +13,14 @@ export const fetchGeneral = ({ locale, city }) =>
         const data = items[0] ? items[0].fields : null;
 
         if (data) {
-          resolve(data);
-        } else {
-          reject();
+          return data;
         }
-      });
-  });
+        throw new Error(`No general data for city=${city}, locale=${locale}`);
+      })
+  );
 
 export const fetchMain = ({ locale, city }) =>
-  new Promise((resolve, reject) => {
+  cachedFetch(`main:${city}:${locale}`, () =>
     client
       .getEntries({
         content_type: "main",
@@ -31,9 +31,8 @@ export const fetchMain = ({ locale, city }) =>
         const data = items[0] ? items[0].fields : null;
 
         if (data) {
-          resolve(data);
-        } else {
-          reject();
+          return data;
         }
-      });
-  });
+        throw new Error(`No main data for city=${city}, locale=${locale}`);
+      })
+  );
