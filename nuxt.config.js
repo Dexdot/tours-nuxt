@@ -1,3 +1,5 @@
+const path = require("path");
+
 const baseTitle = "Пешеход Тур";
 const baseDescription = "Пешеходные туры в Санкт-Петербурге и Таллине";
 
@@ -290,6 +292,13 @@ module.exports = {
      ** Run ESLint on save
      */
     extend(config, { isDev, isClient }) {
+      if (isClient) {
+        config.resolve.alias["https-proxy-agent"] = path.resolve(
+          __dirname,
+          "api/https-proxy-agent-stub.js"
+        );
+      }
+
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: "pre",
